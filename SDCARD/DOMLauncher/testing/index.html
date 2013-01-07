@@ -1,0 +1,173 @@
+
+<link rel="stylesheet" href="css.css" type="text/css" media="screen" charset="utf-8" />
+<!--<link rel="stylesheet" href="file:///data/data/com.awaa.domlauncher/theme/css.css" type="text/css" media="screen" charset="utf-8" />-->
+<link rel="stylesheet" href="file:///mnt/sdcard/DOMLauncher/testing/css.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" src="file:///mnt/sdcard/DOMLauncher/testing/jquery.tinysort.min.js"></script>
+
+<script type="text/javascript" src="events.js"></script>  
+<!--<script type="text/javascript" src="file:///data/data/com.awaa.domlauncher/theme/events.js"></script>  -->
+<script type="text/javascript" src="file:///mnt/sdcard/DOMLauncher/testing/events.js"></script>  
+
+<script type="text/javascript" src="callbacks.js"></script>  
+<!--<script type="text/javascript" src="file:///data/data/com.awaa.domlauncher/theme/callbacks.js"></script>  -->
+<script type="text/javascript" src="file:///mnt/sdcard/DOMLauncher/testing/callbacks.js"></script>  
+
+<!--<script type="text/javascript" src="file:///data/data/com.awaa.domlauncher/theme/idangerous.swiper-1.5.min.js"></script>  -->
+<script src='file:///mnt/sdcard/DOMLauncher/testing/idangerous.swiper-1.5.min.js'></script>
+<script src='file:///mnt/sdcard/DOMLauncher/testing/jquery.ui.touch-punch.min.js'></script>
+
+<script>
+
+//Call all things after document ready.
+$(document).ready(function(){
+	themeLoaded();
+});
+
+
+function themeLoaded(){
+	$('body').css('background-image', 'url(file:///mnt/sdcard/DOMLauncher/testing/bodyBackground.png)').addClass('xhdpi');
+		
+	//Loads up the App Panel.
+	generateApplist();
+
+	//Overrides the 'Menu Button'
+	document.addEventListener("menubutton", onmenubuttonDown, false); //Hardware backbutton event listener to override default functionality.
+		function onmenubuttonDown(){
+				optionsMode();
+		}
+
+
+	//Custom to this theme.  Checks to see if the app is full screen or not and displays the correct icon.
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onRequestFileSystemSuccess, null); 
+
+		function onRequestFileSystemSuccess(fileSystem) { 
+			var findDirectory=fileSystem.root; 
+			findDirectory.getFile("/data/data/com.awaa.domlauncher/theme/isFullscreen.txt", {create:false, exclusive: false}, onGetDirectorySuccess, onGetDirectoryFail); 
+		} 
+		function onGetDirectorySuccess(file) { //Folder Exists. Call cdirInternal to check internal folder structure.
+			 $('#toggle_Statusbar').attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_exitfullscreen.jpg');
+		} 
+		function onGetDirectoryFail(error) { //Folder doesn't exist. Call cdirBase to create.
+			 $('#toggle_Statusbar').attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_fullscreen.jpg');
+		} 
+		
+	//screenBrightness({check:"mode"});	
+			
+	volumeControls({check:"true", type:"ringer"})
+	volumeControls({check:"true", type:"media"})
+	//Starts the Cell Signal Plugin
+	cellSiganl();
+	//Starts the Battery Level Plugin
+	batteryLevel();
+	//Checks to see if Wifi is turned on or off..
+	toggleWifi({check:"true"});
+	//Checks to see if the mobile data connection is on or off.
+	toggleData({check:"true"});
+	//Sets up a timer for each sms and calls that are missed and unread. 
+	missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
+	missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
+
+	//Clock Timer 
+	clockSec = $("#sec")
+	clockHour = $("#hour")
+	clockMin = $("#min")
+	
+	setInterval( function() {
+	var seconds = new Date().getSeconds();
+	var hours = new Date().getHours();
+	var mins = new Date().getMinutes();
+	var sdegree = seconds * 6;
+	var srotate = "rotate(" + sdegree + "deg)";
+	var mdegree = mins * 6;
+	var mrotate = "rotate(" + mdegree + "deg)";
+	var hdegree = hours * 30 + (mins / 2);
+	var hrotate = "rotate(" + hdegree + "deg)";
+	
+	clockSec.css({"-webkit-transform" : srotate});
+	clockHour.css({"-webkit-transform" : hrotate});
+	clockMin.css({"-webkit-transform" : mrotate});
+	}, 1000 );
+	
+
+
+	$( "#slider_Brightness").slider({
+		max:255, min:1,
+		create: function(event, ui){$('.ui-slider-handle').append('<div></div>');},
+		start: function( event, ui ) {
+			swiper.destroy()}, 
+		stop: function( event, ui ) {swiper = new Swiper('.swiper', {createPagination : false});}, 
+		change: function( event, ui ) {screenBrightness({value:''+ui.value+''});},
+		slide: function( event, ui ) {$('#value_Brightness').text("Brightness Value: " + ui.value);$('.ui-slider-handle>div').css('left', '-'+((ui.value/255)*100)+'px');}
+		});
+	//Timeout, calls the Slider jQuery Plugin for a sliding desktop.
+	setTimeout(function(){
+		swiper = new Swiper('.swiper', {
+		createPagination : false
+		});
+		$('#slider').delay(750).animate({opacity:1}, 250);
+	}, 500);
+}
+
+</script>
+
+<div class="desktop">
+    <div id='slider' class='swiper-container swiper' style="opacity:0;">
+        <div class="swiper-wrapper" style="z-index:1;">
+            <div class="swiper-slide" style="float:left; position:relative;">
+            	<div class="innerWrapper">
+                    <div class="app" appLaunch="com.netflix.mediaclient"><span>Netflix</span></div>
+                    <div class="app" appLaunch="com.opera.browser"><span>Opera</span></div>
+                    <div class="app" style="height:100px; width:100px; position:absolute; top:500px; left:25px;background-color:red;" id="domlDummy"></div>   
+                    <ul id="clock" applaunch="com.sec.android.app.clockpackage" appactivity=".ClockPackage" appname="Clock">	
+                        <li id="sec"></li>
+                        <li id="hour"></li>
+                        <li id="min"></li>
+                    </ul>
+            	</div>
+            </div>
+            <div class="swiper-slide" style="float:left; position:relative;">
+            	<div class="innerWrapper">
+                    <div class="row">
+                        <img id="vol_ringUp" src="file:///mnt/sdcard/DOMLauncher/testing/icon_volumeincrease.jpg"></img>       
+                        <img id="vol_ringDown" src="file:///mnt/sdcard/DOMLauncher/testing/icon_volumedecrease.jpg"></img>       
+                        <img id="vol_ringSilent" src="file:///mnt/sdcard/DOMLauncher/testing/icon_volumemute.jpg"></img>       
+                        <img id="vol_ringVibrate" src="file:///mnt/sdcard/DOMLauncher/testing/icon_vibrate.jpg"></img>  
+                    </div>
+                    <div class="row">
+                        <img id="vol_mediaUp" src="file:///mnt/sdcard/DOMLauncher/testing/icon_volumeincrease.jpg"></img>       
+                        <img id="vol_mediaDown" src="file:///mnt/sdcard/DOMLauncher/testing/icon_volumedecrease.jpg"></img>       
+                        <img id="vol_mediaSilent" src="file:///mnt/sdcard/DOMLauncher/testing/icon_volumemute.jpg"></img>       
+                    </div>
+                    <div class="row">
+                        <img id="toggle_Statusbar" src="file:///mnt/sdcard/DOMLauncher/testing/icon_fullscreen.jpg"></img>   
+                        <img id="toggle_Wifi" src="file:///mnt/sdcard/DOMLauncher/testing/icon_wifi.jpg"></img>   
+                        <img id="toggle_34G" src="file:///mnt/sdcard/DOMLauncher/testing/icon_34g.jpg"></img>   
+                        <img id="toggle_airplaneMode" src="file:///mnt/sdcard/DOMLauncher/testing/icon_airplanemode.jpg"></img>   
+                    </div>
+                    <div id="data_cellSignal">Cell Signal: 100%</div>
+                    <div id="data_wifiSignal">Wifi Signal: Disabled</div>
+                    <div id="data_batteryLevel">Battery Level: 100%</div>
+                    <div id="value_missedCalls">Missed Calls:</div>
+                    <div id="value_unreadSMS">Unread SMS:</div>
+                    <div id="value_mediaVol">Media Vol:</div>
+                    <div id="value_ringerVol">Ringer Vol:</div>
+                    <div id="btn_autoBrightness">Auto Brightness:</div>   
+                    <div id="slider_Brightness"></div>   
+                    <div id="value_Brightness">Brightness Value:</div>   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="quickBar">
+   <center>
+        <a href="tel:" class="app dialer" appName="default_Dialer"><span>Dialer</span></a>
+        <div class="app" appLaunch="com.android.contacts" appActivity=".DialtactsContactsEntryActivity" appName="Contacts"><span>Contacts</span></div>
+        <div class="app" id="apps" style="background-image:url(file:///mnt/sdcard/DOMLauncher/testing/icon_apps.jpg);"></div>
+        <div class="app" appLaunch="com.android.settings" appActivity=".Settings" appName="Settings"><span>Settings</span></div>   
+    </center>
+</div>
+<div class="appPanel" id="appPanel"></div>
+<div class="apppanelControls" style=""><span>Refresh List</span><span>Close</span></div>
