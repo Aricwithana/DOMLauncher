@@ -45,7 +45,7 @@ public class Missedcommunications extends Plugin {
 				
 				try {
 					c = this.cordova.getActivity().getContentResolver().query(CallLog.Calls.CONTENT_URI, projection, where, null, null ); 
-				} catch {
+				} catch(Exception e) {
 					where = CallLog.Calls.TYPE+"="+CallLog.Calls.MISSED_TYPE+" AND "+CallLog.Calls.NEW+"=1";
 					
 					c = this.cordova.getActivity().getContentResolver().query(CallLog.Calls.CONTENT_URI, projection, where, null, null );
