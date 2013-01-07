@@ -10,4 +10,6 @@ All these files are free to use and modify.  Just credit me somewhere, link back
 
 Folder with the SD CARD, just copy to your sd card.  
 
+DOMLauncher2.3.x is for older androids.  This app is offically only for 4.0+ to make sure hardware is of higher spec.
+
 -Aricwithana
