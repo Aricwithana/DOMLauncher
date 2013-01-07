@@ -39,13 +39,23 @@ public class Missedcommunications extends Plugin {
 			if(type.equals("calls")){
 				String[] projection = { CallLog.Calls.CACHED_NAME, CallLog.Calls.CACHED_NUMBER_LABEL, CallLog.Calls.TYPE };
 				
-				String where = CallLog.Calls.TYPE+"="+CallLog.Calls.MISSED_TYPE+"="+CallLog.Calls.IS_READ+"=0";          
+				String where = CallLog.Calls.TYPE+"="+CallLog.Calls.MISSED_TYPE+" AND "+CallLog.Calls.IS_READ+"=0";          
+				int nummissedCalls = 0;
+				Cursor c;
 				
-				Cursor c = this.cordova.getActivity().getContentResolver().query(CallLog.Calls.CONTENT_URI, projection, where, null, null );
+				try {
+					c = this.cordova.getActivity().getContentResolver().query(CallLog.Calls.CONTENT_URI, projection, where, null, null ); 
+				} catch {
+					where = CallLog.Calls.TYPE+"="+CallLog.Calls.MISSED_TYPE+" AND "+CallLog.Calls.NEW+"=1";
+					
+					c = this.cordova.getActivity().getContentResolver().query(CallLog.Calls.CONTENT_URI, projection, where, null, null );
+				
+				}
 				
 				c.moveToFirst();  
-				int nummissedCalls = c.getCount();
+				nummissedCalls = c.getCount();
 				c.close(); 
+				
 				return new PluginResult(PluginResult.Status.OK, nummissedCalls);
 				
 			}
