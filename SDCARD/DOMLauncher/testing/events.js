@@ -21,7 +21,7 @@
 	//		the ability for any element to launch an app but nnot necessary
 	//		for the call to work.  As long as the correct information is passed
 	//		this can be customized.
-$('*[appLaunch], *[settings]').on('click', function(e) {
+$(document).on('click', '*[appLaunch], *[settings]', function(e) {
 	launchApps(this);
 });
 
