@@ -260,7 +260,7 @@ function refreshIcons(){
 	window.plugins.applist.show({refreshIcons:true}, //App Package Name
 		function(appList) {
 			appListArray = JSON.parse(appList);
-			styleVar = $("<style>");
+			styleVar = $('<style id="iconsCss">');
 			
 			$.each(appListArray, function(e) {
 				var appName = this.name
@@ -276,12 +276,13 @@ function refreshIcons(){
 						$(styleVar).append('*[appLaunch="'+appLaunch+'"]{background-image:url(file:///data/data/com.awaa.domlauncher/icons/'+appLaunch+'.png);}');
 					}
 			});
-			
+				$('#iconsCss').remove();
 				$('head').append(styleVar);
 				
 				window.plugins.simplesave.show({fileObject:styleVar.text(), filePlace:"data/data/com.awaa.domlauncher/icons/icons.css"}, 
 				
 				function() { //Success Function
+					
 					//alert('yes save css');
 					},
 				function() {// Failure function

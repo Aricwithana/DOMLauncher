@@ -133,6 +133,9 @@ private void generateIcons() {
 					foStream = new FileOutputStream(file);
 					oStream.write(b);
 					oStream.writeTo(foStream);
+					oStream.close();
+					foStream.close();
+					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
