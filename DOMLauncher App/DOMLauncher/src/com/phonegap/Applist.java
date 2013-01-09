@@ -127,19 +127,27 @@ private void generateIcons() {
 			
 			ByteArrayOutputStream oStream = new ByteArrayOutputStream();  
 			bitmap.compress(Bitmap.CompressFormat.PNG, 100, oStream); //bm is the bitmap object   
-			byte[] b = oStream.toByteArray();
+		
+			 byte[]	b = oStream.toByteArray();
 	
 				try {
 					foStream = new FileOutputStream(file);
 					oStream.write(b);
 					oStream.writeTo(foStream);
 					oStream.close();
-					foStream.close();
-					
+					foStream.close();					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			pkgName = null;	
+			appIcon = null;
+			file = null;
+			b = null;
+			foStream = null;
+			oStream = null;
+			bitmap = null;
+			System.gc();
 			}				
 		}// Turns the JSON array into a string and returns the value. 
 	

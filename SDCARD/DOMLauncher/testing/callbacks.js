@@ -332,6 +332,7 @@ function generateApplist(regen){
 				}
 				generateApplist();
 			}else{
+				
 				$('.appPanel').load('file:///mnt/sdcard/DOMLauncher/testing/appPanel.html');
 			}
 		} 
@@ -345,47 +346,61 @@ function generateApplist(regen){
 			//Generally false is the only value needed since refreshIcons(); exists for easier use.
 			window.plugins.applist.show({refreshIcons:false}, 
 				function(appList) {//appList is a JSON Object needing to be parsed.
-					//Parse the appList
+					applistCallback(appList);	
+			}, // Success function
+			function() {alert('Loading App List Failed')}); // Failure function
+		}
+}
+
+
+
+
+function applistCallback(appList){
+				//Parse the appList
 					appListArray = JSON.parse(appList);
 					//For each item in the JSON Array
 						// @ appName - Application Name ('DOMLauncher')
 						// @ appLaunch - Package class name ('com.awaa.domlauncher')
 						// @ appActivity - Acivity Intent ('.DialtactsContactsEntryActivity')
+						pixelBlock = $('<div class="pixelBlock">');
 					$.each(appListArray, function(e) {
 						var appName = this.name
 						var appLaunch = this.package
 						var appActivity = this.intent
 						//I utilize a 'pixel block', 1px/1px off screen, overflow hidden to store the generated DOM Elements into.		
-						$('body').append('<div class="pixelBlock"></div>');
+						
 						//Since we have some packages without intents (and these apps need the activity to launch, we listen and segment)
 						if(this.package === "com.android.settings"){
-							$('.pixelBlock').append('<div class="app" appLaunch="com.android.settings" appActivity=".Settings" appName="'+appName+'"><span>'+appName+'</span></div>');
-							$('.pixelBlock').append('<div class="app"  appName="doml_Settings"><span>DOMLauncher Settings</span></div>');
-							$('.pixelBlock').append('<a href="tel:" class="app dialer" appName="default_Dialer"><span>Dialer</span></a>');
+							$(pixelBlock).append('<div class="app" appLaunch="com.android.settings" appActivity=".Settings" appName="'+appName+'"><span>'+appName+'</span></div>');
+							$(pixelBlock).append('<div class="app"  appName="doml_Settings"><span>DOMLauncher Settings</span></div>');
+							$(pixelBlock).append('<a href="tel:" class="app dialer" appName="default_Dialer"><span>Dialer</span></a>');
 						}else if(this.package === "com.android.contacts"){
-							$('.pixelBlock').append('<div class="app" appLaunch="com.android.contacts" appActivity=".DialtactsContactsEntryActivity" appName="'+appName+'"><span>'+appName+'</span></div>');
+							$(pixelBlock).append('<div class="app" appLaunch="com.android.contacts" appActivity=".DialtactsContactsEntryActivity" appName="'+appName+'"><span>'+appName+'</span></div>');
 						}else{
-							$('.pixelBlock').append('<div class="app" appLaunch="'+appLaunch+'" appActivity="'+appActivity+'" appName="'+appName+'"><span>'+appName+'</span></div>');
+							$(pixelBlock).append('<div class="app" appLaunch="'+appLaunch+'" appActivity="'+appActivity+'" appName="'+appName+'"><span>'+appName+'</span></div>');
 						}
+						 appName = null
+						 appLaunch = null
+						 appActivity = null
 					});
 				//I use a plugin called tSort to sort the DOM Elements generated.	
-				$('.pixelBlock> *').tsort({attr:'appName'});
+				//$('.pixelBlock> *').tsort({attr:'appName'});
 				//Collect the stored DOM Elements
-				var appElements = $('.pixelBlock').html();
+				var appElements = $(pixelBlock).html();
 				//Custom Plugin to save basic non-formatted text files to the system.
 				//Saves the DOM Objects generated onto the system.
-				window.plugins.simplesave.show({fileObject:appElements, filePlace:"mnt/sdcard/DOMLauncher/testing/appPanel.html"}, 
+				window.plugins.simplesave.show({fileObject:$(pixelBlock), filePlace:"mnt/sdcard/DOMLauncher/testing/appPanel.html"}, 
 					
 					function() { //Success Function
 						//Clears the current App Panel
 						$('.appPanel').empty();
 						//Removes the pixel block
-						$('.pixelBlock').remove();
+						//$('.pixelBlock').remove();
 						//Loads the newly created file of DOM Objects into the App Panel
 						$('.appPanel').load('file:///mnt/sdcard/DOMLauncher/testing/appPanel.html');
+						appListArray = null;
+						appElements = null;
 						},
-					function() {alert('App Panel did not save');});// Failure function 							
-			}, // Success function
-			function() {alert('Loading App List Failed')}); // Failure function
-		}
+					function() {alert('App Panel did not save');});// Failure function 		
+	
 }
