@@ -389,18 +389,20 @@ function applistCallback(appList){
 				var appElements = $(pixelBlock).html();
 				//Custom Plugin to save basic non-formatted text files to the system.
 				//Saves the DOM Objects generated onto the system.
-				window.plugins.simplesave.show({fileObject:$(pixelBlock), filePlace:"mnt/sdcard/DOMLauncher/testing/appPanel.html"}, 
+				window.plugins.simplesave.show({fileObject:appElements, filePlace:"mnt/sdcard/DOMLauncher/testing/appPanel.html"}, 
 					
 					function() { //Success Function
 						//Clears the current App Panel
 						$('.appPanel').empty();
 						//Removes the pixel block
 						//$('.pixelBlock').remove();
+						
 						//Loads the newly created file of DOM Objects into the App Panel
 						$('.appPanel').load('file:///mnt/sdcard/DOMLauncher/testing/appPanel.html');
-						appListArray = null;
-						appElements = null;
+						
 						},
 					function() {alert('App Panel did not save');});// Failure function 		
-	
+					appListArray = null;
+					appElements = null;
+					pixelBlock = null
 }
