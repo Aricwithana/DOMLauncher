@@ -21,13 +21,13 @@
 	// @ .level - integer 0-100, battery level value
 	// @ info  - MUST be used as the callback Variable!  This is a Cordova requirement, not mine.
 		// @ object_toggle34G 
-	object_databatteryLevel = $('#data_batteryLevel')
+	$object_databatteryLevel = $('#data_batteryLevel')
 function batterylevelCallback(info){ 
 	/*Begin Theme Specific Editible Code*/
 		if(info.isPlugged != false){
-			object_databatteryLevel.text('Battery Charging:  '+info.level+'%');  
+			$object_databatteryLevel.text('Battery Charging:  '+info.level+'%');  
 		}else{
-			object_databatteryLevel.text('Battery Level:  '+info.level+'%'); 
+			$object_databatteryLevel.text('Battery Level:  '+info.level+'%'); 
 		}
 	/*End Theme Specific Editible Code*/
 }
@@ -41,8 +41,8 @@ function batterylevelCallback(info){
 	// @ check - returns the boolean true/false if the function is just being used to check information.
 	// @ returnVal - returns integers, strings or booleans depending on the combination of input commands when the initial function is called.
 		// @ object_toggle34G 
-	object_valueringerVol = $('#value_ringerVol')
-	object_valuemediaVol = $('#value_mediaVol')
+	$object_valueringerVol = $('#value_ringerVol')
+	$object_valuemediaVol = $('#value_mediaVol')
 function volumecontrolsCallback(args){
 	var vol = args.vol
 	var type = args.type
@@ -50,10 +50,10 @@ function volumecontrolsCallback(args){
 	var returnVal = args.returnVal
 	/*Begin Theme Specific Editible Code*/
 		if(type == "ringer"){
-			object_valueringerVol.text('Ringer Vol: ' + returnVal)	
+			$object_valueringerVol.text('Ringer Vol: ' + returnVal)	
 		}
 		if(type == "media"){
-			object_valuemediaVol.text('Ringer Vol: ' + returnVal)	
+			$object_valuemediaVol.text('Ringer Vol: ' + returnVal)	
 		}
 	/*End Theme Specific Editible Code*/
 }
@@ -63,15 +63,15 @@ function volumecontrolsCallback(args){
 	// @ check - returns the boolean true/false if the function is just being used to check information.
 	// @ returnVal - returns boolean true/false depending on if the data connection is on or off.
 		// @ object_toggle34G 
-	object_toggle34G = $('#toggle_34G')
+	$object_toggle34G = $('#toggle_34G')
 function toggledataCallback(args){
 	var returnVal = args.returnVal
 	var check = args.check
 	/*Begin Theme Specific Editible Code*/
 		if(returnVal === true){
-			object_toggle34G.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_34genabled.jpg');
+			$object_toggle34G.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_34genabled.jpg');
 		}else{
-			object_toggle34G.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_34g.jpg');	
+			$object_toggle34G.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_34g.jpg');	
 		}
 	/*End Theme Specific Editible Code*/
 }
@@ -104,7 +104,7 @@ function launchappsCallback(args){
 	// 		on desired users wants) to the function that changes the UI.
 	//		This was done to simply the code, not a neccessary thing.
 		// @ object_datawifiSignal 
-	object_datawifiSignal = $('#data_wifiSignal')
+	$object_datawifiSignal = $('#data_wifiSignal')
 function wifisignalCallback(args){
 	var returnVal = args.returnVal
 	/*Begin Theme Specific Editible Code*/
@@ -130,12 +130,14 @@ function wifisignalCallback(args){
 		} else if (returnVal > -57.25 && returnVal <= -55) { wifiChange(95);
 		} else if (returnVal > -55) { wifiChange(100);
 		}
+	
+		function wifiChange(percentage){
+			$object_datawifiSignal.text('Wifi Signal:  '+percentage+'%');	
+		}
 	/*End Theme Specific Editible Code*/
 }
 
-function wifiChange(percentage){
-	object_datawifiSignal.text('Wifi Signal:  '+percentage+'%');	
-}
+
 
 
 
@@ -151,7 +153,7 @@ function wifiChange(percentage){
 	//	This function is called directly from within the Cordova API Java Plugin.
 	//		DO NOT CHANGE THE FUNCTION CALL BACK NAMESPACE!
 		// @ object_datawifiSignal 
-	object_datacellsignal = $('#data_cellSignal')
+	$object_datacellsignal = $('#data_cellSignal')
 function cellsignalCallback(strengthDbm){
 	/*Begin Theme Specific Editible Code*/
 		if (strengthDbm <= -97.75) { cellsignalChange(0); 
@@ -167,7 +169,7 @@ function cellsignalCallback(strengthDbm){
 		} else if (strengthDbm > -77.5 && strengthDbm <= -75.25) { cellsignalChange(100);
 		}
 		function cellsignalChange(percentage){
-			object_datacellsignal.text('Cell Signal:  '+percentage+'%');		
+			$object_datacellsignal.text('Cell Signal:  '+percentage+'%');		
 		}
 	/*End Theme Specific Editible Code*/
 }
@@ -178,17 +180,17 @@ function cellsignalCallback(strengthDbm){
 	// @ check - returns the boolean true/false if the function is just being used to check information.
 	// @ returnVal - returns boolean true/false depending on if the data connection is on or off.
 		// @ object_toggleWifi 
-	object_toggleWifi = $('#toggle_Wifi')
+	$object_toggleWifi = $('#toggle_Wifi')
 function togglewifiCallback(args){
 	var check = args.check
 	var returnVal = args.returnVal
 	/*Begin Theme Specific Editible Code*/
 		if(returnVal === true){
-			object_toggleWifi.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_wifienabled.jpg');
+			$object_toggleWifi.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_wifienabled.jpg');
 			setTimeout(function(){toggleData({check:"true"});}, 10000);
 		}else{
-			object_toggleWifi.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_wifi.jpg');
-			object_datawifiSignal.text('Wifi Signal:  Disabled');	
+			$object_toggleWifi.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_wifi.jpg');
+			$object_datawifiSignal.text('Wifi Signal:  Disabled');	
 			setTimeout(function(){toggleData({check:"true"});}, 10000);
 		}
 	/*End Theme Specific Editible Code*/
@@ -201,18 +203,18 @@ function togglewifiCallback(args){
 	// @ type - returns the type of value checked (will be 'sms' or 'calls')
 	// @ returnVal - returns an integer or OK.
 		// @ object_valuemissedCalls 
-	object_valuemissedCalls = $('#value_missedCalls')
-	object_valueunreadSMS = $('#value_unreadSMS')
+	$object_valuemissedCalls = $('#value_missedCalls')
+	$object_valueunreadSMS = $('#value_unreadSMS')
 function missedcommunicationsCallback(args){
 		var type = args.type;
 		var returnVal = args.returnVal
 	/*Begin Theme Specific Editible Code*/
 		if(type == "calls"){
-			object_valuemissedCalls.text("Missed Calls: " + returnVal);	
+			$object_valuemissedCalls.text("Missed Calls: " + returnVal);	
 		}
 		
 		if(type == "sms"){
-			object_valueunreadSMS.text("Unread SMS: " + returnVal);	
+			$object_valueunreadSMS.text("Unread SMS: " + returnVal);	
 		}
 	/*End Theme Specific Editible Code*/
 }
@@ -222,7 +224,7 @@ function missedcommunicationsCallback(args){
 	// @ type - returns the type of value checked (will be 'sms' or 'calls')
 	// @ returnVal - returns an integer or OK.
 		// @ object_toggleWifi 
-	object_btnautoBrightness = $('#btn_autoBrightness')
+	$object_btnautoBrightness = $('#btn_autoBrightness')
 function screenbrightnessCallback(args){
 	var value = args.value;
 	var check = args.check;
@@ -231,11 +233,11 @@ function screenbrightnessCallback(args){
 	var returnVar = args.returnVar;	
 	
 	if(mode == "auto" && returnVar == 1 || check == "mode" && returnVar == 1){
-		object_btnautoBrightness.text("Auto Brightness On");	
+		$object_btnautoBrightness.text("Auto Brightness On");	
 	}
 	
 	if(mode == "auto" && returnVar == 0 || check == "mode" && returnVar == 0){
-		object_btnautoBrightness.text("Auto Brightness Off");	
+		$object_btnautoBrightness.text("Auto Brightness Off");	
 	}
 	
 	if(value > 0){
@@ -247,21 +249,21 @@ function screenbrightnessCallback(args){
 
 //Air Plane Mode Toggle
 		// @ object_toggleWifi 
-	object_toggleairplaneMode = $('#toggle_airplaneMode')
+	$object_toggleairplaneMode = $('#toggle_airplaneMode')
 function toggleairplaneCallback(args){
 	var returnVal = args.returnVal //Returns boolean - true/false
 	/*Begin Theme Specific Editible Code*/
 		if(returnVal === true){
-			object_datawifiSignal.text('Wifi Signal: Disabled');	
-			object_toggle34G = $('#toggle_34G').attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_34g.jpg');
-			object_toggleWifi.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_wifi.jpg');
-			object_toggleairplaneMode.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_airplanemodeenabled.jpg');
+			$object_datawifiSignal.text('Wifi Signal: Disabled');	
+			$object_toggle34G = $('#toggle_34G').attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_34g.jpg');
+			$object_toggleWifi.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_wifi.jpg');
+			$object_toggleairplaneMode.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_airplanemodeenabled.jpg');
 		}
 		
 		if(returnVal === false){
-			object_datawifiSignal.text('Wifi Signal: Checking');	
-			object_datacellsignal.text('Cell Signal: Checking');		
-			object_toggleairplaneMode.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_airplanemode.jpg');
+			$object_datawifiSignal.text('Wifi Signal: Checking');	
+			$object_datacellsignal.text('Cell Signal: Checking');		
+			$object_toggleairplaneMode.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_airplanemode.jpg');
 			setTimeout(function(){toggleWifi({check:"true"});toggleData({check:"true"});}, 3000);
 		}
 	/*End Theme Specific Editible Code*/
@@ -334,6 +336,12 @@ function generateApplist(regen){
 			}else{
 				
 				$('.appPanel').load('file:///mnt/sdcard/DOMLauncher/testing/appPanel.html');
+				setTimeout(function(){
+					
+					$('*[appLaunch], *[settings]').on('click', function() {
+						launchApps(this);
+					});
+				}, 1000);
 			}
 		} 
 		//File doesn't exist.		
@@ -341,6 +349,9 @@ function generateApplist(regen){
 			console.log("file does not exist"); 
 			//Refreshes the Icon Cache and Regenerates the CSS File.
 			refreshIcons();
+			$('*[appLaunch], *[settings]').off('click', function() {
+				launchApps(this);
+			});
 			//This is the App List Cordova Plugin.  'refreshIcons:' must be either true/false.
 			//True ONLY refreshes the Icon Cache.  Nothing more.
 			//Generally false is the only value needed since refreshIcons(); exists for easier use.
@@ -362,7 +373,7 @@ function applistCallback(appList){
 						// @ appName - Application Name ('DOMLauncher')
 						// @ appLaunch - Package class name ('com.awaa.domlauncher')
 						// @ appActivity - Acivity Intent ('.DialtactsContactsEntryActivity')
-						pixelBlock = $('<div class="pixelBlock">');
+						$pixelBlock = $('<div class="pixelBlock">');
 					$.each(appListArray, function(e) {
 						var appName = this.name
 						var appLaunch = this.package
@@ -371,13 +382,13 @@ function applistCallback(appList){
 						
 						//Since we have some packages without intents (and these apps need the activity to launch, we listen and segment)
 						if(this.package === "com.android.settings"){
-							$(pixelBlock).append('<div class="app" appLaunch="com.android.settings" appActivity=".Settings" appName="'+appName+'"><span>'+appName+'</span></div>');
-							$(pixelBlock).append('<div class="app"  appName="doml_Settings"><span>DOMLauncher Settings</span></div>');
-							$(pixelBlock).append('<a href="tel:" class="app dialer" appName="default_Dialer"><span>Dialer</span></a>');
+							$pixelBlock.append('<div class="app" appLaunch="com.android.settings" appActivity=".Settings" appName="'+appName+'"><span>'+appName+'</span></div>');
+							$pixelBlock.append('<div class="app"  appName="doml_Settings"><span>DOMLauncher Settings</span></div>');
+							$pixelBlock.append('<a href="tel:" class="app dialer" appName="default_Dialer"><span>Dialer</span></a>');
 						}else if(this.package === "com.android.contacts"){
-							$(pixelBlock).append('<div class="app" appLaunch="com.android.contacts" appActivity=".DialtactsContactsEntryActivity" appName="'+appName+'"><span>'+appName+'</span></div>');
+							$pixelBlock.append('<div class="app" appLaunch="com.android.contacts" appActivity=".DialtactsContactsEntryActivity" appName="'+appName+'"><span>'+appName+'</span></div>');
 						}else{
-							$(pixelBlock).append('<div class="app" appLaunch="'+appLaunch+'" appActivity="'+appActivity+'" appName="'+appName+'"><span>'+appName+'</span></div>');
+							$pixelBlock.append('<div class="app" appLaunch="'+appLaunch+'" appActivity="'+appActivity+'" appName="'+appName+'"><span>'+appName+'</span></div>');
 						}
 						 appName = null
 						 appLaunch = null
@@ -385,24 +396,25 @@ function applistCallback(appList){
 					});
 				//I use a plugin called tSort to sort the DOM Elements generated.	
 				//$('.pixelBlock> *').tsort({attr:'appName'});
-				//Collect the stored DOM Elements
-				var appElements = $(pixelBlock).html();
+
 				//Custom Plugin to save basic non-formatted text files to the system.
 				//Saves the DOM Objects generated onto the system.
-				window.plugins.simplesave.show({fileObject:appElements, filePlace:"mnt/sdcard/DOMLauncher/testing/appPanel.html"}, 
+				window.plugins.simplesave.show({fileObject:$pixelBlock.html(), filePlace:"/mnt/sdcard/DOMLauncher/testing/appPanel.html"}, 
 					
 					function() { //Success Function
 						//Clears the current App Panel
 						$('.appPanel').empty();
-						//Removes the pixel block
-						//$('.pixelBlock').remove();
-						
 						//Loads the newly created file of DOM Objects into the App Panel
 						$('.appPanel').load('file:///mnt/sdcard/DOMLauncher/testing/appPanel.html');
-						
+							setTimeout(function(){
+								$('*[appLaunch], *[settings]').on('click', function() {
+									launchApps(this);
+								});
+							}, 1000);
 						},
 					function() {alert('App Panel did not save');});// Failure function 		
+				
 					appListArray = null;
-					appElements = null;
-					pixelBlock = null
+					$pixelBlock = null
+					
 }

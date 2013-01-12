@@ -57,7 +57,7 @@ function toggleStatusbar(){
 	function onRequestFileSystemSuccess(fileSystem) { 
 		var findDirectory=fileSystem.root; 
 		//Checks if isFullscreen.txt file exists within the app Data Folder Loaded Theme Folder but does not create it.
-		findDirectory.getFile("/data/data/com.awaa.domlauncher/theme/isFullscreen.txt", {create:false, exclusive: false}, onGetDirectorySuccess, onGetDirectoryFail); 
+		findDirectory.getFile("/mnt/sdcard/DOMLauncher/settings/isFullscreen.txt", {create:false, exclusive: false}, onGetDirectorySuccess, onGetDirectoryFail); 
 	} 
 
 	//File Exists
@@ -85,7 +85,7 @@ function toggleStatusbar(){
 		console.log("ISFS does not exist.  Will now create."); 
 		
 		//Trigger Simple Save Cordova Cordova Plugin.  Save blank file named isFullscreen.txt
-		window.plugins.simplesave.show({fileObject:"", filePlace:"/data/data/com.awaa.domlauncher/theme/isFullscreen.txt"}, 
+		window.plugins.simplesave.show({fileObject:"", filePlace:"/mnt/sdcard/DOMLauncher/settings/isFullscreen.txt"}, 
 			function() { //Success Function
 				window.plugins.fullscreentoggle.show({}, 
 				function() {}, // Success function
@@ -113,7 +113,7 @@ function toggleWifi(args){
 			if(returnVal === true){
 				wifiSignaltimer = setInterval(wifiSignal, 1000);
 			}else{
-				clearTimeout(wifiSignaltimer);	
+				clearTimeout(wifiSignaltimer);	 
 			}
 		},// Cordova Plugin Success Function. Returns the passed variables and the return information. 
 		function() {alert('Wifi Toggle Error');}); // Cordova Plugin Failure function.
@@ -145,12 +145,13 @@ function toggleData(args){
 
 
 //Celluar Signal Plugin
-function cellSiganl(){
+function cellSiganl(args){
+	var action = args.action
 	//Triggers the Broadcast Receiving Cell Signal Cordova Plugin.
 	//Accepts more than 'start', have to add the other options.
 	//This plugins 'callback' is a specific function found in callback.js
 	//	that is called from the native Java.  Not as a part of the code below.
-	window.plugins.cellularsignalgetter.show({action:"start"}, 
+	window.plugins.cellularsignalgetter.show({action:action}, 
 		function() {console.log("Cell Signal Works"); },//Cordova Plugin Success Function
 		function() {alert('Cellular Signal Error');	}); // Failure function
 }
@@ -207,7 +208,7 @@ function optionsMode(){
 	function onRequestFileSystemSuccess(fileSystem) { 
 		var findDirectory=fileSystem.root; 
 		//Checks if triggersettings.txt file exists within the app Data Folder Loaded Theme Folder but does not create it.
-		findDirectory.getFile("/data/data/com.awaa.domlauncher/triggersettings.txt", {create:true, exclusive: false}, onGetDirectorySuccess, onGetDirectoryFail); 
+		findDirectory.getFile("/mnt/sdcard/DOMLauncher/settings/triggersettings.txt", {create:true, exclusive: false}, onGetDirectorySuccess, onGetDirectoryFail); 
 	} 
 	function onGetDirectorySuccess(file) { 
 		window.plugins.fullscreentoggle.show({}, 
@@ -268,18 +269,18 @@ function refreshIcons(){
 				var appActivity = this.intent
 				
 					if(this.package === "com.android.settings"){
-						$(styleVar).append('*[appLaunch="com.android.settings"]{background-image:url(file:///data/data/com.awaa.domlauncher/icons/com.android.settings.png);}');
-						$(styleVar).append('*[appName="doml_Settings"]{background-image:url(file:///data/data/com.awaa.domlauncher/icons/com.android.settings.png);}');
+						$(styleVar).append('*[appLaunch="com.android.settings"]{background-image:url(file:///mnt/sdcard/DOMLauncher/icons/com.android.settings.png);}');
+						$(styleVar).append('*[appName="doml_Settings"]{background-image:url(file:///mnt/sdcard/DOMLauncher/icons/com.android.settings.png);}');
 					}else if(this.package === "com.android.contacts"){
-						$(styleVar).append('*[appLaunch="com.android.contacts"]{background-image:url(file:///data/data/com.awaa.domlauncher/icons/com.android.contacts.png);}');
+						$(styleVar).append('*[appLaunch="com.android.contacts"]{background-image:url(file:///mnt/sdcard/DOMLauncher/icons/com.android.contacts.png);}');
 					}else{
-						$(styleVar).append('*[appLaunch="'+appLaunch+'"]{background-image:url(file:///data/data/com.awaa.domlauncher/icons/'+appLaunch+'.png);}');
+						$(styleVar).append('*[appLaunch="'+appLaunch+'"]{background-image:url(file:///mnt/sdcard/DOMLauncher/icons/'+appLaunch+'.png);}');
 					}
 			});
 				$('#iconsCss').remove();
 				$('head').append(styleVar);
 				
-				window.plugins.simplesave.show({fileObject:styleVar.text(), filePlace:"data/data/com.awaa.domlauncher/icons/icons.css"}, 
+				window.plugins.simplesave.show({fileObject:styleVar.text(), filePlace:"/mnt/sdcard/DOMLauncher/icons/icons.css"}, 
 				
 				function() { //Success Function
 					

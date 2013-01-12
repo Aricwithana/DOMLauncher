@@ -19,15 +19,15 @@ public class DOMLauncher extends DroidGap {
         super.clearCache();      
        
         
-      File dataFolder = Environment.getDataDirectory();
+     
       File sdcard = Environment.getExternalStorageDirectory();
       //Get the text file
  
-      File fstxtfile = new File(dataFolder,"/data/com.awaa.domlauncher/theme/isFullscreen.txt");
-      File optionsScreen = new File(sdcard,"/DOMLauncher/yesOptionscreen.txt");
-      File settingsFile = new File(dataFolder,"/data/com.awaa.domlauncher/settings.xml"); 
-      File themeFile = new File(dataFolder,"/data/com.awaa.domlauncher/theme/index.html");   
-      File settingsMode = new File(dataFolder,"/data/com.awaa.domlauncher/triggersettings.txt");   	
+      File fstxtfile = new File(sdcard,"/DOMLauncher/settings/isFullscreen.txt");
+      File optionsScreen = new File(sdcard,"/DOMLauncher/settings/yesOptionscreen.txt");
+      File settingsFile = new File(sdcard,"/DOMLauncher/settings/settings.xml"); 
+      File themeFile = new File(sdcard,"/DOMLauncher/currentTheme/index.html");   
+      File settingsMode = new File(sdcard,"/DOMLauncher/settings/triggersettings.txt");   	
       File testingMode =  new File(sdcard,"/DOMLauncher/testing/testing.txt");   
       
       if(settingsMode.exists()){
@@ -37,7 +37,7 @@ public class DOMLauncher extends DroidGap {
          if(settingsFile.exists()){ 			
   			if(themeFile.exists()){
   				if(optionsScreen.exists()){
-  					super.loadUrl("file:///android_asset/www/options.html");
+  					super.loadUrl("file:///mnt/sdcard/DOMLauncher/options.html");
   				}else{
   					
   					if(testingMode.exists()){

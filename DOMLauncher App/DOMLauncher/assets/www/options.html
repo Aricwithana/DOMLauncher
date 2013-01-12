@@ -34,13 +34,15 @@
 				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onRequestFileSystemSuccess, null);
 				function onRequestFileSystemSuccess(fileSystem) { 
 					var findDirectory=fileSystem.root; 
-					findDirectory.getFile("/data/data/com.awaa.domlauncher/settings.xml", {create:true, exclusive: true}, onGetDirectorySuccess, onGetDirectoryFail); 
-					findDirectory.getFile("/data/data/com.awaa.domlauncher/quickcontacts.xml", {create:true, exclusive: true}, onGetDirectorySuccess, onGetDirectoryFail); 
-					findDirectory.getFile("/data/data/com.awaa.domlauncher/quickapps.xml", {create:true, exclusive: true}, onGetDirectorySuccess, onGetDirectoryFail); 
-					findDirectory.getFile("/data/data/com.awaa.domlauncher/quickweb.xml", {create:true, exclusive: true}, onGetDirectorySuccess, onGetDirectoryFail);  
-					findDirectory.getDirectory("/data/data/com.awaa.domlauncher/icons", {create: true, exclusive:true}, onGetIconDirectorySuccess, onGetDirectoryFail);
-					findDirectory.getDirectory("/data/data/com.awaa.domlauncher/theme", {create: true, exclusive:true}, onGetDirectorySuccess, onGetDirectoryFail);						
-					findDirectory.getFile("/data/data/com.awaa.domlauncher/triggersettings.txt", {create: true}, onGetSettingsDirectorySuccess, onGetSettingsDirectoryFail);	
+					findDirectory.getDirectory("/mnt/sdcard/DOMLauncher/icons", {create: true, exclusive:true}, onGetIconDirectorySuccess, onGetDirectoryFail);
+					findDirectory.getDirectory("/mnt/sdcard/DOMLauncher/theme", {create: true, exclusive:true}, onGetDirectorySuccess, onGetDirectoryFail);	
+					findDirectory.getDirectory("/mnt/sdcard/DOMLauncher/settings", {create: true, exclusive:true}, onGetDirectorySuccess, onGetDirectoryFail);	
+					findDirectory.getFile("/mnt/sdcard/DOMLauncher/settings/settings.xml", {create:true, exclusive: true}, onGetDirectorySuccess, onGetDirectoryFail); 
+					findDirectory.getFile("/mnt/sdcard/DOMLauncher/settings/quickcontacts.xml", {create:true, exclusive: true}, onGetDirectorySuccess, onGetDirectoryFail); 
+					findDirectory.getFile("/mnt/sdcard/DOMLauncher/settings/quickapps.xml", {create:true, exclusive: true}, onGetDirectorySuccess, onGetDirectoryFail); 
+					findDirectory.getFile("/mnt/sdcard/DOMLauncher/settings/quickweb.xml", {create:true, exclusive: true}, onGetDirectorySuccess, onGetDirectoryFail);  
+										
+					findDirectory.getFile("/mnt/sdcard/DOMLauncher/settings/triggersettings.txt", {create: true}, onGetSettingsDirectorySuccess, onGetSettingsDirectoryFail);	
 					} 
 			
 				function onGetDirectorySuccess(file) { //Folder Exists. Call cdirInternal to check internal folder structure.
@@ -110,7 +112,7 @@
 				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, folderCopy, null); 
 			//alert(path);
 				function folderCopy(fileSystem) { 
-					fileSystem.root.getDirectory("/data/data/com.awaa.domlauncher/theme", {create: true, exclusive:false}, dirDel, null);
+					fileSystem.root.getDirectory("file:///mnt/sdcard/DOMLauncher/Currenttheme", {create: true, exclusive:false}, dirDel, null);
 					fileSystem.root.getDirectory(path, {create: false, exclusive:false}, dirSuc, dirFail);
 				
 				} 

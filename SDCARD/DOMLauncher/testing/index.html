@@ -88,10 +88,37 @@ $(document).ready(function(){
 
 
 function themeLoaded(){
+	missedcallsTimer = null;
+	missedsmsTimer = null;
+	clockTimer = null;
+	
 	$('body').css('background-image', 'url(file:///mnt/sdcard/DOMLauncher/testing/bodyBackground.png)').addClass('xhdpi');
 		
 	//Loads up the App Panel.
 	generateApplist();
+	
+	//Pause Event
+    document.addEventListener("pause", onPause, false);
+
+    // Handle the pause event
+    function onPause() {
+		clearInterval(clockTimer);
+		cellSiganl({action:"stop"});
+		clearInterval(wifiSignaltimer);
+		clearInterval(missedcallsTimer);
+		clearInterval(missedsmsTimer);
+		
+	}
+
+	document.addEventListener("resume", onResume, false);
+	// Handle the resume event
+	function onResume() {
+		toggleWifi({check:"true"});
+		clockTimer = setInterval(clock, 1000 );
+		missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
+		missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
+		cellSiganl({action:"start"});
+	}
 
 	//Overrides the 'Menu Button'
 	document.addEventListener("menubutton", onmenubuttonDown, false); //Hardware backbutton event listener to override default functionality.
@@ -119,7 +146,7 @@ function themeLoaded(){
 	volumeControls({check:"true", type:"ringer"})
 	volumeControls({check:"true", type:"media"})
 	//Starts the Cell Signal Plugin
-	cellSiganl();
+	cellSiganl({action:"start"});
 	//Starts the Battery Level Plugin
 	batteryLevel();
 	//Checks to see if Wifi is turned on or off..
@@ -135,7 +162,9 @@ function themeLoaded(){
 	clockHour = $("#hour")
 	clockMin = $("#min")
 	
-	setInterval( function() {
+	clockTimer = setInterval(clock, 1000 );
+	
+ function clock() {
 	var seconds = new Date().getSeconds();
 	var hours = new Date().getHours();
 	var mins = new Date().getMinutes();
@@ -149,9 +178,7 @@ function themeLoaded(){
 	clockSec.css({"-webkit-transform" : srotate});
 	clockHour.css({"-webkit-transform" : hrotate});
 	clockMin.css({"-webkit-transform" : mrotate});
-	}, 1000 );
-	
-
+	}
 
 	$( "#slider_Brightness").slider({
 		max:255, min:1,
@@ -159,8 +186,8 @@ function themeLoaded(){
 		start: function( event, ui ) {
 			swiper.destroy()}, 
 		stop: function( event, ui ) {swiper = new Swiper('.swiper', {createPagination : false});}, 
-		change: function( event, ui ) {screenBrightness({value:''+ui.value+''});}//,
-		//slide: function( event, ui ) {$('#value_Brightness').text("Brightness Value: " + ui.value);$('.ui-slider-handle>div').css('left', '-'+((ui.value/255)*100)+'px');}
+		change: function( event, ui ) {screenBrightness({value:''+ui.value+''});},
+		slide: function( event, ui ) {$('#value_Brightness').text("Brightness Value: " + ui.value);$('.ui-slider-handle>div').css('left', '-'+((ui.value/255)*100)+'px');}
 		});
 	//Timeout, calls the Slider jQuery Plugin for a sliding desktop.
 	setTimeout(function(){

@@ -104,52 +104,51 @@ private String generateList() {
 
 private void generateIcons() {	
 
-	final PackageManager pm = this.cordova.getActivity().getPackageManager();
-		
-		//Create new JSON Array.
-	
-		
+		PackageManager pm = this.cordova.getActivity().getPackageManager();
+
 		List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 		
-		for (ApplicationInfo packageInfo : packages) {Log.d(id, "Icon Gen");
+		for (ApplicationInfo packageInfo : packages) {
+			Log.d(id, "Icon Gen");
+				
+			Intent appActivity = pm.getLaunchIntentForPackage(packageInfo.packageName);
 			
-		Intent appActivity = pm.getLaunchIntentForPackage(packageInfo.packageName);
-		
-		if(appActivity != null){
-			Log.d(id, "Package:" + appActivity);
-			String pkgName = packageInfo.packageName;		
-			Drawable appIcon = packageInfo.loadIcon(this.cordova.getActivity().getPackageManager());
-						
-			File file = new File("/data/data/com.awaa.domlauncher/icons/"+pkgName+".png");
-	        FileOutputStream foStream = null;
-			
-			Bitmap bitmap = ((BitmapDrawable)appIcon).getBitmap();
-			
-			ByteArrayOutputStream oStream = new ByteArrayOutputStream();  
-			bitmap.compress(Bitmap.CompressFormat.PNG, 100, oStream); //bm is the bitmap object   
-		
-			 byte[]	b = oStream.toByteArray();
-	
-				try {
-					foStream = new FileOutputStream(file);
-					oStream.write(b);
-					oStream.writeTo(foStream);
-					oStream.close();
-					foStream.close();					
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			pkgName = null;	
-			appIcon = null;
-			file = null;
-			b = null;
-			foStream = null;
-			oStream = null;
-			bitmap = null;
-			System.gc();
+			if(appActivity != null){
+				Log.d(id, "Package:" + appActivity);
+				String pkgName = packageInfo.packageName;		
+				Drawable appIcon = packageInfo.loadIcon(this.cordova.getActivity().getPackageManager());
+							
+				File file = new File("/mnt/sdcard/DOMLauncher/icons/"+pkgName+".png");
+				FileOutputStream foStream = null;
+				
+				Bitmap bitmap = ((BitmapDrawable)appIcon).getBitmap();
+				
+				ByteArrayOutputStream oStream = new ByteArrayOutputStream();  
+				bitmap.compress(Bitmap.CompressFormat.PNG, 100, oStream); //bm is the bitmap object   
+				
+				 byte[]	b = oStream.toByteArray();				
+					try {
+						foStream = new FileOutputStream(file);
+						oStream.write(b);
+						oStream.writeTo(foStream);
+						oStream.close();
+						foStream.close();					
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				pkgName = null;	
+				appIcon = null;
+				file = null;
+				b = null;
+				foStream = null;
+				oStream = null;
+				bitmap = null;
+				System.gc();
 			}				
 		}// Turns the JSON array into a string and returns the value. 
-	
+		packages = null;
+		pm = null;
+		System.gc();
 	}
 }
