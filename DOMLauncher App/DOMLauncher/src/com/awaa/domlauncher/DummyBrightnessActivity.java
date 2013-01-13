@@ -17,21 +17,30 @@ import org.apache.cordova.*;
 public class DummyBrightnessActivity extends DroidGap{
 
     private static final int DELAYED_MESSAGE = 1;
+    //static class MyHandler extends Handler { private DummuBrightnessActivity activity = null; MyHandler(DummBrightnessActivity activity) { this.activity = activity; } 
+    static class MyHandler extends Handler { 
+    	private DummyBrightnessActivity activity = null; 
+    	MyHandler(DummyBrightnessActivity activity) { 
+    		
+    		this.activity = activity; 
+    		
+    		  
+               
+    		}
 
+    	public void handleMessage(Message msg) {
+            if(msg.what == DELAYED_MESSAGE) {
+                activity.finish();
+            }
+            super.handleMessage(msg);
+        }
+    }
     private Handler handler;
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);            
-      handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                if(msg.what == DELAYED_MESSAGE) {
-                    DummyBrightnessActivity.this.finish();
-                }
-                super.handleMessage(msg);
-            }
-        };
+        handler = new MyHandler(this);
         
         File sdcard = Environment.getExternalStorageDirectory();
    
@@ -62,7 +71,7 @@ public class DummyBrightnessActivity extends DroidGap{
 
             Message message = handler.obtainMessage(DELAYED_MESSAGE);
             //this next line is very important, you need to finish your activity with slight delay
-            handler.sendMessageDelayed(message,10);         	
+            handler.sendMessageDelayed(message,500);         	
         }
         
         
@@ -73,7 +82,7 @@ public class DummyBrightnessActivity extends DroidGap{
 	
 	        Message message = handler.obtainMessage(DELAYED_MESSAGE);
 	        //this next line is very important, you need to finish your activity with slight delay
-	        handler.sendMessageDelayed(message,10); 
+	        handler.sendMessageDelayed(message,500); 
         }
     }
 
