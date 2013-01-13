@@ -1,7 +1,7 @@
 DOMLauncher
 ===========
 
-Cordova Powered Android App Launcher Replacement
+Cordova Powered Android App Launcher Replacement. 
 
 This is a Beta.  
 
@@ -28,7 +28,29 @@ Compile with Eclipse and intall on the device.
 
 Folder within the SD CARD folder, just copy stuff to your sdcard AFTER you launch the app the first time. 
 
-HELP WANTED:
-Since my background is not in Java, I am looking for people that would like to optimize and tweak the Cordova Plugins.
+
+
+DEVELOPERS:
+
+The app itself is not extensive.  I have written a collection of additional Cordova API Plugins to make this app function, the rest is just HTML/CSS/JS.
+
+These additional plugins include:
+
+Toggle Wifi
+Toggle Data
+Screen Brightness Controls
+Media/Ringer Volumn Controls
+Wifi Signal
+Cellular Signal
+Unread SMS
+Missed CallS
+Launch Apps/Intents/Activities
+Fullscreen Toggle
+Simple Save -Saving simple string/text based objects to text (html,txt,css,etc) file.
+Get Applications - Gets installed application information and returns as a list to parse.  Also generates out installed app icons to a folder.
+
+Many of these plugins are commonly asked for things for the Cordova Library or use in a native application.  Since my background is not in Java, I am looking for people that would like to optimize and tweak the Cordova Plugins since they are not perfect and fully useable outside DOMLauncher!
+
+Each comes with a nice javascript wrapper for easy use!
 
 -Aricwithana
