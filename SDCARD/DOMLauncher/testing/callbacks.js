@@ -241,7 +241,7 @@ function screenbrightnessCallback(args){
 	}
 	
 	if(value > 0){
-		object_btnautoBrightness.text("Auto Brightness On");
+		$object_btnautoBrightness.text("Auto Brightness On");
 	}
 
 }

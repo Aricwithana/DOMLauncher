@@ -57,7 +57,7 @@
     </center>
 </div>
 <div class="appPanel" id="appPanel"></div>
-<div class="apppanelControls" style=""><span>Refresh List</span><span>Close</span></div>
+<div class="apppanelControls"><span>Refresh List</span><span>Close</span></div>
 
 
 
@@ -102,6 +102,7 @@ function themeLoaded(){
 
     // Handle the pause event
     function onPause() {
+		window.removeEventListener("batterystatus", batterylevelCallback, false);
 		clearInterval(clockTimer);
 		cellSiganl({action:"stop"});
 		clearInterval(wifiSignaltimer);
@@ -113,6 +114,7 @@ function themeLoaded(){
 	document.addEventListener("resume", onResume, false);
 	// Handle the resume event
 	function onResume() {
+		window.addEventListener("batterystatus", batterylevelCallback, false);
 		toggleWifi({check:"true"});
 		clockTimer = setInterval(clock, 1000 );
 		missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
@@ -158,9 +160,9 @@ function themeLoaded(){
 	missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
 
 	//Clock Timer 
-	clockSec = $("#sec")
-	clockHour = $("#hour")
-	clockMin = $("#min")
+	$clockSec = $("#sec")
+	$clockHour = $("#hour")
+	$clockMin = $("#min")
 	
 	clockTimer = setInterval(clock, 1000 );
 	
@@ -175,9 +177,9 @@ function themeLoaded(){
 	var hdegree = hours * 30 + (mins / 2);
 	var hrotate = "rotate(" + hdegree + "deg)";
 	
-	clockSec.css({"-webkit-transform" : srotate});
-	clockHour.css({"-webkit-transform" : hrotate});
-	clockMin.css({"-webkit-transform" : mrotate});
+	$clockSec.css({"-webkit-transform" : srotate});
+	$clockHour.css({"-webkit-transform" : hrotate});
+	$clockMin.css({"-webkit-transform" : mrotate});
 	}
 
 	$( "#slider_Brightness").slider({
