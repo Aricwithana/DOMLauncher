@@ -28,5 +28,7 @@ Compile with Eclipse and intall on the device.
 
 Folder within the SD CARD folder, just copy stuff to your sdcard AFTER you launch the app the first time. 
 
+HELP WANTED:
+Since my background is not in Java, I am looking for people that would like to optimize and tweak the Cordova Plugins.
 
 -Aricwithana
