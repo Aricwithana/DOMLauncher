@@ -33,9 +33,9 @@ public class DummyBrightnessActivity extends DroidGap{
             }
         };
         
-        File dataFolder = Environment.getDataDirectory();
+        File sdcard = Environment.getExternalStorageDirectory();
    
-        File fstxtfile = new File(dataFolder,"/data/com.awaa.domlauncher/theme/isFullscreen.txt");
+        File fstxtfile = new File(sdcard,"/DOMLauncher/settings/isFullscreen.txt");
      
   		if(fstxtfile.exists()){ 
   			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
