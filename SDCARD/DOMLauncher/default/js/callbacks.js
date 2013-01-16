@@ -32,9 +32,6 @@ function applistCallback(appList){
 
 	//Clock Timer 
 	clockTimer = null;
-	$clockSec = $("#sec");
-	$clockHour = $("#hour");
-	$clockMin = $("#min");
  function clock() {
 	var seconds = new Date().getSeconds();
 	var hours = new Date().getHours();
@@ -46,9 +43,9 @@ function applistCallback(appList){
 	var hdegree = hours * 30 + (mins / 2);
 	var hrotate = "rotate(" + hdegree + "deg)";
 	
-	$clockSec.css({"-webkit-transform" : srotate});
-	$clockHour.css({"-webkit-transform" : hrotate});
-	$clockMin.css({"-webkit-transform" : mrotate});
+	$("#sec").css({"-webkit-transform" : srotate});
+	$("#hour").css({"-webkit-transform" : hrotate});
+	$("#min").css({"-webkit-transform" : mrotate});
 }
 
 
@@ -74,5 +71,5 @@ function applistCallback(appList){
 	
 	// Handle the resume event
 	function onResume() {
-		clockTimer = setInterval(clock, 1000 );
+		clockTimer = setInterval(clock, 1000);
 	}
