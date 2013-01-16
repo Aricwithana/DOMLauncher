@@ -28,3 +28,51 @@ function applistCallback(appList){
 		appListArray = null;
 		$appPanel = null
 }
+
+
+	//Clock Timer 
+	clockTimer = null;
+	$clockSec = $("#sec");
+	$clockHour = $("#hour");
+	$clockMin = $("#min");
+ function clock() {
+	var seconds = new Date().getSeconds();
+	var hours = new Date().getHours();
+	var mins = new Date().getMinutes();
+	var sdegree = seconds * 6;
+	var srotate = "rotate(" + sdegree + "deg)";
+	var mdegree = mins * 6;
+	var mrotate = "rotate(" + mdegree + "deg)";
+	var hdegree = hours * 30 + (mins / 2);
+	var hrotate = "rotate(" + hdegree + "deg)";
+	
+	$clockSec.css({"-webkit-transform" : srotate});
+	$clockHour.css({"-webkit-transform" : hrotate});
+	$clockMin.css({"-webkit-transform" : mrotate});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Handle the pause event
+    function onPause() {
+		clearInterval(clockTimer);
+	}
+
+	
+	// Handle the resume event
+	function onResume() {
+		clockTimer = setInterval(clock, 1000 );
+	}

@@ -1,5 +1,61 @@
 @charset "utf-8";
 /* CSS Document */
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+body
+{
+	overflow:hidden;
+	background-image:url(file:///mnt/sdcard/DOMLauncher/default/images/xhdpiBG.png);	
+}
 
 .app
 {
@@ -28,6 +84,38 @@
 	right:0px;
 }
 
+
+
+
+
+
+
+
+
+.quickBar
+{
+	text-align:center;
+	bottom:0px;
+	height:120px;
+	vertical-align:center;
+	position:absolute;
+	left:0px;
+	right:0px;
+	background-color:rgba(204,204,204,.5);
+	-webkit-box-shadow: rgba(0, 0, 0, .5) 0px -1px 30px 5px;
+	overflow:hidden;
+	z-index:1;	
+
+}
+
+.quickBar .app
+{
+	margin:0px;
+	margin:10px;
+}
+
+
+
 .appPanel
 {
 	position:absolute;
@@ -39,6 +127,7 @@
 	z-index:99;	
 	color:#ffffff;
 	text-align:center;
+	display:none;
 }
 
 .appPanel_Content
@@ -74,4 +163,78 @@
 	border-top:2px solid #cccccc;
 	line-height:125px;
 	font-size:24px;
+}
+
+
+
+.swiper {
+	
+  position:absolute;
+  top:0px;
+  bottom:120px;
+  right:0px;
+  left:0px;
+  z-index:1;
+  overflow:hidden;
+}
+
+
+.innerWrapper
+{
+	position:absolute; 
+	left:0px; 
+	top:0px; 
+	bottom:0px; 
+	right:0px;
+	padding:25px;
+}
+
+
+
+/*Clock CSS
+	http://css-tricks.com/css3-clock/
+	PUBLISHED NOVEMBER 17, 2008
+	Toby Pitman http://www.tobypitman.com/
+*/
+#clock 
+{
+	position: absolute;
+	top:10px;
+	right:25px;
+	width: 600px;
+	height: 600px;
+	background: url(file:///mnt/sdcard/DOMLauncher/default/images/clockface.png);
+	background-position:center center;
+	background-repeate:no-repeat;
+	list-style: none;
+	zoom:.6;
+}
+
+#sec, #min, #hour 
+{
+	position: absolute;
+	width: 30px;
+	height: 600px;
+	top: 0px;
+	left: 305px;
+	background-position:center center;
+	background-repeate:no-repeat;
+}
+
+#sec 
+{
+	background: url(file:///mnt/sdcard/DOMLauncher/default/images/sechand.png);
+	z-index: 3;
+}
+   
+#min 
+{
+	background: url(file:///mnt/sdcard/DOMLauncher/default/images/minhand.png);
+	z-index: 2;
+}
+   
+#hour 
+{
+	background: url(file:///mnt/sdcard/DOMLauncher/default/images/hourhand.png);
+	z-index: 1;
 }

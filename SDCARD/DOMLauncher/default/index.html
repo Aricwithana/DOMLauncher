@@ -3,6 +3,9 @@
 <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.5)" href="file:///mnt/sdcard/DOMLauncher/default/css/hdpi.css" />
 <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 2.0)" href="file:///mnt/sdcard/DOMLauncher/default/css/xhdpi.css" />		
 <script type="text/javascript" src="file:///mnt/sdcard/DOMLauncher/default/js/callbacks.js"></script>  
+<script type="text/javascript" src="file:///mnt/sdcard/DOMLauncher/default/js/events.js"></script>  
+
+<script type="text/javascript" src="file:///mnt/sdcard/DOMLauncher/default/js/idangerous.swiper-1.5.min.js"></script>  
 <script>
 
 
@@ -12,20 +15,53 @@ $(document).ready(function(){
 	themeLoaded();
 });
 
-$(document).on('click', '*[appLaunch], *[settings]', function() {
-	launchApps(this);
-});
-
 function themeLoaded(){
-	appList({refreshIcons:false})
+	appList({refreshIcons:false});
+	document.addEventListener("pause", onPause, false);
+	document.addEventListener("resume", onResume, false);
+	clockTimer = setInterval(clock, 1000 );
+		setTimeout(function(){
+		swiper = new Swiper('.swiper', {
+		createPagination : false
+		});
+	}, 500);
+	
 }
 
-$('#refresh_appPanel').on('click', function(){
-	refresh_iconCSS({refreshIcons:false});
-	appList({refreshIcons:true})	
-});
+
+
+
 
 </script>
+
+    <div id='slider' class='swiper-container swiper'>
+        <div class="swiper-wrapper" style="z-index:1;">
+            <div class="swiper-slide" style="float:left; position:relative;">
+            	<div class="innerWrapper">
+                    <div class="app" appLaunch="com.netflix.mediaclient"><span>Netflix</span></div>
+                    <div class="app" appLaunch="com.opera.browser"><span>Opera</span></div>
+                    <div class="app" style="height:100px; width:100px; position:absolute; top:500px; left:25px;background-color:red;" id="domlDummy"></div>   
+                    <ul id="clock" applaunch="com.sec.android.app.clockpackage" appactivity=".ClockPackage" appname="Clock">	
+                        <li id="sec"></li>
+                        <li id="hour"></li>
+                        <li id="min"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="swiper-slide" style="float:left; position:relative;">
+            	<div class="innerWrapper">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<div class="quickBar">
+    <a href="tel:" class="app dialer" appName="default_Dialer"></a>
+    <div class="app" appLaunch="com.android.contacts" appActivity=".DialtactsContactsEntryActivity" appName="Contacts"></div>
+    <div class="app" id="appPanel_Show" style="background-image:url(file:///mnt/sdcard/DOMLauncher/default/images/icon_apps.png);"></div>
+    <div class="app" appLaunch="com.android.settings" appActivity=".Settings" appName="Settings"></div>   
+</div>
 
 
 <div class="appPanel"><div class="appPanel_Content"></div><div id="refresh_appPanel">Refresh</div><div id="close_appPanel">Close</div></div>
