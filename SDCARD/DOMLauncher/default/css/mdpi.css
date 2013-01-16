@@ -1,0 +1,28 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+.app{
+	background-position:left top;
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	position:relative;
+	display: inline-block;
+	width:48px; 
+	height:48px;
+	margin:15px; 
+}  
+
+.app span
+{
+	position:absolute;
+	text-align:center;
+	overflow: hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	background-color:rgba(0,0,0,.75);
+	color:white;
+	bottom:-25px;
+	left:0px;
+	right:0px;
+}

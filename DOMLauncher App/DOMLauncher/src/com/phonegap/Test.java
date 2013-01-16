@@ -7,7 +7,6 @@ import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CallLog;
-import android.provider.VoicemailContract;
 
 import android.util.Log;
 

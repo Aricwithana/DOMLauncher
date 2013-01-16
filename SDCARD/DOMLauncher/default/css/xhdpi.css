@@ -1,0 +1,77 @@
+@charset "utf-8";
+/* CSS Document */
+
+.app
+{
+	background-position:left top;
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	position:relative;
+	display: inline-block;
+	width:96px; 
+	height:96px;
+	margin:25px; 
+	display:inline-block;
+}  
+
+.app span
+{
+	position:absolute;
+	text-align:center;
+	overflow: hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	background-color:rgba(0,0,0,.75);
+	color:white;
+	bottom:-25px;
+	left:0px;
+	right:0px;
+}
+
+.appPanel
+{
+	position:absolute;
+	top:0px;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	background-color:#000000;
+	z-index:99;	
+	color:#ffffff;
+	text-align:center;
+}
+
+.appPanel_Content
+{
+	position:absolute;
+	top:0px;
+	bottom:125px;
+	left:0px;
+	right:0px;
+	overflow:scroll;
+}
+
+#refresh_appPanel
+{
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	right:50%;
+	height:125px;	
+	border-top:2px solid #cccccc;
+	line-height:125px;
+	font-size:24px;
+}
+
+#close_appPanel
+{
+	position:absolute;
+	bottom:0px;
+	right:0px;
+	left:50%;
+	height:125px;	
+	border-left:2px solid #cccccc;
+	border-top:2px solid #cccccc;
+	line-height:125px;
+	font-size:24px;
+}

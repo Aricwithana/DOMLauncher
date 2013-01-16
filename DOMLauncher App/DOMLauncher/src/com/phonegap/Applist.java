@@ -118,7 +118,7 @@ private void generateIcons() {
 				String pkgName = packageInfo.packageName;		
 				Drawable appIcon = packageInfo.loadIcon(this.cordova.getActivity().getPackageManager());
 							
-				File file = new File("/mnt/sdcard/DOMLauncher/icons/"+pkgName+".png");
+				File file = new File("/mnt/sdcard/DOMLauncher/settings/icons/"+pkgName+".png");
 				FileOutputStream foStream = null;
 				
 				Bitmap bitmap = ((BitmapDrawable)appIcon).getBitmap();

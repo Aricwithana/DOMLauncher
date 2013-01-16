@@ -14,7 +14,6 @@ import android.util.Log;
 
 public class Missedcommunications extends Plugin { 
 
-	@SuppressLint("NewApi")
 	@Override
     public PluginResult execute(String action, JSONArray args, String callbackId) {
 		

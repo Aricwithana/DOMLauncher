@@ -266,7 +266,7 @@ div
 	right:25px;
 	width: 600px;
 	height: 600px;
-	background: url(file:///mnt/sdcard/DOMLauncher/testing/clockface.png);
+	background: url(file:///mnt/sdcard/DOMLauncher/olddefault/images/clockface.png);
 	background-position:center center;
 	background-repeate:no-repeat;
 	list-style: none;
@@ -286,19 +286,19 @@ div
 
 #sec 
 {
-	background: url(file:///mnt/sdcard/DOMLauncher/testing/sechand.png);
+	background: url(file:///mnt/sdcard/DOMLauncher/olddefault/images/sechand.png);
 	z-index: 3;
 }
    
 #min 
 {
-	background: url(file:///mnt/sdcard/DOMLauncher/testing/minhand.png);
+	background: url(file:///mnt/sdcard/DOMLauncher/olddefault/images/minhand.png);
 	z-index: 2;
 }
    
 #hour 
 {
-	background: url(file:///mnt/sdcard/DOMLauncher/testing/hourhand.png);
+	background: url(file:///mnt/sdcard/DOMLauncher/olddefault/images/hourhand.png);
 	z-index: 1;
 }
 

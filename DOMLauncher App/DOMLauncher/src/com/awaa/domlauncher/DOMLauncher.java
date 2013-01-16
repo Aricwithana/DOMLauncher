@@ -22,51 +22,32 @@ public class DOMLauncher extends DroidGap {
      
       File sdcard = Environment.getExternalStorageDirectory();
       //Get the text file
- 
-      File fstxtfile = new File(sdcard,"/DOMLauncher/settings/isFullscreen.txt");
-      File optionsScreen = new File(sdcard,"/DOMLauncher/settings/yesOptionscreen.txt");
-      File settingsFile = new File(sdcard,"/DOMLauncher/settings/settings.xml"); 
-      File themeFile = new File(sdcard,"/DOMLauncher/currentTheme/index.html");   
-      File settingsMode = new File(sdcard,"/DOMLauncher/settings/triggersettings.txt");   	
-      File testingMode =  new File(sdcard,"/DOMLauncher/testing/testing.txt");   
+      File fstxtfile = new File(sdcard,"/DOMLauncher/settings/fullscreenEnabled");
+      File sdcardExists = new File(sdcard,"/DOMLauncher/settings/sdcardCheck");   	
+  
       
-      if(settingsMode.exists()){
-    	  super.loadUrl("file:///android_asset/www/options.html");	
-      }else{
+  
     	  
-         if(settingsFile.exists()){ 			
-  			if(themeFile.exists()){
-  				if(optionsScreen.exists()){
-  					super.loadUrl("file:///mnt/sdcard/DOMLauncher/options.html");
-  				}else{
-  					
-  					if(testingMode.exists()){
-	  					super.loadUrl("file:///android_asset/www/testing.html");  						
-  					}else{
-	  					super.loadUrl("file:///android_asset/www/index.html");
-  					}
-  				  				
-  				}	
+       			
+  			if(sdcardExists.exists()){
+				
+				
+					super.loadUrl("file:///android_asset/www/index.html");
+					 if(fstxtfile.exists()){ 
+							getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+							WindowManager.LayoutParams.FLAG_FULLSCREEN | 
+							WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+				      }    
+				
+		  									
   			}else{ 					
-				if(testingMode.exists()){
-					super.loadUrl("file:///android_asset/www/testing.html");  						
-				}else{
-					super.loadUrl("file:///android_asset/www/options.html");
-				}
+			
+					super.loadUrl("file:///android_asset/www/dummy.html");
+				
   			}
-  			
-  		}else{         	  
-  			super.loadUrl("file:///android_asset/www/options.html");
-  		}
-      		
-      }
+  			    
       
-      
-      if(fstxtfile.exists()){ 
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
-			WindowManager.LayoutParams.FLAG_FULLSCREEN | 
-			WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-      }    
+     
    }
 } 
 

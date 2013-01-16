@@ -12,7 +12,7 @@
         
         
         
-        <title>CHome</title>
+        <title>DOMLauncher</title>
         
         <script type="text/javascript" src="cordova-2.1.0.js"></script>  
         <script type="text/javascript" src="js/launch.js"></script>  
@@ -31,13 +31,36 @@
 		<script src="js/jquery-1.8.1.min.js"></script>
         <script src="js/jquery-ui-1.8.23.custom.min.js"></script>
         <script src="js/functions.js"></script>
-        <link rel="stylesheet" id="iconsCss" href="file:///mnt/sdcard/DOMLauncher/icons/icons.css" type="text/css" media="screen" charset="utf-8" />
+        <link rel="stylesheet" id="iconsCss" href="file:///mnt/sdcard/DOMLauncher/settings/icons/icons.css" type="text/css" media="screen" charset="utf-8" />
 		<script>
         
 			function onLoad() {document.addEventListener("deviceready", deviceReady, false);}
 			
 			function deviceReady() { 
-				$('body').load('file:///mnt/sdcard/DOMLauncher/currrentTheme/index.html'); 
+			
+			
+				$.ajax({ //Loads the downloaded xml file into the applications. 
+				type: "GET",
+				url: "file:///mnt/sdcard/DOMLauncher/settings/themeList.xml", //File path of the xml.
+				dataType: "xml",
+				success: function(xml){
+				$(xml).find('THEME').each(function(){	//Retreives the data from each xml Node.
+					var tmPath = $(this).find('PATH').text();
+					
+						$('body').load('file:///mnt/sdcard/DOMLauncher/'+tmPath+'/index.html',    function (responseText, textStatus, XMLHttpRequest) {
+							if (textStatus == "error") {
+							  $('body').load('noIndex.html');
+							}
+						}); 
+			
+					});
+				  },
+				  error: function() {
+				  }
+				});
+
+			
+			
 				
 			}	
         </script>
@@ -47,14 +70,7 @@
                 background-image:url(img/icon_Dialer.png);
                 text-decoration:none;
                 color:inherit;	   
-            }
-            *[appName="doml_Settings"]
-            {
-                background-image:url(file:///data/data/com.awaa.domlauncher/icons/com.android.settings.png);
-                text-decoration:none;
-                color:inherit;	   
-            }
-			
+            }			
 			
         </style>
     </head>

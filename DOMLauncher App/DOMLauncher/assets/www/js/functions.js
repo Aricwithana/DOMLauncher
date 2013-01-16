@@ -57,7 +57,7 @@ function toggleStatusbar(){
 	function onRequestFileSystemSuccess(fileSystem) { 
 		var findDirectory=fileSystem.root; 
 		//Checks if isFullscreen.txt file exists within the app Data Folder Loaded Theme Folder but does not create it.
-		findDirectory.getFile("/mnt/sdcard/DOMLauncher/settings/isFullscreen.txt", {create:false, exclusive: false}, onGetDirectorySuccess, onGetDirectoryFail); 
+		findDirectory.getFile("/mnt/sdcard/DOMLauncher/settings/fullscreenEnabled", {create:false, exclusive: false}, onGetDirectorySuccess, onGetDirectoryFail); 
 	} 
 
 	//File Exists
@@ -85,7 +85,7 @@ function toggleStatusbar(){
 		console.log("ISFS does not exist.  Will now create."); 
 		
 		//Trigger Simple Save Cordova Cordova Plugin.  Save blank file named isFullscreen.txt
-		window.plugins.simplesave.show({fileObject:"", filePlace:"/mnt/sdcard/DOMLauncher/settings/isFullscreen.txt"}, 
+		window.plugins.simplesave.show({fileObject:"", filePlace:"/mnt/sdcard/DOMLauncher/settings/fullscreenEnabled"}, 
 			function() { //Success Function
 				window.plugins.fullscreentoggle.show({}, 
 				function() {}, // Success function
@@ -238,27 +238,32 @@ function missedCommunications(args){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function refreshIcons(){
+function appList(args){
+	var refreshIcons = args.refreshIcons || false
 	
-	window.plugins.applist.show({refreshIcons:true}, //App Package Name
+	window.plugins.applist.show({refreshIcons:refreshIcons}, 
+		function(appList) {//appList is a JSON Object needing to be parsed.
+			applistCallback(appList);	
+	}, // Success function
+	function() {alert('Loading App List Failed')}); // Failure function
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+function refresh_iconCSS(args){
+	var refreshIcons = args.refreshIcons || false
+	window.plugins.applist.show({refreshIcons:refreshIcons}, //App Package Name
 		function(appList) {
 			appListArray = JSON.parse(appList);
 			styleVar = $('<style id="iconsCss">');
@@ -269,18 +274,18 @@ function refreshIcons(){
 				var appActivity = this.intent
 				
 					if(this.package === "com.android.settings"){
-						$(styleVar).append('*[appLaunch="com.android.settings"]{background-image:url(file:///mnt/sdcard/DOMLauncher/icons/com.android.settings.png);}');
-						$(styleVar).append('*[appName="doml_Settings"]{background-image:url(file:///mnt/sdcard/DOMLauncher/icons/com.android.settings.png);}');
+						$(styleVar).append('*[appLaunch="com.android.settings"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/com.android.settings.png);}');
+						$(styleVar).append('*[appName="doml_Settings"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/com.android.settings.png);}');
 					}else if(this.package === "com.android.contacts"){
-						$(styleVar).append('*[appLaunch="com.android.contacts"]{background-image:url(file:///mnt/sdcard/DOMLauncher/icons/com.android.contacts.png);}');
+						$(styleVar).append('*[appLaunch="com.android.contacts"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/com.android.contacts.png);}');
 					}else{
-						$(styleVar).append('*[appLaunch="'+appLaunch+'"]{background-image:url(file:///mnt/sdcard/DOMLauncher/icons/'+appLaunch+'.png);}');
+						$(styleVar).append('*[appLaunch="'+appLaunch+'"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/'+appLaunch+'.png);}');
 					}
 			});
 				$('#iconsCss').remove();
 				$('head').append(styleVar);
 				
-				window.plugins.simplesave.show({fileObject:styleVar.text(), filePlace:"/mnt/sdcard/DOMLauncher/icons/icons.css"}, 
+				window.plugins.simplesave.show({fileObject:styleVar.text(), filePlace:"/mnt/sdcard/DOMLauncher/settings/icons/icons.css"}, 
 				
 				function() { //Success Function
 					

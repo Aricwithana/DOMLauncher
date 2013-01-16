@@ -15,7 +15,7 @@ import android.provider.Settings.SettingNotFoundException;
 public class Screenbrightness extends Plugin { 
 
 	
-	
+	 
 	@Override
     public PluginResult execute(String action, JSONArray args, String callbackId) {
 		

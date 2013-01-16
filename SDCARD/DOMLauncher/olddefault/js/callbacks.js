@@ -69,9 +69,9 @@ function toggledataCallback(args){
 	var check = args.check
 	/*Begin Theme Specific Editible Code*/
 		if(returnVal === true){
-			$object_toggle34G.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_34genabled.jpg');
+			$object_toggle34G.attr('src', 'file:///mnt/sdcard/DOMLauncher/olddefault/images/icon_34genabled.jpg');
 		}else{
-			$object_toggle34G.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_34g.jpg');	
+			$object_toggle34G.attr('src', 'file:///mnt/sdcard/DOMLauncher/olddefault/images/icon_34g.jpg');	
 		}
 	/*End Theme Specific Editible Code*/
 }
@@ -186,10 +186,10 @@ function togglewifiCallback(args){
 	var returnVal = args.returnVal
 	/*Begin Theme Specific Editible Code*/
 		if(returnVal === true){
-			$object_toggleWifi.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_wifienabled.jpg');
+			$object_toggleWifi.attr('src', 'file:///mnt/sdcard/DOMLauncher/olddefault/images/icon_wifienabled.jpg');
 			setTimeout(function(){toggleData({check:"true"});}, 10000);
 		}else{
-			$object_toggleWifi.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_wifi.jpg');
+			$object_toggleWifi.attr('src', 'file:///mnt/sdcard/DOMLauncher/olddefault/images/icon_wifi.jpg');
 			$object_datawifiSignal.text('Wifi Signal:  Disabled');	
 			setTimeout(function(){toggleData({check:"true"});}, 10000);
 		}
@@ -255,15 +255,15 @@ function toggleairplaneCallback(args){
 	/*Begin Theme Specific Editible Code*/
 		if(returnVal === true){
 			$object_datawifiSignal.text('Wifi Signal: Disabled');	
-			$object_toggle34G = $('#toggle_34G').attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_34g.jpg');
-			$object_toggleWifi.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_wifi.jpg');
-			$object_toggleairplaneMode.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_airplanemodeenabled.jpg');
+			$object_toggle34G = $('#toggle_34G').attr('src', 'file:///mnt/sdcard/DOMLauncher/olddefault/images/icon_34g.jpg');
+			$object_toggleWifi.attr('src', 'file:///mnt/sdcard/DOMLauncher/olddefault/images/icon_wifi.jpg');
+			$object_toggleairplaneMode.attr('src', 'file:///mnt/sdcard/DOMLauncher/olddefault/images/icon_airplanemodeenabled.jpg');
 		}
 		
 		if(returnVal === false){
 			$object_datawifiSignal.text('Wifi Signal: Checking');	
 			$object_datacellsignal.text('Cell Signal: Checking');		
-			$object_toggleairplaneMode.attr('src', 'file:///mnt/sdcard/DOMLauncher/testing/icon_airplanemode.jpg');
+			$object_toggleairplaneMode.attr('src', 'file:///mnt/sdcard/DOMLauncher/olddefault/images/icon_airplanemode.jpg');
 			setTimeout(function(){toggleWifi({check:"true"});toggleData({check:"true"});}, 3000);
 		}
 	/*End Theme Specific Editible Code*/
@@ -314,53 +314,14 @@ function toggleairplaneCallback(args){
 function generateApplist(regen){
 	//Checks if the appPanel data file (.html file holding DOM Objects) exists via the native Cordova File API.
 	//Does not create the file via the File API, just if it exists with 'create:false'.
-	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onRequestFileSystemSuccess, null);
-		function onRequestFileSystemSuccess(fileSystem) { 
-			var findDirectory=fileSystem.root; 
-			findDirectory.getFile("/mnt/sdcard/DOMLauncher/testing/appPanel.html", {create:false, exclusive:false}, onGetFileSuccess, onGetFileFail); 
-		} 
-		//File exists, load it into the DOM.
-		function onGetFileSuccess(file) { 
-			console.log("created"+file.name); 		
-			if(regen == true){
-				file.remove(success, fail);
-				
-				function success(){
-				  console.log("ISFS Removed"); 
-				}
-				//File Remove Fail Callback
-				function fail(){
-				  console.log("ISFS Remove Failed"); 
-				}
-				generateApplist();
-			}else{
-				
-				$('.appPanel').load('file:///mnt/sdcard/DOMLauncher/testing/appPanel.html');
-				setTimeout(function(){
-					
-					$('*[appLaunch], *[settings]').on('click', function() {
-						launchApps(this);
-					});
-				}, 1000);
-			}
-		} 
 		//File doesn't exist.		
-		function onGetFileFail(error) { 
-			console.log("file does not exist"); 
 			//Refreshes the Icon Cache and Regenerates the CSS File.
-			refreshIcons();
-			$('*[appLaunch], *[settings]').off('click', function() {
-				launchApps(this);
-			});
+	refresh_iconCSS({refreshIcons:false});
+			$('.appPanel').empty();
 			//This is the App List Cordova Plugin.  'refreshIcons:' must be either true/false.
 			//True ONLY refreshes the Icon Cache.  Nothing more.
 			//Generally false is the only value needed since refreshIcons(); exists for easier use.
-			window.plugins.applist.show({refreshIcons:false}, 
-				function(appList) {//appList is a JSON Object needing to be parsed.
-					applistCallback(appList);	
-			}, // Success function
-			function() {alert('Loading App List Failed')}); // Failure function
-		}
+	appList({refreshIcons:true})	
 }
 
 
@@ -368,12 +329,13 @@ function generateApplist(regen){
 
 function applistCallback(appList){
 				//Parse the appList
+				
 					appListArray = JSON.parse(appList);
 					//For each item in the JSON Array
 						// @ appName - Application Name ('DOMLauncher')
 						// @ appLaunch - Package class name ('com.awaa.domlauncher')
 						// @ appActivity - Acivity Intent ('.DialtactsContactsEntryActivity')
-						$pixelBlock = $('<div class="pixelBlock">');
+						$pixelBlock = $('.appPanel')
 					$.each(appListArray, function(e) {
 						var appName = this.name
 						var appLaunch = this.package
@@ -383,7 +345,6 @@ function applistCallback(appList){
 						//Since we have some packages without intents (and these apps need the activity to launch, we listen and segment)
 						if(this.package === "com.android.settings"){
 							$pixelBlock.append('<div class="app" appLaunch="com.android.settings" appActivity=".Settings" appName="'+appName+'"><span>'+appName+'</span></div>');
-							$pixelBlock.append('<div class="app"  appName="doml_Settings"><span>DOMLauncher Settings</span></div>');
 							$pixelBlock.append('<a href="tel:" class="app dialer" appName="default_Dialer"><span>Dialer</span></a>');
 						}else if(this.package === "com.android.contacts"){
 							$pixelBlock.append('<div class="app" appLaunch="com.android.contacts" appActivity=".DialtactsContactsEntryActivity" appName="'+appName+'"><span>'+appName+'</span></div>');
@@ -394,25 +355,8 @@ function applistCallback(appList){
 						 appLaunch = null
 						 appActivity = null
 					});
-				//I use a plugin called tSort to sort the DOM Elements generated.	
-				//$('.pixelBlock> *').tsort({attr:'appName'});
-
-				//Custom Plugin to save basic non-formatted text files to the system.
-				//Saves the DOM Objects generated onto the system.
-				window.plugins.simplesave.show({fileObject:$pixelBlock.html(), filePlace:"/mnt/sdcard/DOMLauncher/testing/appPanel.html"}, 
 					
-					function() { //Success Function
-						//Clears the current App Panel
-						$('.appPanel').empty();
-						//Loads the newly created file of DOM Objects into the App Panel
-						$('.appPanel').load('file:///mnt/sdcard/DOMLauncher/testing/appPanel.html');
-							setTimeout(function(){
-								$('*[appLaunch], *[settings]').on('click', function() {
-									launchApps(this);
-								});
-							}, 1000);
-						},
-					function() {alert('App Panel did not save');});// Failure function 		
+
 				
 					appListArray = null;
 					$pixelBlock = null

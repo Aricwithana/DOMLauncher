@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LIST>
-<!--
 <THEME>
-	<NAME>Default</NAME>
-	<PATH>DOMLauncher/default</PATH>
+	<PATH>default</PATH>
 </THEME>
--->
+
 </LIST>
