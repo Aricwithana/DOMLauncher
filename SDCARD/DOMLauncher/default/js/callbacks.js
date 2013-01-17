@@ -29,23 +29,26 @@ function applistCallback(appList){
 		$appPanel = null
 }
 
+/*Clock CSS
+	http://css-tricks.com/css3-clock/
+	PUBLISHED NOVEMBER 17, 2008
+	Toby Pitman http://www.tobypitman.com/
+*/
 
-	//Clock Timer 
-	clockTimer = null;
+//Clock Timer 
+clockTimer = null;
+	
  function clock() {
 	var seconds = new Date().getSeconds();
 	var hours = new Date().getHours();
 	var mins = new Date().getMinutes();
 	var sdegree = seconds * 6;
-	var srotate = "rotate(" + sdegree + "deg)";
 	var mdegree = mins * 6;
-	var mrotate = "rotate(" + mdegree + "deg)";
 	var hdegree = hours * 30 + (mins / 2);
-	var hrotate = "rotate(" + hdegree + "deg)";
 	
-	$("#sec").css({"-webkit-transform" : srotate});
-	$("#hour").css({"-webkit-transform" : hrotate});
-	$("#min").css({"-webkit-transform" : mrotate});
+	$("#sec").css({"-webkit-transform" : "rotate(" + sdegree + "deg)"});
+	$("#hour").css({"-webkit-transform" : "rotate(" + hdegree + "deg)"});
+	$("#min").css({"-webkit-transform": "rotate(" + mdegree + "deg)"});
 }
 
 
@@ -65,11 +68,11 @@ function applistCallback(appList){
 
     // Handle the pause event
     function onPause() {
-		clearInterval(clockTimer);
+		//clearInterval(clockTimer);
 	}
 
 	
 	// Handle the resume event
 	function onResume() {
-		clockTimer = setInterval(clock, 1000);
+		//clockTimer = setInterval(clock, 1000);
 	}
