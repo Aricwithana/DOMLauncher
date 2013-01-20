@@ -52,12 +52,15 @@ table {
 
 
 body
-{
+{	
 	overflow:hidden;
 	background-image:url(file:///mnt/sdcard/DOMLauncher/default/images/xhdpiBG.png);	
 }
 
-.app
+
+
+
+.app, .btn
 {
 	background-position:left top;
 	background-repeat:no-repeat;
@@ -70,7 +73,7 @@ body
 	display:inline-block;
 }  
 
-.app span
+.app span, .btn span
 {
 	position:absolute;
 	text-align:center;
@@ -127,7 +130,15 @@ body
 	z-index:99;	
 	color:#ffffff;
 	text-align:center;
-	display:none;
+	opacity:0;
+	-webkit-transition: opacity .5s;
+	display:none;		
+}
+
+.appPanel.visible
+{	display:block;
+	opacity:1;
+	-webkit-transition: opacity .5s;		
 }
 
 .appPanel_Content
@@ -167,28 +178,6 @@ body
 
 
 
-.swiper {
-	
-  position:absolute;
-  top:0px;
-  bottom:120px;
-  right:0px;
-  left:0px;
-  z-index:1;
-  overflow:hidden;
-}
-
-
-.innerWrapper
-{
-	position:absolute; 
-	left:0px; 
-	top:0px; 
-	bottom:0px; 
-	right:0px;
-	padding:25px;
-}
-
 
 
 /*Clock CSS
@@ -216,7 +205,7 @@ body
 	width: 30px;
 	height: 600px;
 	top: 0px;
-	left: 305px;
+	left: 286px;
 	background-position:center center;
 	background-repeate:no-repeat;
 }
@@ -238,3 +227,68 @@ body
 	background: url(file:///mnt/sdcard/DOMLauncher/default/images/hourhand.png);
 	z-index: 1;
 }
+
+
+
+
+
+.switch
+{
+	position: relative;
+	overflow:hidden;
+	border:2px solid  #393939;
+	background-color:#141414;
+	width:200px;
+	height:50px;
+	margin:100px;
+	border-radius:10px;
+}
+
+.switch>div:last-child
+{
+	bottom:0px;
+	left:0px;
+	right:0px;
+	top:0px;
+	position:absolute;
+	z-index:1;
+}
+
+.switch>div:first-child
+{
+	height:100%;
+	width:100px;
+	position:absolute;
+	border-radius:8px;
+	background-image: -webkit-linear-gradient(bottom, rgb(96,111,117) 54%, rgb(134,154,161) 91%);	
+	color:#ccedfe;
+	z-index:2;
+	left:0px;
+}
+
+.switch>div:first-child:before
+{
+	position:absolute;
+	top:0px;
+	right:0px;
+	left:0px;
+	bottom:0px;
+	text-align:center;
+	line-height:50px;
+	font-size:24px;
+	display:block;
+	content:"OFF";
+}
+
+.switch>div.on
+{
+	background-image: -webkit-linear-gradient(bottom, rgb(82,147,63) 55%, rgb(112,198,86) 100%);	
+	color:#efff97;
+}
+
+.switch>div.on:before
+{
+	content:"ON";
+}
+
+

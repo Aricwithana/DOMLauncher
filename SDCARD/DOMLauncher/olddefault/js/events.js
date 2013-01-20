@@ -21,16 +21,12 @@
 	//		the ability for any element to launch an app but nnot necessary
 	//		for the call to work.  As long as the correct information is passed
 	//		this can be customized.
-//$(document).on('click', '*[appLaunch], *[settings]', function() {
-//	launchApps(this);
-//});
-
-
-//App Launch Call Function
-	// @ optionsMode() - Restarts the app in Options Mode  
-$('*[appName="doml_Settings"]').on('click', function(e) {
-	optionsMode();
+$(document).on('click', '*[appLaunch], *[settings]', function() {
+	launchApps(this);
 });
+
+
+
 
 
 

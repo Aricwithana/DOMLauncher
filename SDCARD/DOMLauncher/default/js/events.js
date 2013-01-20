@@ -1,9 +1,15 @@
-$('#close_appPanel').on('click', function(){
-	$('.appPanel').fadeOut('fast');
-});
+$('#close_appPanel, #appPanel_Show').on('click', function(){
+	
+	if($('.appPanel').hasClass('visible')){
+		$('.appPanel').removeClass('visible');
+		setTimeout(function(){$('.appPanel').css('display', 'none');}, 500);
+	}else{
+		
+		$('.appPanel').css('display', 'block');
+		
+		setTimeout(function(){$('.appPanel').addClass('visible');}, 10);
+	}
 
-$('#appPanel_Show').on('click', function(){
-	$('.appPanel').fadeIn('fast');
 });
 
 $('#refresh_appPanel').on('click', function(){

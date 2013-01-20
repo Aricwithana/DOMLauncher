@@ -9,7 +9,7 @@
         
         <title>CHome</title>
         
-        <script type="text/javascript" src="cordova-2.1.0.js"></script>  
+        <script type="text/javascript" src="cordova-2.3.0.js"></script>  
         <script type="text/javascript" src="js/launch.js"></script>  
         <script type="text/javascript" src="js/test.js"></script>  
         <script type="text/javascript" src="js/airplane.js"></script>  
@@ -27,7 +27,7 @@
         <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.0)" href="css/mdpi.css" />
         <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.5)" href="css/hdpi.css" />
         <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 2.0)" href="css/xhdpi.css" />		
-		<script src="js/jquery-1.8.1.min.js"></script>
+		<script src="js/jquery-1.9.0.min.js"></script>
         <!--<script src="js/jquery-ui-1.8.23.custom.min.js"></script>-->        
 		<script src="js/functions.js"></script>
         <script>
@@ -35,12 +35,8 @@
 			function onLoad() {document.addEventListener("deviceready", deviceReady, false);}
 			
 			function deviceReady() { 
-		refreshIcons();
-			window.plugins.applist.show({refreshIcons:true}, 
-				function(appList) {//appList is a JSON Object needing to be parsed.
-					applistCallback(appList);	
-			}, // Success function
-			function() {alert('Loading App List Failed')}); // Failure function
+				refresh_iconCSS({refreshIcons:false});
+				appList({refreshIcons:true});
 			
 			
 			}

@@ -39,16 +39,15 @@ function applistCallback(appList){
 clockTimer = null;
 	
  function clock() {
-	var seconds = new Date().getSeconds();
-	var hours = new Date().getHours();
-	var mins = new Date().getMinutes();
-	var sdegree = seconds * 6;
-	var mdegree = mins * 6;
-	var hdegree = hours * 30 + (mins / 2);
+	date = new Date();
+	mins = date.getMinutes();
+
+	$("#sec").css({"-webkit-transform" : "rotate(" + date.getSeconds() * 6 + "deg)"});
+	$("#hour").css({"-webkit-transform" : "rotate(" + date.getHours() * 30 + (mins / 2) + "deg)"});
+	$("#min").css({"-webkit-transform": "rotate(" + mins * 6 + "deg)"});
 	
-	$("#sec").css({"-webkit-transform" : "rotate(" + sdegree + "deg)"});
-	$("#hour").css({"-webkit-transform" : "rotate(" + hdegree + "deg)"});
-	$("#min").css({"-webkit-transform": "rotate(" + mdegree + "deg)"});
+	var date = null;
+	var mins = null;
 }
 
 
@@ -68,11 +67,11 @@ clockTimer = null;
 
     // Handle the pause event
     function onPause() {
-		//clearInterval(clockTimer);
+		clearInterval(clockTimer);
 	}
 
 	
 	// Handle the resume event
 	function onResume() {
-		//clockTimer = setInterval(clock, 1000);
+		clockTimer = setInterval(clock, 1000);
 	}
