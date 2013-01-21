@@ -50,49 +50,11 @@ function volumeControls(args){
 
 
 //Toggle Status Bar.
-function toggleStatusbar(){
-	
-	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onRequestFileSystemSuccess, null);  //Initiates the Cordova File API
-
-	function onRequestFileSystemSuccess(fileSystem) { 
-		var findDirectory=fileSystem.root; 
-		//Checks if isFullscreen.txt file exists within the app Data Folder Loaded Theme Folder but does not create it.
-		findDirectory.getFile("/mnt/sdcard/DOMLauncher/settings/fullscreenEnabled", {create:false, exclusive: false}, onGetDirectorySuccess, onGetDirectoryFail); 
-	} 
-
-	//File Exists
-	function onGetDirectorySuccess(file) { 
-		console.log("isFullscreen.txt Exists and Will now Remove "+file.name); 
-		file.remove(success, fail); //Deletes the File
-		
-		//Initiages Toggle Fullscreen Cordova Plugin.  Just restarts the App, that's it.
-		window.plugins.fullscreentoggle.show({}, 
-			function() {}, // Success function
+function toggleStatusbar(args){
+		check = args.check || false;
+		window.plugins.fullscreentoggle.show({check:check}, 
+			function(returnVal) {fullscreentoggleCallback({returnVal:returnVal});}, // Success function
 			function() {alert('Toggle Bar Failed')}); // Failure function
-		
-		//File Remove Success Callback
-		function success(){
-		  console.log("ISFS Removed"); 
-		}
-		//File Remove Fail Callback
-		function fail(){
-		  console.log("ISFS Remove Failed"); 
-		}
-	} 
-
-	//isFullscreen.txt doesn't exist. Call cdirBase to create.
-	function onGetDirectoryFail(error) { 
-		console.log("ISFS does not exist.  Will now create."); 
-		
-		//Trigger Simple Save Cordova Cordova Plugin.  Save blank file named isFullscreen.txt
-		window.plugins.simplesave.show({fileObject:"", filePlace:"/mnt/sdcard/DOMLauncher/settings/fullscreenEnabled"}, 
-			function() { //Success Function
-				window.plugins.fullscreentoggle.show({}, 
-				function() {}, // Success function
-				function() {alert('Toggle Bar Failed')}); // Failure function
-			},
-			function() {}); // Failure function			
-	} 	
 }
 
 

@@ -22,50 +22,76 @@ function themeLoaded(){
 	document.addEventListener("resume", onResume, false);
 	clockTimer = setInterval(clock, 1000 );
 		
-		window.mySwipe = new Swipe(
-		  document.getElementById('slider')
-		);
+	window.mySwipe = new Swipe(
+	  document.getElementById('slider')
+	);
+
+	
+	switches();
+	toggleStatusbar({check:"true"});
+	$('.switch>div:last-child').on('touchend', function(){
+		handle = $(this).siblings('div');
+		handlePOS = parseInt($(handle).css('left'));
 		
-/*	$( ".switch" ).slider({ min:1, max:100, 
-	range: "min",
-	stop: function(event,ui){if(ui.value > 50){$('.switch .ui-slider-handle').animate({left:'150px'}, 100, function(){$( ".switch" ).slider( "value", 100 );}); }else{$('.switch .ui-slider-handle').animate({left:'0px'}, 100, function(){$( ".switch" ).slider( "value", 0 );});}},
-	animate: "fast", create: function( event, ui){}, slide: function( event, ui ) {$('#slider>ul, #slider, #slider>ul>li').on('touchmove', function(e){e.stopPropagation();});} });
-*/	
-
-$( ".switch>div:first-child" ).draggable({containment: "parent",
-  create: function( event, ui ) {},
-  stop: function( event, ui ) {
-	  
-if(parseInt($('.switch>div:first-child').css('left')) >= 60){$('.switch>div:first-child').animate({left:'100px'}, 100).addClass('on'); }
-
-if(parseInt($('.switch>div:first-child').css('left')) <= 60){$('.switch>div:first-child').animate({left:'0px'}, 100).removeClass('on');}	  
-	  
-	  
-	  },
-  drag: function( event, ui ) {  
-	if(parseInt($('.switch>div:first-child').css('left')) >= 60  && $('.switch>div:first-child').hasClass('on') == false){
-		$('.switch>div:first-child').addClass('on'); 
-	}
-	
-	if(parseInt($('.switch>div:first-child').css('left')) <= 59 && $('.switch>div:first-child').hasClass('on') == true){
-		$('.switch>div:first-child').removeClass('on');
-	}  
-  $('#slider>ul, #slider, #slider>ul>li').on('touchmove', function(e){e.stopPropagation();});   }
-});
-
-
-
-$( ".switch>div:last-child" ).on('touchend', function(){
-	var handle = parseInt($(this).siblings('div').css('left'));
-	
-	if(handle <= 60){$('.switch>div:first-child').animate({left:'100px'}, 100).addClass('on'); }
-	
-	if(handle >= 60){$('.switch>div:first-child').animate({left:'0px'}, 100).removeClass('on');}	  
-});
+		if(handlePOS <= 49){$(handle).animate({left:'100px'}, 100).addClass('on'); }
+		if(handlePOS >= 50){$(handle).animate({left:'0px'}, 100).removeClass('on');}	  
+		handlePOS = null;
+		handle = null;
+	});
 }
 
 
+function switches(){
+	$( ".switch>div:first-child" ).each(function(){
+		$(this).draggable({containment: "parent",distance:5,
+			create: function( event, ui ) {},
+			stop: function( event, ui ) {
+				handle = $(this);
+				switchID = $(handle).parent('.switch').attr('id');
+				handlePOS =  parseInt($(handle).css('left'))
+				
+				if(handlePOS >= 49){$(handle).animate({left:'100px'}, 100).addClass('on');  switchCallback({state:"on", id:switchID});}
+				if(handlePOS <= 50){$(handle).animate({left:'0px'}, 100).removeClass('on'); switchCallback({state:"off", id:switchID});}	  
+				handlePOS = null;
+				switchID = null;
+				handle = null;
+				
+			},
+			drag: function( event, ui ) {  
+				handle = $(this);
+				handlePOS = parseInt($(handle).css('left'))
+				
+				if( handlePOS >= 49  && $(handle).hasClass('on') == false){$(handle).addClass('on'); }
+				if(handlePOS <= 50 && $(handle).hasClass('on') == true){$(handle).removeClass('on');}  
+				$('#slider>ul, #slider, #slider>ul>li').on('touchmove', function(e){e.stopPropagation();});   
+				handlePOS = null;
+				handle = null;
+			}
+		});
+	});
+}
 
+function switchCallback(args){
+	switchID = args.id || null;
+	switchState = args.state || null;
+
+	if(switchID == "toggle_fullScreen"){
+		toggleStatusbar({});
+	}
+	
+}	
+	
+function fullscreentoggleCallback(args){
+	returnVal = args.returnVal
+	
+	if(returnVal != true){
+		$('#toggle_fullScreen>div:first-child').css('left', '0px').removeClass('on');
+	}else{
+		$('#toggle_fullScreen>div:first-child').css('left', '100px').addClass('on');
+	}
+	
+}
+	
 
 
 </script>
@@ -74,10 +100,24 @@ $( ".switch>div:last-child" ).on('touchend', function(){
     <li style='display:block;'>
         <div class="app" appLaunch="com.netflix.mediaclient"><span>Netflix</span></div>
         <div class="app" appLaunch="com.opera.browser"><span>Opera</span></div>
-<!--    <div class="app" style="height:100px; width:100px; position:absolute; top:500px; left:25px;background-color:red;" id="domlDummy"></div>-->    
-	
-    <div class="switch" id="switchExample"><div></div><div></div></div>
     
+        <ul class="controlList" id="systemControls">
+            <li>
+                <div>FULLSCREEN</div><div id="toggle_fullScreen" class="switch"><div></div><div></div></div>
+            </li>
+            <li> 
+                <div>WIFI</div><div id="toggle_wifi" class="switch"><div></div><div></div></div>
+            </li>
+            <li> 
+                <div>DATA</div><div id="toggle_data" class="switch"><div></div><div></div></div>
+            </li>
+            <li> 
+                <div>AIRPLANE</div><div id="toggle_airplane" class="switch"><div></div><div></div></div>
+            </li>
+            <li> 
+                <div>AUTO-BRIGHTNESS</div><div id="toggle_autoBrightness" class="switch"><div></div><div></div></div>
+            </li>
+        </ul>
     </li>
     <li style='display:none;'>
         <ul id="clock" applaunch="com.sec.android.app.clockpackage" appactivity=".ClockPackage" appname="Clock">	
