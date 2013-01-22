@@ -20,10 +20,10 @@
 /*App/Activity Launcher*/
 function launchApps(object){ //Object var represents a DOM Elements that holds the meta information for app or activity.
 	//These pull all needed information from the passed DOM Object.
-	var appName = $(object).attr('appLaunch') || false;  //com.class.name
-	var appActivity = $(object).attr('appActivity') || false;  //.ActivityCall
-	var activityFull = appName+appActivity || false;  //Pieces the the com.class.name and the .ActivityCall into one string.
-	var settings = $(object).attr('settings') || false; //Signifies launch specified settings sub category.
+	 appName = $(object).attr('appLaunch') || false;  //com.class.name
+	 appActivity = $(object).attr('appActivity') || false;  //.ActivityCall
+	 activityFull = appName+appActivity || false;  //Pieces the the com.class.name and the .ActivityCall into one string.
+	 settings = $(object).attr('settings') || false; //Signifies launch specified settings sub category.
 	
 	//Initiates the Cordova Plugin
 	window.plugins.launch.show({appName: appName, appActivity: activityFull, settings:settings  }, //Passes the retrived information above to the Cordova Plugin
@@ -37,9 +37,9 @@ function launchApps(object){ //Object var represents a DOM Elements that holds t
 //Volume Controls-Ringer, Media & Ringer Mode
 function volumeControls(args){
 	//Information pulled from the sent {}
-	var vol = args.vol || false; 
-	var type = args.type || false;
-	var check = args.check || false;
+	 vol = args.vol || false; 
+	 type = args.type || false;
+	 check = args.check || false;
 	//Initisates the Volumn Control Cordova Plugin
 	window.plugins.volumecontrols.show({vol:vol, type:type, check:check}, //Passes the retrived information to the Cordova Plugin.
 		function(returnVal) {volumecontrolsCallback({vol:vol, type:type, check:check, returnVal:returnVal});},// Cordova Plugin Success Function.  Triggers callback, passes back all sent variables and returned var.
@@ -64,10 +64,11 @@ wifiSignaltimer = null;
 //Toggle Wifi Plugin
 function toggleWifi(args){
 	//Pulls the variables from the sent {}
-	var check = args.check || false;
+	check = args.check || false;
+	state = args.state || false;
 	
 	//Trigger Wifi Toggler Cordova Plugin
-	window.plugins.wifitoggler.show({check:check}, 
+	window.plugins.wifitoggler.show({check:check, state:state}, 
 		
 		function(returnVal) { 
 			togglewifiCallback({check:check, returnVal:returnVal})
@@ -96,10 +97,11 @@ function wifiSignal(){
 //Toggle Mobile Data Plugin.  
 function toggleData(args){
 	//Pulls the variables from the sent {}
-	var check = args.check || false;
+	 check = args.check || false;
+	 state = args.state || false;
 	//Triggers the Data Toggler Cordova Plugin
-	window.plugins.mobiledatatoggler.show({check:check}, 
-		function(returnVal) {toggledataCallback({check:check, returnVal:returnVal});}, //Cordova Plugin Success Function.  Returns the sent variables and returned value.
+	window.plugins.mobiledatatoggler.show({check:check, state:state}, 
+		function(returnVal) {toggledataCallback({check:check, returnVal:returnVal, state:state});}, //Cordova Plugin Success Function.  Returns the sent variables and returned value.
 		function() {alert('Toggle Data Error');}); // Failure function
 }
 
@@ -108,7 +110,7 @@ function toggleData(args){
 
 //Celluar Signal Plugin
 function cellSiganl(args){
-	var action = args.action
+	 action = args.action
 	//Triggers the Broadcast Receiving Cell Signal Cordova Plugin.
 	//Accepts more than 'start', have to add the other options.
 	//This plugins 'callback' is a specific function found in callback.js
@@ -149,10 +151,10 @@ function toggleAirplane(){
 
 
 function screenBrightness(args){
-	var value = args.value || -1
-	var check = args.check || false
-	var float = value || false
-	var mode = args.mode || false
+	 value = args.value || -1
+	 check = args.check || false
+	 float = value || false
+	 mode = args.mode || false
 	window.plugins.screenbrightness.show({check:check, value:value, mode:mode, float:float}, 
 		function(returnVar) { 
 		screenbrightnessCallback({value:value, check:check, float:float, mode:mode, returnVar:returnVar})},//Success Function
@@ -184,7 +186,7 @@ function optionsMode(){
 
 //Missed SMS/Calls Value.
 function missedCommunications(args){
-	var type = args.type || false;
+	 type = args.type || false;
 	
 	window.plugins.missedcommunications.show({type:type}, 
 		function(returnVal) {missedcommunicationsCallback({type:type, returnVal:returnVal});},//Success Function
@@ -201,7 +203,7 @@ function missedCommunications(args){
 
 
 function appList(args){
-	var refreshIcons = args.refreshIcons || false
+	 refreshIcons = args.refreshIcons || false
 	
 	window.plugins.applist.show({refreshIcons:refreshIcons}, 
 		function(appList) {//appList is a JSON Object needing to be parsed.
@@ -224,7 +226,7 @@ function appList(args){
 
 
 function refresh_iconCSS(args){
-	var refreshIcons = args.refreshIcons || false
+	 refreshIcons = args.refreshIcons || false
 	window.plugins.applist.show({refreshIcons:refreshIcons}, //App Package Name
 		function(appList) {
 			appListArray = JSON.parse(appList);

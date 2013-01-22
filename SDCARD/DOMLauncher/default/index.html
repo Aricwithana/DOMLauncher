@@ -5,7 +5,6 @@
 <script type="text/javascript" src="file:///mnt/sdcard/DOMLauncher/default/js/callbacks.js"></script>  
 <script type="text/javascript" src="file:///mnt/sdcard/DOMLauncher/default/js/events.js"></script>  
 <script type="text/javascript" src="file:///mnt/sdcard/DOMLauncher/default/js/swipe.min.js"></script>  
-<script type="text/javascript" src="file:///mnt/sdcard/DOMLauncher/default/js/widgets/switch/switch.js"></script>  
 
 <script>
 
@@ -29,75 +28,17 @@ function themeLoaded(){
 	
 	switches();
 	toggleStatusbar({check:"true"});
-	$('.switch>div:last-child').on('touchend', function(){
-		handle = $(this).siblings('div');
-		handlePOS = parseInt($(handle).css('left'));
-		
-		if(handlePOS <= 49){$(handle).animate({left:'100px'}, 100).addClass('on'); }
-		if(handlePOS >= 50){$(handle).animate({left:'0px'}, 100).removeClass('on');}	  
-		handlePOS = null;
-		handle = null;
-	});
+	toggleWifi({check:"true"});
 }
 
 
-function switches(){
-	$( ".switch>div:first-child" ).each(function(){
-		$(this).draggable({containment: "parent",distance:5,
-			create: function( event, ui ) {},
-			stop: function( event, ui ) {
-				handle = $(this);
-				switchID = $(handle).parent('.switch').attr('id');
-				handlePOS =  parseInt($(handle).css('left'))
-				
-				if(handlePOS >= 49){$(handle).animate({left:'100px'}, 100).addClass('on');  switchCallback({state:"on", id:switchID});}
-				if(handlePOS <= 50){$(handle).animate({left:'0px'}, 100).removeClass('on'); switchCallback({state:"off", id:switchID});}	  
-				handlePOS = null;
-				switchID = null;
-				handle = null;
-				
-			},
-			drag: function( event, ui ) {  
-				handle = $(this);
-				handlePOS = parseInt($(handle).css('left'))
-				
-				if( handlePOS >= 49  && $(handle).hasClass('on') == false){$(handle).addClass('on'); }
-				if(handlePOS <= 50 && $(handle).hasClass('on') == true){$(handle).removeClass('on');}  
-				$('#slider>ul, #slider, #slider>ul>li').on('touchmove', function(e){e.stopPropagation();});   
-				handlePOS = null;
-				handle = null;
-			}
-		});
-	});
-}
-
-function switchCallback(args){
-	switchID = args.id || null;
-	switchState = args.state || null;
-
-	if(switchID == "toggle_fullScreen"){
-		toggleStatusbar({});
-	}
-	
-}	
-	
-function fullscreentoggleCallback(args){
-	returnVal = args.returnVal
-	
-	if(returnVal != true){
-		$('#toggle_fullScreen>div:first-child').css('left', '0px').removeClass('on');
-	}else{
-		$('#toggle_fullScreen>div:first-child').css('left', '100px').addClass('on');
-	}
-	
-}
 	
 
 
 </script>
 <div id='slider'  style="overflow:hidden; position:absolute; top:0px; left:0px; right:0px; bottom:125px;">
   <ul style="position:absolute; left:0px; top:0px; bottom:0px; overflow:hidden;">
-    <li style='display:block;'>
+    <li style="position:relative;">
         <div class="app" appLaunch="com.netflix.mediaclient"><span>Netflix</span></div>
         <div class="app" appLaunch="com.opera.browser"><span>Opera</span></div>
     
@@ -119,7 +60,7 @@ function fullscreentoggleCallback(args){
             </li>
         </ul>
     </li>
-    <li style='display:none;'>
+    <li style='position:relative;'>
         <ul id="clock" applaunch="com.sec.android.app.clockpackage" appactivity=".ClockPackage" appname="Clock">	
             <li id="sec"></li>
             <li id="hour"></li>

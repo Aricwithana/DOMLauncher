@@ -47,9 +47,9 @@ public class Mobiledatatoggler extends Plugin {
 
 			
 			
-			String csgAction = args.getJSONObject(0).getString("check");	 
-            
-            if (csgAction.equals("true")) {
+			String check = args.getJSONObject(0).getString("check");	 
+			String state = args.getJSONObject(0).getString("state");
+            if (check.equals("true")) {
                     
                 if(telephonyManager.getDataState() == TelephonyManager.DATA_CONNECTED){
         			
@@ -62,7 +62,9 @@ public class Mobiledatatoggler extends Plugin {
     				return new PluginResult(PluginResult.Status.OK, false);
     			}
 
-            } else{
+            } 
+            
+            if(state.equals("toggle")){
             
             	if(telephonyManager.getDataState() == TelephonyManager.DATA_CONNECTED){
 			
@@ -78,10 +80,19 @@ public class Mobiledatatoggler extends Plugin {
             }
 			
 			  
+            if(state.equals("on")){
+					setMobileDataEnabledMethod.invoke(iConnectivityManager, true);
+					return new PluginResult(PluginResult.Status.OK, true);
+
+            }		
 			
 			
-			
-			
+            if(state.equals("off")){
+ 					setMobileDataEnabledMethod.invoke(iConnectivityManager, false);
+ 					return new PluginResult(PluginResult.Status.OK, false);
+
+             }		
+ 					
 			
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block

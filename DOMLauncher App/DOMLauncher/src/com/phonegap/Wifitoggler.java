@@ -20,7 +20,8 @@ public class Wifitoggler extends Plugin {
 		WifiManager wifiManager = (WifiManager)this.cordova.getActivity().getSystemService(Context.WIFI_SERVICE);	
 		
 		try {
-			String check = args.getJSONObject(0).getString("check");		
+			String check = args.getJSONObject(0).getString("check");					
+			String state = args.getJSONObject(0).getString("state");		
 			//Log.d(id, "Just Check:" +check);			
 			if(check.equals("true")){				
 				if (wifiManager.isWifiEnabled()) {					   				
@@ -31,17 +32,30 @@ public class Wifitoggler extends Plugin {
 					return new PluginResult(PluginResult.Status.OK, wifiS);
 				}												
 			}
+			
 			if(check.equals("false")){				
-				if (wifiManager.isWifiEnabled()) {				   
-					//Log.d(id, "is connected:");
-					wifiManager.setWifiEnabled(false);					
-					boolean wifiS = false;					
-					return new PluginResult(PluginResult.Status.OK, wifiS);				
-				}else{	
-					boolean wifiS = true;
+				
+				if(state.equals("on")){
 					wifiManager.setWifiEnabled(true);
-					return new PluginResult(PluginResult.Status.OK, wifiS);
-				}								
+					return new PluginResult(PluginResult.Status.OK, true);	
+					
+				}
+					
+				if(state.equals("off")){
+					wifiManager.setWifiEnabled(false);									
+					return new PluginResult(PluginResult.Status.OK, false);						
+				}
+						
+				if(state.equals("toggle")){
+					if (wifiManager.isWifiEnabled()) {				   
+						//Log.d(id, "is connected:");
+						wifiManager.setWifiEnabled(false);									
+						return new PluginResult(PluginResult.Status.OK, false);				
+					}else{						
+						wifiManager.setWifiEnabled(true);
+						return new PluginResult(PluginResult.Status.OK, true);
+					}							
+				}				
 			}						
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
