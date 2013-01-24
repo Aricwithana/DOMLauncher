@@ -66,6 +66,7 @@
 <plugin name="Simplesave" value="com.phonegap.Simplesave"/>
 <plugin name="Screenbrightness" value="com.phonegap.Screenbrightness"/>
 <plugin name="Missedcommunications" value="com.phonegap.Missedcommunications"/>
+<plugin name="Wificontrols" value="com.phonegap.Wificontrols"/>
 </plugins>
 </cordova>
 

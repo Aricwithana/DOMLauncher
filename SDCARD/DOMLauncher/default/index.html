@@ -29,11 +29,9 @@ function themeLoaded(){
 	switches();
 	toggleStatusbar({check:"true"});
 	toggleWifi({check:"true"});
-}
-
-
+	toggleData({check:"true"});
 	
-
+}
 
 </script>
 <div id='slider'  style="overflow:hidden; position:absolute; top:0px; left:0px; right:0px; bottom:125px;">
@@ -44,19 +42,19 @@ function themeLoaded(){
     
         <ul class="controlList" id="systemControls">
             <li>
-                <div>FULLSCREEN</div><div id="toggle_fullScreen" class="switch"><div></div><div></div></div>
+                <div>FULLSCREEN</div><div id="toggle_fullScreen" class="switch"><div></div></div>
             </li>
             <li> 
-                <div>WIFI</div><div id="toggle_wifi" class="switch"><div></div><div></div></div>
+                <div>WIFI</div><div id="toggle_wifi" class="switch"><div></div></div>
             </li>
             <li> 
-                <div>DATA</div><div id="toggle_data" class="switch"><div></div><div></div></div>
+                <div>DATA</div><div id="toggle_data" class="switch"><div></div></div>
             </li>
             <li> 
-                <div>AIRPLANE</div><div id="toggle_airplane" class="switch"><div></div><div></div></div>
+                <div>AIRPLANE</div><div id="toggle_airplane" class="switch"><div></div></div>
             </li>
             <li> 
-                <div>AUTO-BRIGHTNESS</div><div id="toggle_autoBrightness" class="switch"><div></div><div></div></div>
+                <div>AUTO-BRIGHTNESS</div><div id="toggle_autoBrightness" class="switch"><div></div></div>
             </li>
         </ul>
     </li>
@@ -66,6 +64,8 @@ function themeLoaded(){
             <li id="hour"></li>
             <li id="min"></li>
         </ul>
+        
+        <div id="test" style="position:absolute; background-color:red; width:50px; height:50px; top:100px; left:100px;"></div>
     </li>
   </ul>
 </div>

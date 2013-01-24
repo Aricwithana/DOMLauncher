@@ -243,16 +243,6 @@ body
 	border-radius:10px;
 }
 
-.switch>div:last-child
-{
-	bottom:0px;
-	left:0px;
-	right:0px;
-	top:0px;
-	position:absolute;
-	z-index:1;
-}
-
 .switch>div:first-child
 {
 	height:100%;

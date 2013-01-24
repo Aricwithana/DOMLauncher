@@ -68,26 +68,29 @@ function toggleWifi(args){
 	state = args.state || false;
 	
 	//Trigger Wifi Toggler Cordova Plugin
-	window.plugins.wifitoggler.show({check:check, state:state}, 
+	window.plugins.wificontrols.show({check:check, state:state}, 
 		
 		function(returnVal) { 
 			togglewifiCallback({check:check, returnVal:returnVal})
 			//Wifi Signal is seperate Plugin.  This initates or disables getting the signal value, checking every 1 second when running.  Should be converted to native broadcast listener.
 			if(returnVal === true){
-				wifiSignaltimer = setInterval(wifiSignal, 1000);
+				//wifiSignaltimer = setInterval(wifiSignal, 1000);
+				//wifiSignal({state:"start"});
 			}else{
-				clearTimeout(wifiSignaltimer);	 
+				//clearTimeout(wifiSignaltimer);	 
+				//wifiSignal({state:"stop"});
 			}
 		},// Cordova Plugin Success Function. Returns the passed variables and the return information. 
 		function() {alert('Wifi Toggle Error');}); // Cordova Plugin Failure function.
 }
 
 //Wifi Signal Plugin.  This can be called any time.  Is specifically used with the Wifi Toggle JS Wrapper.
-function wifiSignal(){
+function wifiSignal(args){
+	state = args.state || null
 	//Triggers the Wifi Signal Getter Cordova Plugin
-	window.plugins.wifisignalgetter.show({}, 
-		function(returnVal) {wifisignalCallback({returnVal:returnVal});},// Cordova Plugin Success Function.  Returns the signal value to the callback function.
-		function() {alert('Wifi Signal Error');}); // Failure function
+	window.plugins.wifisignalgetter.show({state:state}, 
+		function() {},//wifisignalCallback({returnVal:returnVal}); Cordova Plugin Success Function.  Returns the signal value to the callback function.
+		function(error) {alert( error);}); // Failure function
 }
 
 

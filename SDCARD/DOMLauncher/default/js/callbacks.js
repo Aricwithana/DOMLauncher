@@ -58,12 +58,12 @@ clockTimer = null;
 
 function switches(){
 	$( ".switch>div:first-child" ).each(function(){
-		$(this).draggable({containment: "parent",distance:1,
+		$(this).draggable({containment: "parent",distance:0,
 			create: function( event, ui ) {},
 			stop: function( event, ui ) {
 				handle = $(this);
 				switchID = $(handle).parent('.switch').attr('id');
-				handlePOS =  $(handle).attr('data-pos');
+				handlePOS =  parseInt($(handle).css('left'))
 				
 				if(handlePOS >= 49){if(handlePOS != 100){$(handle).animate({left:'100px'}, 250).addClass('on');}  switchCallback({state:"on", id:switchID});}
 				if(handlePOS <= 50){$(handle).animate({left:'0px'}, 250).removeClass('on'); switchCallback({state:"off", id:switchID});}	  
@@ -74,8 +74,7 @@ function switches(){
 			},
 			drag: function( event, ui ) {  
 				handle = $(this);
-				handlePOS = parseInt($(handle).css('left'))
-				$(handle).attr('data-pos', handlePOS);
+				handlePOS = parseInt($(handle).css('left'));
 				
 				if( handlePOS >= 49  && $(handle).hasClass('on') == false){$(handle).addClass('on'); }
 				if(handlePOS <= 50 && $(handle).hasClass('on') == true){$(handle).removeClass('on');}  
@@ -109,7 +108,7 @@ function switchCallback(args){
 	if(switchID === "toggle_data" && state === "on"){
 		toggleData({state:"on"});
 	}
-	
+
 }	
 	
 function fullscreentoggleCallback(args){
@@ -135,15 +134,13 @@ function togglewifiCallback(args){
 	 returnVal = args.returnVal
 	 state = args.state
 	/*Begin Theme Specific Editible Code*/
-		if(returnVal === true){
-			$('#toggle_wifi>div:first-child').css('left', '100px').addClass('on');
-			setTimeout(function(){toggleData({check:"true"});}, 10000);
+		if(returnVal === true && $('#toggle_wifi>div:first-child').hasClass('on') === false){
+			$('#toggle_wifi>div:first-child').animate({left: '100px'}, 250).addClass('on');
 		}
-		if(returnVal === false){
-			$('#toggle_wifi>div:first-child').css('left', '0px').removeClass('on');
-			setTimeout(function(){toggleData({check:"true"});}, 10000);
-		
+		if(returnVal === false && $('#toggle_wifi>div:first-child').hasClass('on') === true){
+			$('#toggle_wifi>div:first-child').animate({left: '0px'}, 250).removeClass('on');
 		}
+		setTimeout(function(){toggleData({check:"true"});}, 10000);
 	/*End Theme Specific Editible Code*/
 }
 
@@ -155,14 +152,15 @@ function togglewifiCallback(args){
 function toggledataCallback(args){
 	 returnVal = args.returnVal
 	 check = args.check
-	 state = args.state
+	 state = args.state 
+	 
 	/*Begin Theme Specific Editible Code*/
-		if(returnVal === true){
-			$('#toggle_data>div:first-child').css('left', '100px').addClass('on');
+		if(returnVal === true && $('#toggle_data>div:first-child').hasClass('on') === false){
+			$('#toggle_data>div:first-child').animate({left: '100px'}, 250).addClass('on');
 			
 		}
-		if(returnVal === false){
-			$('#toggle_data>div:first-child').css('left', '0px').removeClass('on');
+		if(returnVal === false && $('#toggle_data>div:first-child').hasClass('on') === true){
+			$('#toggle_data>div:first-child').animate({left: '0px'}, 250).removeClass('on');
 			
 		
 		}
@@ -185,33 +183,34 @@ function toggledataCallback(args){
 	// 		on desired users wants) to the function that changes the UI.
 	//		This was done to simply the code, not a neccessary thing.
 		// @ object_datawifiSignal 
-function wifisignalCallback(args){
-	 returnVal = args.returnVal
+function wifisignalCallback(strengthDbm){
+	
 	/*Begin Theme Specific Editible Code*/
-		if (returnVal <= -97.75) { wifiChange(0); 
-		} else if (returnVal > -97.75 && returnVal <= -95.5) { wifiChange(5);  
-		} else if (returnVal > -95.5 && returnVal <= -93.25) { wifiChange(10);
-		} else if (returnVal > -93.25 && returnVal <= -91) { wifiChange(15);
-		} else if (returnVal > -91 && returnVal <= -88.75) { wifiChange(20);
-		} else if (returnVal > -88.75 && returnVal <= -86.5) { wifiChange(25);
-		} else if (returnVal > -86.5 && returnVal <= -84.25) { wifiChange(30);
-		} else if (returnVal > -84.25 && returnVal <= -82) { wifiChange(35);
-		} else if (returnVal > -82 && returnVal <= -79.75) { wifiChange(40);
-		} else if (returnVal > -79.75 && returnVal <= -77.5) { wifiChange(45);
-		} else if (returnVal > -77.5 && returnVal <= -75.25) { wifiChange(50);
-		} else if (returnVal > -75.25 && returnVal <= -73) { wifiChange(55);
-		} else if (returnVal > -73 && returnVal <= -70.75) { wifiChange(60);
-		} else if (returnVal > -70.75 && returnVal <= -68.5) { wifiChange(65);
-		} else if (returnVal > -68.5 && returnVal <= -66.25) { wifiChange(70);
-		} else if (returnVal > -66.25 && returnVal <= -64) { wifiChange(75);
-		} else if (returnVal > -64 && returnVal <= -61.75) { wifiChange(80);
-		} else if (returnVal > -61.75 && returnVal <= -59.5) { wifiChange(85);
-		} else if (returnVal > -59.5 && returnVal <= -57.25) { wifiChange(90);
-		} else if (returnVal > -57.25 && returnVal <= -55) { wifiChange(95);
-		} else if (returnVal > -55) { wifiChange(100);
+		if (strengthDbm <= -97.75) { wifiChange(0); 
+		} else if (strengthDbm > -97.75 && strengthDbm <= -95.5) { wifiChange(5);  
+		} else if (strengthDbm > -95.5 && strengthDbm <= -93.25) { wifiChange(10);
+		} else if (strengthDbm > -93.25 && strengthDbm <= -91) { wifiChange(15);
+		} else if (strengthDbm > -91 && strengthDbm <= -88.75) { wifiChange(20);
+		} else if (strengthDbm > -88.75 && strengthDbm <= -86.5) { wifiChange(25);
+		} else if (strengthDbm > -86.5 && strengthDbm <= -84.25) { wifiChange(30);
+		} else if (strengthDbm > -84.25 && strengthDbm <= -82) { wifiChange(35);
+		} else if (strengthDbm > -82 && strengthDbm <= -79.75) { wifiChange(40);
+		} else if (strengthDbm > -79.75 && strengthDbm <= -77.5) { wifiChange(45);
+		} else if (strengthDbm > -77.5 && strengthDbm <= -75.25) { wifiChange(50);
+		} else if (strengthDbm > -75.25 && strengthDbm <= -73) { wifiChange(55);
+		} else if (strengthDbm > -73 && strengthDbm <= -70.75) { wifiChange(60);
+		} else if (strengthDbm > -70.75 && strengthDbm <= -68.5) { wifiChange(65);
+		} else if (strengthDbm > -68.5 && strengthDbm <= -66.25) { wifiChange(70);
+		} else if (strengthDbm > -66.25 && strengthDbm <= -64) { wifiChange(75);
+		} else if (strengthDbm > -64 && strengthDbm <= -61.75) { wifiChange(80);
+		} else if (strengthDbm > -61.75 && strengthDbm <= -59.5) { wifiChange(85);
+		} else if (strengthDbm > -59.5 && strengthDbm <= -57.25) { wifiChange(90);
+		} else if (strengthDbm > -57.25 && strengthDbm <= -55) { wifiChange(95);
+		} else if (strengthDbm > -55) { wifiChange(100);
 		}
 	
 		function wifiChange(percentage){
+			$('#test').text(percentage);
 		}
 	/*End Theme Specific Editible Code*/
 }

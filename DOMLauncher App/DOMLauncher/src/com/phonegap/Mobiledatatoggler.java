@@ -61,6 +61,11 @@ public class Mobiledatatoggler extends Plugin {
     			
     				return new PluginResult(PluginResult.Status.OK, false);
     			}
+                
+                if(telephonyManager.getDataState() == TelephonyManager.DATA_SUSPENDED){
+        			
+    				return new PluginResult(PluginResult.Status.OK, true);
+    			}
 
             } 
             
