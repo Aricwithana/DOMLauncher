@@ -30,44 +30,52 @@ function themeLoaded(){
 	toggleStatusbar({check:"true"});
 	toggleWifi({check:"true"});
 	toggleData({check:"true"});
-	
+	cellSiganl({action:"start"});
+	batteryLevel();
 }
 
 </script>
 <div id='slider'  style="overflow:hidden; position:absolute; top:0px; left:0px; right:0px; bottom:125px;">
-  <ul style="position:absolute; left:0px; top:0px; bottom:0px; overflow:hidden;">
-    <li style="position:relative;">
-        <div class="app" appLaunch="com.netflix.mediaclient"><span>Netflix</span></div>
-        <div class="app" appLaunch="com.opera.browser"><span>Opera</span></div>
-    
-        <ul class="controlList" id="systemControls">
-            <li>
-                <div>FULLSCREEN</div><div id="toggle_fullScreen" class="switch"><div></div></div>
-            </li>
-            <li> 
-                <div>WIFI</div><div id="toggle_wifi" class="switch"><div></div></div>
-            </li>
-            <li> 
-                <div>DATA</div><div id="toggle_data" class="switch"><div></div></div>
-            </li>
-            <li> 
-                <div>AIRPLANE</div><div id="toggle_airplane" class="switch"><div></div></div>
-            </li>
-            <li> 
-                <div>AUTO-BRIGHTNESS</div><div id="toggle_autoBrightness" class="switch"><div></div></div>
-            </li>
-        </ul>
-    </li>
-    <li style='position:relative;'>
-        <ul id="clock" applaunch="com.sec.android.app.clockpackage" appactivity=".ClockPackage" appname="Clock">	
-            <li id="sec"></li>
-            <li id="hour"></li>
-            <li id="min"></li>
-        </ul>
+    <ul style="position:absolute; left:0px; top:0px; bottom:0px; overflow:hidden;">
+        <li style="position:relative;">
+            <div class="app" appLaunch="com.netflix.mediaclient"><span>Netflix</span></div>
+            <div class="app" appLaunch="com.opera.browser"><span>Opera</span></div>
         
-        <div id="test" style="position:absolute; background-color:red; width:50px; height:50px; top:100px; left:100px;"></div>
-    </li>
-  </ul>
+            <ul class="controlList" id="systemControls">
+                <li>
+                    <div>FULLSCREEN</div><div id="toggle_fullScreen" class="switch"><div></div></div>
+                </li>
+                <li> 
+                    <div>WIFI</div><div id="toggle_wifi" class="switch"><div></div></div>
+                </li>
+                <li> 
+                    <div>DATA</div><div id="toggle_data" class="switch"><div></div></div>
+                </li>
+                <li> 
+                    <div>AIRPLANE</div><div id="toggle_airplane" class="switch"><div></div></div>
+                </li>
+                <li> 
+                    <div>AUTO-BRIGHTNESS</div><div id="toggle_autoBrightness" class="switch"><div></div></div>
+                </li>
+                <li> 
+                    <div>Wifi Signal:</div><div id="meter_Wifi" class="meter"><div></div></div>
+                </li>
+                <li> 
+                    <div>Cellular Signal:</div><div id="meter_Cellular" class="meter"><div></div></div>
+                </li>
+                <li> 
+                    <div>Battery Level:</div><div id="meter_Battery" class="meter"><div></div></div>
+                </li>
+            </ul>
+        </li>
+        <li style='position:relative;'>
+            <ul id="clock" applaunch="com.sec.android.app.clockpackage" appactivity=".ClockPackage" appname="Clock">	
+                <li id="sec"></li>
+                <li id="hour"></li>
+                <li id="min"></li>
+            </ul>
+        </li>
+    </ul>
 </div>
 
 <div class="quickBar">

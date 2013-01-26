@@ -58,8 +58,6 @@
 <plugin name="Airplane" value="com.phonegap.Airplane"/>
 <plugin name="Applist" value="com.phonegap.Applist"/>
 <plugin name="Fullscreentoggle" value="com.phonegap.Fullscreentoggle"/>
-<plugin name="Wifitoggler" value="com.phonegap.Wifitoggler"/>
-<plugin name="Wifisignalgetter" value="com.phonegap.Wifisignalgetter"/>
 <plugin name="Volumecontrols" value="com.phonegap.Volumecontrols"/>
 <plugin name="Cellularsignalgetter" value="com.phonegap.Cellularsignalgetter"/>
 <plugin name="Mobiledatatoggler" value="com.phonegap.Mobiledatatoggler"/>
