@@ -38,17 +38,17 @@ function applistCallback(appList){
 //@ clockTimer - Nulls the setInterval object.
 //@ clockSec, clockHour, clockMin - Caches repeatedly Called DOM element.
 	clockTimer = null;
-	$clockSec = $("#sec");
-	$clockHour = $("#hour");
-	$clockMin = $("#min");
+	clockSec = document.getElementById("sec");
+	clockHour = document.getElementById("hour");
+	clockMin = document.getElementById("min");
 	
 function clock() {
 	date = new Date();
 	mins = date.getMinutes();
-	
-	$clockSec.css({"-webkit-transform" : "rotate(" + date.getSeconds() * 6 + "deg)"});
-	$clockHour.css({"-webkit-transform" : "rotate(" + date.getHours() * 30 + (mins / 2) + "deg)"});
-	$clockMin.css({"-webkit-transform": "rotate(" + mins * 6 + "deg)"});
+	console.log("clock tick"); 
+	clockSec.style.WebkitTransform = "rotate(" + date.getSeconds() * 6 + "deg)";
+	clockHour.style.WebkitTransform = "rotate(" + date.getHours() * 30 + (mins / 2) + "deg)";
+	clockMin.style.WebkitTransform = "rotate(" + mins * 6 + "deg)";
 	
 	date = null;
 	mins = null;
@@ -313,16 +313,30 @@ function batterylevelCallback(info){
 }
 
 
+//Launch App/Acitivity/Setting Callback
+	// @ name - com.class.name that was supplised
+	// @ activity - fully compiled activity call intent
+	// @ settings - settings subgroup to be launched
+	// @ object - DOM object original information was attached to. 
+function launchappsCallback(args){
+	var name = args.name
+	var activity = args.activityFull
+	var settings = args.settings
+	var object = args.object
+	/*Begin Theme Specific Editible Code*/
+		//There is no response code supplised for this theme.  
+	/*End Theme Specific Editible Code*/
+}
 
 
 
     // Handle the pause event
     function onPause() {
-		clearInterval(clockTimer);
+		//clearInterval(window.clockTimer);
 	}
 
 	
 	// Handle the resume event
 	function onResume() {
-		clockTimer = setInterval(clock, 1000);
+		//window.clockTimer = setInterval(clock, 1000);
 	}
