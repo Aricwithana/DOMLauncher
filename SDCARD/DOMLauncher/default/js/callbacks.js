@@ -38,17 +38,17 @@ function applistCallback(appList){
 //@ clockTimer - Nulls the setInterval object.
 //@ clockSec, clockHour, clockMin - Caches repeatedly Called DOM element.
 	clockTimer = null;
-	clockSec = document.getElementById("sec");
-	clockHour = document.getElementById("hour");
-	clockMin = document.getElementById("min");
+	window.clockSec = document.getElementById("sec");
+	window.clockHour = document.getElementById("hour");
+	window.clockMin = document.getElementById("min");
 	
 function clock() {
 	date = new Date();
 	mins = date.getMinutes();
 	console.log("clock tick"); 
-	clockSec.style.WebkitTransform = "rotate(" + date.getSeconds() * 6 + "deg)";
-	clockHour.style.WebkitTransform = "rotate(" + date.getHours() * 30 + (mins / 2) + "deg)";
-	clockMin.style.WebkitTransform = "rotate(" + mins * 6 + "deg)";
+	window.clockSec.style.WebkitTransform = "rotate(" + date.getSeconds() * 6 + "deg)";
+	window.clockHour.style.WebkitTransform = "rotate(" + date.getHours() * 30 + (mins / 2) + "deg)";
+	window.clockMin.style.WebkitTransform = "rotate(" + mins * 6 + "deg)";
 	
 	date = null;
 	mins = null;

@@ -212,22 +212,79 @@ body
 
 #sec 
 {
-	background: url(file:///mnt/sdcard/DOMLauncher/default/images/sechand.png);
 	z-index: 3;
 }
-   
+
+#sec:before
+{
+	background-color:red;
+	border-radius:12px;
+	width:24px;
+	content:"";
+	display:block;
+	position:absolute;
+	left:3px;
+	top:288px;	
+	height:24px;
+}
+ #sec:after
+{
+	background-color:red;
+	border-radius:12px;
+	width:12px;
+	content:"";
+	display:block;
+	position:absolute;
+	left:9px;
+	top:325px;	
+	height:43px;
+}
+ 
+#sec div 
+{
+	border-top-left-radius:6px;
+	border-top-right-radius:6px;
+	width:6px;
+	background-color:red;
+	height:208px;
+	position:absolute;
+	left:12px;
+	top:120px;
+}
 #min 
 {
-	background: url(file:///mnt/sdcard/DOMLauncher/default/images/minhand.png);
 	z-index: 2;
 }
-   
+#min:before
+{
+	background-color:#000000;
+	border-radius:15px;
+	width:12px;
+	content:"";
+	display:block;
+	position:absolute;
+	left:9px;
+	top:121px;	
+	height:185px;
+}
+  
 #hour 
 {
-	background: url(file:///mnt/sdcard/DOMLauncher/default/images/hourhand.png);
 	z-index: 1;
 }
 
+#hour:before
+{
+	background-color:#000000;
+	border-radius:15px;
+	width:20px;
+	content:"";
+	display:block;
+	position:absolute;
+	left:5px;
+	top:192px;	
+	height:118px;
+}
 
 
 
