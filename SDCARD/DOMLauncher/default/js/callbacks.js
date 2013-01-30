@@ -1,11 +1,12 @@
+// requestedPercentageVolume / 100 * getSteamMaxVolume()
 function applistCallback(appList){	
 		//Parse the appList
-		appListArray = JSON.parse(appList);
+		var appListArray = JSON.parse(appList);
 		//For each item in the JSON Array
 			//@ appName - Application Name ('DOMLauncher')
 			//@ appLaunch - Package class name ('com.awaa.domlauncher')
 			//@ appActivity - Acivity Intent ('.DialtactsContactsEntryActivity')
-			$appPanel = $('.appPanel_Content');
+		var	$appPanel = $('.appPanel_Content');
 			$appPanel.empty();
 		$.each(appListArray, function(e) {
 			 appName = this.name
@@ -20,12 +21,12 @@ function applistCallback(appList){
 			}else{
 				$appPanel.append('<div class="app" appLaunch="'+appLaunch+'" appActivity="'+appActivity+'" appName="'+appName+'"><span>'+appName+'</span></div>');
 			}
-			 appName = null
-			 appLaunch = null
-			 appActivity = null
+			var	 appName = null
+			var appLaunch = null
+			var appActivity = null
 		});
-		appListArray = null;
-		$appPanel = null
+		var appListArray = null;
+		var $appPanel = null
 }
 
 /*Clock CSS
@@ -37,21 +38,15 @@ function applistCallback(appList){
 
 //@ clockTimer - Nulls the setInterval object.
 //@ clockSec, clockHour, clockMin - Caches repeatedly Called DOM element.
-	clockTimer = null;
-	window.clockSec = document.getElementById("sec");
-	window.clockHour = document.getElementById("hour");
-	window.clockMin = document.getElementById("min");
-	
+	var clockTimer = null;
 function clock() {
-	date = new Date();
-	mins = date.getMinutes();
-	console.log("clock tick"); 
-	window.clockSec.style.WebkitTransform = "rotate(" + date.getSeconds() * 6 + "deg)";
-	window.clockHour.style.WebkitTransform = "rotate(" + date.getHours() * 30 + (mins / 2) + "deg)";
-	window.clockMin.style.WebkitTransform = "rotate(" + mins * 6 + "deg)";
-	
-	date = null;
-	mins = null;
+	var date = new Date()
+ 
+	document.getElementById("sec").style.WebkitTransform = "rotate(" + (date.getSeconds() * 6) + "deg)";
+	document.getElementById("hour").style.WebkitTransform = "rotate(" + (date.getHours() * 30 + (date.getMinutes() / 2)) + "deg)";
+	document.getElementById("min").style.WebkitTransform = "rotate(" + (date.getMinutes() * 6) + "deg)";
+
+	var date = null;
 }
 
 
@@ -67,33 +62,33 @@ function clock() {
 function switches(){
 	$( ".switch>div:first-child" ).each(function(){
 		$(this).draggable({containment: "parent",distance:0,
-			create: function( event, ui ) {},
+			create: function( event, ui ) {$('#slider>ul, #slider, #slider>ul>li').on('touchmove', function(e){e.stopPropagation();});},
 			stop: function( event, ui ) {
-				handle = $(this); //Switch Handle
-				switchID = $(handle).parent('.switch').attr('id');
-				handlePOS =  parseInt($(handle).css('left'))
+				var handle = $(this); //Switch Handle
+				var switchID = $(handle).parent('.switch').attr('id');
+				var handlePOS =  parseInt($(handle).css('left'))
 				
 				//Controls the switch state response on touch end.  Animates and called the switchCallback function passing its state and switch ID.
 				if(handlePOS >= 49){if(handlePOS != 100){$(handle).animate({left:'100px'}, 250).addClass('on');}  switchCallback({state:"on", id:switchID});}
 				if(handlePOS <= 50){$(handle).animate({left:'0px'}, 250).removeClass('on'); switchCallback({state:"off", id:switchID});}	  
 				
-				handlePOS = null;
-				switchID = null;
-				handle = null;
+				var handlePOS = null;
+				var switchID = null;
+				var handle = null;
 				
 			},
 			drag: function( event, ui ) {  
-				handle = $(this); //Switch Handle
-				handlePOS = parseInt($(handle).css('left'));
+				var handle = $(this); //Switch Handle
+				var handlePOS = parseInt($(handle).css('left'));
 				
 				//Controls the switch state response while dragging.  
 				if( handlePOS >= 49  && $(handle).hasClass('on') == false){$(handle).addClass('on'); }
 				if(handlePOS <= 50 && $(handle).hasClass('on') == true){$(handle).removeClass('on');}  
 				//Prevents the screen scroll while interacting with a switch.
-				$('#slider>ul, #slider, #slider>ul>li').on('touchmove', function(e){e.stopPropagation();});   
+				   
 				
-				handlePOS = null;
-				handle = null;
+				var handlePOS = null;
+				var handle = null;
 			}
 		});
 	});
@@ -103,8 +98,8 @@ function switches(){
 	//@ switchID - ID of the switch
 	//@ state - Current end state of the switch
 function switchCallback(args){
-	switchID = args.id || null;
-	state = args.state || null;
+	var switchID = args.id || null;
+	var state = args.state || null;
 	
 	/*Begin Theme Specific Editible Code*/
 		if(switchID === "toggle_fullScreen"){ 
@@ -138,14 +133,112 @@ function switchCallback(args){
 		if(switchID === "toggle_data" && state === "on"){
 			toggleData({state:"on"});
 		}
+		
+		
+		if(switchID === "toggle_Airplane" && state === "off"){
+			toggleAirplane({state:"off"});
+		}
+		if(switchID === "toggle_Airplane" && state === "on"){
+			toggleAirplane({state:"on"});
+		}
+		
+		if(switchID === "toggle_autoBrightness" && state === "off"){
+			screenBrightness({auto:"off"});
+		}
+		if(switchID === "toggle_autoBrightness" && state === "on"){
+			screenBrightness({auto:"on"});
+		}
+
 	/*End Theme Specific Editible Code*/
 }	
 	
 
+//Screenbrightness Controls Callback
+	// @ type - returns the type of value checked (will be 'sms' or 'calls')
+	// @ returnVal - returns an integer or OK.
+		// @ object_toggleWifi 
+
+function screenbrightnessCallback(args){
+	var value = args.value;
+	var check = args.check;
+	var float = args.float;
+	var toggle = args.toggle;
+	var auto = args.auto;
+	var returnVar = args.returnVar;	
+	
+	if(mode == "auto" && returnVar == 1 || check == "mode" && returnVar == 1){
+			
+	}
+	
+	if(mode == "auto" && returnVar == 0 || check == "mode" && returnVar == 0){
+		
+	}
+	
+	if(value > 0){
+		
+	}
+
+}
+
+
+//Volume Control Callback
+	// @ vol - returns the supplied volume type specified 'up/down/mute/silent/vibrate'
+	// @ type - returns the supplised volume control type 'media/ringer/mode/maxRinger/normal'
+	// @ check - returns the boolean true/false if the function is just being used to check information.
+	// @ returnVal - returns integers, strings or booleans depending on the combination of input commands when the initial function is called.
+		// @ object_toggle34G 
+	
+	 
+function volumecontrolsCallback(args){
+	var vol = args.vol
+	var type = args.type
+	var check = args.check
+	var returnVal = args.returnVal
+	/*Begin Theme Specific Editible Code*/
+		if(type == "ringer"){
+			//$object_valueringerVol.text('Ringer Vol: ' + returnVal)	
+		}
+		if(type == "media"){
+			$('#meter_mediaVol').siblings('div').text('Media Volume: ' + returnVal)	
+		}
+	/*End Theme Specific Editible Code*/
+}
+
+
+
+
+
+
+
+
+
+//Air Plane Mode Toggle
+function toggleairplaneCallback(args){
+	var returnVal = args.returnVal //Returns boolean - true/false
+	var state = args.state //Returns string - on/off
+	var check = args.check //Returns boolean - true/false
+		
+
+	/*Begin Theme Specific Editible Code*/
+		if(returnVal === false && $('#toggle_Airplane>div:first-child').hasClass('on') === true){
+			$('#toggle_Airplane>div:first-child').css('left', '0px').removeClass('on');
+		}
+		
+		if(returnVal === true && $('#toggle_Airplane>div:first-child').hasClass('on') === false){
+			$('#toggle_Airplane>div:first-child').css('left', '100px').addClass('on');	
+		}
+		setTimeout(function(){toggleWifi({check:"true"});}, 10000);
+	/*End Theme Specific Editible Code*/
+}
+
+
+
+
+
 //Fullscreen Toggle Callback
 	// @ returnVal - returns boolean true/false depending on if the app is full screen or not.
 function fullscreentoggleCallback(args){
-	returnVal = args.returnVal
+	var returnVal = args.returnVal
 	/*Begin Theme Specific Editible Code*/
 		if(returnVal != true){
 			$('#toggle_fullScreen>div:first-child').css('left', '0px').removeClass('on');
@@ -162,9 +255,9 @@ function fullscreentoggleCallback(args){
 	// @ returnVal - returns boolean true/false depending on if the data connection is on or off.
 	// @ state - returns the state on/off/toggle that was supplied in the original call.
 function togglewifiCallback(args){
-	 check = args.check
-	 returnVal = args.returnVal
-	 state = args.state
+	var check = args.check
+	var returnVal = args.returnVal
+	var state = args.state
 	
 	/*Begin Theme Specific Editible Code*/
 		if(returnVal === true && $('#toggle_wifi>div:first-child').hasClass('on') === false){
@@ -184,9 +277,9 @@ function togglewifiCallback(args){
 	// @ check - returns the boolean true/false if the function is just being used to check information.
 	// @ returnVal - returns boolean true/false depending on if the data connection is on or off.
 function toggledataCallback(args){
-	 returnVal = args.returnVal
-	 check = args.check
-	 state = args.state 
+	 var returnVal = args.returnVal
+	 var check = args.check
+	 var state = args.state 
 	 
 	/*Begin Theme Specific Editible Code*/
 		if(returnVal === true && $('#toggle_data>div:first-child').hasClass('on') === false){
@@ -215,10 +308,7 @@ function toggledataCallback(args){
 	//		This was done to simply the code, not a neccessary thing.
 	//	This function is called directly from within the Cordova API Java Plugin.
 	//		DO NOT CHANGE THE FUNCTION CALL BACK NAMESPACE!
-	// @ meterwifiBar - Caches repeatedly Called DOM element.
-	// @ meterwifiLabel - Caches repeatedly Called DOM element.
-		$meterwifiBar = $('#meter_Wifi').children('div');
-		$meterwifiLabel = $('#meter_Wifi').siblings('div');
+
 function wifisignalCallback(strengthDbm){
 	
 	/*Begin Theme Specific Editible Code*/
@@ -248,8 +338,8 @@ function wifisignalCallback(strengthDbm){
 }
 	//Used with the Wifi Signal Callback Function.
 	function wifiChange(percentage){
-		$meterwifiLabel.text('Wifi Signal: ' + percentage + '%');
-		$meterwifiBar.css('width', percentage + '%');
+		$('#meter_Wifi').siblings('div').text('Wifi Signal: ' + percentage + '%');
+		$('#meter_Wifi').children('div').css('width', percentage + '%');
 	}
 
 
@@ -265,10 +355,6 @@ function wifisignalCallback(strengthDbm){
 	//
 	//	This function is called directly from within the Cordova API Java Plugin.
 	//		DO NOT CHANGE THE FUNCTION CALL BACK NAMESPACE!
-		// @ object_datawifiSignal 
-	$metercellularBar = $('#meter_Cellular').children('div');
-	$metercellularLabel = $('#meter_Cellular').siblings('div');
-	
 function cellsignalCallback(strengthDbm){
 	/*Begin Theme Specific Editible Code*/
 		if (strengthDbm <= -97.75) { cellsignalChange(0); 
@@ -287,8 +373,8 @@ function cellsignalCallback(strengthDbm){
 }
 	//Used with the Cellular Signal Callback Function.
 	function cellsignalChange(percentage){
-		$metercellularLabel.text('Cellular Signal: ' + percentage + '%');
-		$metercellularBar.css('width', percentage + '%');
+		$('#meter_Cellular').siblings('div').text('Cellular Signal: ' + percentage + '%');
+		$('#meter_Cellular').children('div').css('width', percentage + '%');
 	}
 
 
@@ -297,17 +383,14 @@ function cellsignalCallback(strengthDbm){
 	// @.isPlugged - boolean true/false if the device is plugged in.
 	// @ .level - integer 0-100, battery level value
 	// @ info  - MUST be used as the callback Variable!  This is a Cordova requirement, not mine.
-	$meterbatteryBar = $('#meter_Battery').children('div');
-	$meterbatteryLabel = $('#meter_Battery').siblings('div');
-	
 function batterylevelCallback(info){ 
 	/*Begin Theme Specific Editible Code*/
 		if(info.isPlugged != false){
-			$meterbatteryLabel.text('Battery Charging:  '+info.level+'%');  
-			$meterbatteryBar.css('width', info.level + '%');
+			$('#meter_Battery').siblings('div').text('Battery Charging:  '+info.level+'%');  
+			$('#meter_Battery').children('div').css('width', info.level + '%');
 		}else{
-			$meterbatteryLabel.text('Battery Level:  '+info.level+'%'); 
-			$meterbatteryBar.css('width', info.level + '%');
+			$('#meter_Battery').siblings('div').text('Battery Level:  '+info.level+'%'); 
+			$('#meter_Battery').children('div').css('width', info.level + '%');
 		}
 	/*End Theme Specific Editible Code*/
 }
@@ -332,11 +415,11 @@ function launchappsCallback(args){
 
     // Handle the pause event
     function onPause() {
-		//clearInterval(window.clockTimer);
+		clearInterval(clockTimer);
 	}
 
 	
 	// Handle the resume event
 	function onResume() {
-		//window.clockTimer = setInterval(clock, 1000);
+		clockTimer = setInterval(clock, 1000);
 	}

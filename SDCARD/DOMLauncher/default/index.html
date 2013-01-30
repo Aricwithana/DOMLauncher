@@ -7,33 +7,33 @@
 <script type="text/javascript" src="file:///mnt/sdcard/DOMLauncher/default/js/swipe.min.js"></script>  
 
 <script>
-
-
-
-
 $(document).ready(function(){
-	themeLoaded();
-});
+	
 
-function themeLoaded(){
 	appList({refreshIcons:false});
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("resume", onResume, false);
-	//window.clockTimer = setInterval(clock, 1000 );
+	 clockTimer = setInterval(clock, 1000 );
 		
 	window.mySwipe = new Swipe(
 	  document.getElementById('slider')
 	);
 
-	
 	switches();
 	toggleStatusbar({check:"true"});
 	toggleWifi({check:"true"});
 	toggleData({check:"true"});
 	cellSiganl({action:"start"});
 	batteryLevel();
-}
-
+	toggleAirplane({check:"true"});
+	volumeControls({check:"true", type:"media"});
+	
+	$( "#slider_Brightness" ).slider({max:255, min:1,
+	  create: function( event, ui ) {$('#slider>ul, #slider, #slider>ul>li').on('touchmove', function(e){e.stopPropagation();});},
+	  change: function( event, ui ) {screenBrightness({value:''+ui.value+''});},
+	  slide: function(event,ui){   }
+	});	
+});
 </script>
 <div id='slider'  style="overflow:hidden; position:absolute; top:0px; left:0px; right:0px; bottom:125px;">
     <ul style="position:absolute; left:0px; top:0px; bottom:0px; overflow:hidden;">
@@ -41,6 +41,8 @@ function themeLoaded(){
             <div class="app" appLaunch="com.netflix.mediaclient"><span>Netflix</span></div>
             <div class="app" appLaunch="com.opera.browser"><span>Opera</span></div>
         
+        </li>
+        <li style='position:relative;'>
             <ul class="controlList" id="systemControls">
                 <li>
                     <div>FULLSCREEN</div><div id="toggle_fullScreen" class="switch"><div></div></div>
@@ -52,7 +54,7 @@ function themeLoaded(){
                     <div>DATA</div><div id="toggle_data" class="switch"><div></div></div>
                 </li>
                 <li> 
-                    <div>AIRPLANE</div><div id="toggle_airplane" class="switch"><div></div></div>
+                    <div>AIRPLANE</div><div id="toggle_Airplane" class="switch"><div></div></div>
                 </li>
                 <li> 
                     <div>AUTO-BRIGHTNESS</div><div id="toggle_autoBrightness" class="switch"><div></div></div>
@@ -65,6 +67,12 @@ function themeLoaded(){
                 </li>
                 <li> 
                     <div>Battery Level:</div><div id="meter_Battery" class="meter"><div></div></div>
+                </li>
+                <li> 
+                    <div>Brightness:</div><div id="slider_Brightness" class="slider"><div></div></div>
+                </li>
+                <li> 
+                    <div>Media Volumn:</div><div id="meter_mediaVol" class="slider"><div></div></div>
                 </li>
             </ul>
         </li>

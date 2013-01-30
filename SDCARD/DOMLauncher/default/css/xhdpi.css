@@ -54,7 +54,7 @@ table {
 body
 {	
 	overflow:hidden;
-	background-image:url(file:///mnt/sdcard/DOMLauncher/default/images/xhdpiBG.png);	
+	background-image:url(file:///mnt/sdcard/DOMLauncher/default/images/xhdpiBG.jpg);	
 }
 
 
@@ -196,8 +196,9 @@ body
 	background-position:center center;
 	background-repeate:no-repeat;
 	list-style: none;
-	zoom:.6;
 }
+
+
 
 #sec, #min, #hour 
 {
@@ -376,11 +377,13 @@ body
 
 	#systemControls
 	{
+/*		margin-right:auto;
+		margin-left:auto;
+		margin-top:50px;*/
 		position:absolute;
-		top:250px;
-		width:500px;
-		right:10px;
-			
+		top:50px;
+		left:50px;
+		width:500px;			
 	}
 	
 	
@@ -439,3 +442,45 @@ body
 
 
 
+
+
+
+/*!
+ * jQuery UI Slider 1.9.0
+ * http://jqueryui.com
+ *
+ * Copyright 2012 jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Slider#theming
+ */
+ 
+ 
+.slider.ui-slider { 
+	position: absolute; 
+	text-align: left; 	
+	width:200px;
+	height:50px;
+	position: absolute;
+	right: 18px;
+	top: 0px;
+	
+}
+
+.slider.ui-slider .ui-slider-handle { position: absolute; z-index: 2;  height: 100%; cursor: default; }
+.slider.ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; background-position: 0 0; }
+
+.slider.ui-slider-horizontal {}
+.ui-slider-horizontal:before{content:""; display:block; position:absolute; top:20px;  bottom:20px; left:0px; right:0px; border:2px solid  #393939;background-color:#141414;border-radius:10px;}
+.slider.ui-slider-horizontal .ui-slider-handle { top: 0px; width: 0px;}
+.ui-slider-horizontal .ui-slider-handle:before{content:""; display:block; position:absolute; top:0px;  left:-20px;bottom:0px; width:40px; border:2px solid  #393939;background-image: -webkit-linear-gradient(bottom, rgb(82,147,63) 55%, rgb(112,198,86) 100%);border-radius:10px;}
+.slider.ui-slider-horizontal .ui-slider-range { top: 0; height: 100%; }
+.slider.ui-slider-horizontal .ui-slider-range-min { left: 0; }
+.slider.ui-slider-horizontal .ui-slider-range-max { right: 0; }
+
+.slider.ui-slider-vertical { width: .8em; height: 100px; }
+.slider.ui-slider-vertical .ui-slider-handle { left: -.3em; margin-left: 0; margin-bottom: -.6em; }
+.slider.ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
+.slider.ui-slider-vertical .ui-slider-range-min { bottom: 0; }
+.slider.ui-slider-vertical .ui-slider-range-max { top: 0; }

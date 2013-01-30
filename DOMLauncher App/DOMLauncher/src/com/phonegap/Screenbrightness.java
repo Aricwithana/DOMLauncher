@@ -22,7 +22,8 @@ public class Screenbrightness extends Plugin {
 		
 		try {
 			String check = args.getJSONObject(0).getString("check");
-			String mode = args.getJSONObject(0).getString("mode");
+			String auto = args.getJSONObject(0).getString("auto");		
+			String toggle = args.getJSONObject(0).getString("toggle");
 			int value = args.getJSONObject(0).getInt("value");
 			float floater = args.getJSONObject(0).getInt("float");
 			float floaterFinal = floater/255;
@@ -41,7 +42,35 @@ public class Screenbrightness extends Plugin {
 			
 			
 
-			if(mode.equals("auto")){
+			if(auto.equals("on")){
+			//int getMode = Settings.System.getInt(this.cordova.getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE);			
+			
+				
+				Intent intent = new Intent(this.cordova.getActivity(), com.awaa.domlauncher.DummyBrightnessActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //this is important
+				//in the next line 'brightness' should be a float number between 0.0 and 1.0
+				intent.putExtra("toggle mode", 1); 
+				
+				this.cordova.getActivity().startActivity(intent);					
+				
+				int modeSend = 1;
+				return new PluginResult(PluginResult.Status.OK, modeSend);
+			}
+			
+			if(auto.equals("off")){
+								
+				Intent intent = new Intent(this.cordova.getActivity(), com.awaa.domlauncher.DummyBrightnessActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //this is important
+				//in the next line 'brightness' should be a float number between 0.0 and 1.0
+				intent.putExtra("toggle mode", 0); 		
+				this.cordova.getActivity().startActivity(intent);
+				
+				
+				int modeSend = 0;
+				return new PluginResult(PluginResult.Status.OK, modeSend);
+			}
+		
+			if(toggle.equals("true")){
 				int getMode = Settings.System.getInt(this.cordova.getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE);			
 				if(getMode == 1){
 					
