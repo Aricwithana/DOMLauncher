@@ -33,6 +33,17 @@ $(document).ready(function(){
 	  change: function( event, ui ) {screenBrightness({value:''+ui.value+''});},
 	  slide: function(event,ui){   }
 	});	
+	
+	$( "#slider_mediaVol" ).slider({max:100, min:0,
+	  create: function( event, ui ) {$('#slider>ul, #slider, #slider>ul>li').on('touchmove', function(e){e.stopPropagation();});},
+	  change: function( event, ui ) {},
+	  slide: function(event,ui){volumeControls({type:"media", percentage:''+ui.value+''}); }
+	});	
+	$( "#slider_ringerVol" ).slider({max:100, min:0,
+	  create: function( event, ui ) {$('#slider>ul, #slider, #slider>ul>li').on('touchmove', function(e){e.stopPropagation();});},
+	  change: function( event, ui ) {},
+	  slide: function(event,ui){volumeControls({type:"ringer", toast:"off", percentage:''+ui.value+''}); }
+	});	
 });
 </script>
 <div id='slider'  style="overflow:hidden; position:absolute; top:0px; left:0px; right:0px; bottom:125px;">
@@ -72,7 +83,16 @@ $(document).ready(function(){
                     <div>Brightness:</div><div id="slider_Brightness" class="slider"><div></div></div>
                 </li>
                 <li> 
-                    <div>Media Volumn:</div><div id="meter_mediaVol" class="slider"><div></div></div>
+                    <div>Media Volumn:</div><div id="slider_mediaVol" class="slider"><div></div></div>
+                </li>
+                <li> 
+                    <div>Ringer Volumn:</div><div id="slider_ringerVol" class="slider"><div></div></div>
+                </li>
+                <li> 
+                    <div>Ringer Silent</div><div id="toggle_ringerSilent" class="switch"><div></div></div>
+                </li>
+                <li> 
+                    <div>Ringer Vibrate</div><div id="toggle_ringerVibrate" class="switch"><div></div></div>
                 </li>
             </ul>
         </li>

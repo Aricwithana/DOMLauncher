@@ -40,9 +40,11 @@ function volumeControls(args){
 	 var vol = args.vol || false; 
 	 var type = args.type || false;
 	 var check = args.check || false;
+	 var percentage = args.percentage || -1;
+	 var toast = args.toast || true
 	//Initisates the Volumn Control Cordova Plugin
-	window.plugins.volumecontrols.show({vol:vol, type:type, check:check}, //Passes the retrived information to the Cordova Plugin.
-		function(returnVal) {volumecontrolsCallback({vol:vol, type:type, check:check, returnVal:returnVal});},// Cordova Plugin Success Function.  Triggers callback, passes back all sent variables and returned var.
+	window.plugins.volumecontrols.show({vol:vol, type:type, check:check, percentage:percentage, toast:toast}, //Passes the retrived information to the Cordova Plugin.
+		function(returnVal) {volumecontrolsCallback({vol:vol, type:type, check:check, returnVal:returnVal, percentage:percentage});},// Cordova Plugin Success Function.  Triggers callback, passes back all sent variables and returned var.
 		function() {alert('Vol Change Error');}); // Cordova Plugin Failure function
 }
 

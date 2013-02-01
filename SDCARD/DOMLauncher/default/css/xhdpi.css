@@ -331,6 +331,7 @@ body
 {
 	background-image: -webkit-linear-gradient(bottom, rgb(82,147,63) 55%, rgb(112,198,86) 100%);	
 	color:#efff97;
+	
 }
 
 .switch>div.on:before

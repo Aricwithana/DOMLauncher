@@ -147,8 +147,23 @@ function switchCallback(args){
 		}
 		if(switchID === "toggle_autoBrightness" && state === "on"){
 			screenBrightness({auto:"on"});
+		}		
+		
+		if(switchID === "toggle_ringerSilent" && state === "off"){
+			volumeControls({type:"ringer", vol:"normal"});
 		}
-
+		if(switchID === "toggle_ringerSilent" && state === "on"){
+			volumeControls({type:"ringer", vol:"silent"});
+		}	
+		
+		if(switchID === "toggle_ringerVibrate" && state === "off"){
+			volumeControls({type:"ringer", vol:"normal"});
+		}
+		if(switchID === "toggle_ringerVibrate" && state === "on"){
+			volumeControls({type:"ringer", vol:"vibrate"});
+		}	
+		
+			
 	/*End Theme Specific Editible Code*/
 }	
 	
@@ -194,12 +209,14 @@ function volumecontrolsCallback(args){
 	var type = args.type
 	var check = args.check
 	var returnVal = args.returnVal
+	var percentage = args.percentage
+	var toast = args.toast
 	/*Begin Theme Specific Editible Code*/
 		if(type == "ringer"){
-			//$object_valueringerVol.text('Ringer Vol: ' + returnVal)	
+			$('#slider_ringerVol').siblings('div').text('Ringer Volume: ' + returnVal);	
 		}
 		if(type == "media"){
-			$('#meter_mediaVol').siblings('div').text('Media Volume: ' + returnVal)	
+			$('#slider_mediaVol').siblings('div').text('Media Volume: ' + returnVal);	
 		}
 	/*End Theme Specific Editible Code*/
 }

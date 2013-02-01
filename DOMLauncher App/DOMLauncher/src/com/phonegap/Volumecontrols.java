@@ -23,8 +23,11 @@ public class Volumecontrols extends Plugin {
 			
 			AudioManager audioManager = (AudioManager)this.cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
 			String vol = args.getJSONObject(0).getString("vol");
+			String toast = args.getJSONObject(0).getString("toast");
 			String type = args.getJSONObject(0).getString("type");
 			String check = args.getJSONObject(0).getString("check");
+			String percentage = args.getJSONObject(0).getString("percentage");
+			int percentVal = Integer.parseInt(percentage);
 			int ringerMode = audioManager.getRingerMode();
 			
 			if(check.equals("true")){
@@ -62,166 +65,194 @@ public class Volumecontrols extends Plugin {
 			}else{
 				if(type.equals("media")){
 									
-					if(vol.equals("up")){
-						int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);										
-						int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-						
-						if(curVolume != maxVolume){
-																								//FLAG_REMOVE_SOUND_AND_VIBRATE
-							audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, curVolume + 1, AudioManager.FLAG_SHOW_UI);
-							return new PluginResult(PluginResult.Status.OK, curVolume + 1);
-						}else{
-							
-							String maxVol = "max";
-							return new PluginResult(PluginResult.Status.OK, maxVol);
-							
-						}
-					}
-	
-					if(vol.equals("down")){	
-															
-						int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-						
-						if(curVolume != 0){
-						
-							audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, curVolume - 1, AudioManager.FLAG_SHOW_UI);
-							return new PluginResult(PluginResult.Status.OK, curVolume - 1);
-						}else{
-							
-							String minVol = "min";
-							return new PluginResult(PluginResult.Status.OK, minVol);
-							
-						}
-					}
 					
-					if(vol.equals("mute")){						
-							audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_SHOW_UI);
-							String muteTrue = "mute";
-							return new PluginResult(PluginResult.Status.OK, muteTrue);
-							
+					if(percentVal >= 0){
+						
+						int mediaVal = (percentVal * audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)) / 100;
+				
+						if(toast.equals("off")){
+							audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mediaVal, 0);
+							return new PluginResult(PluginResult.Status.OK, mediaVal );
+						}else{
+							audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mediaVal, AudioManager.FLAG_SHOW_UI);
+							return new PluginResult(PluginResult.Status.OK, mediaVal );
 						}
+					}else{
+						if(vol.equals("up")){
+							int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);										
+							int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+							
+							if(curVolume != maxVolume){
+								if(toast.equals("off")){																	
+									audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, curVolume + 1, 0);
+									return new PluginResult(PluginResult.Status.OK, curVolume + 1);
+								}else{
+									audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, curVolume + 1, AudioManager.FLAG_SHOW_UI);
+									return new PluginResult(PluginResult.Status.OK, curVolume + 1);
+								}
+							}else{
+								
+								String maxVol = "max";
+								return new PluginResult(PluginResult.Status.OK, maxVol);
+								
+							}
+						}
+		
+						if(vol.equals("down")){	
+																
+							int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+							
+							if(curVolume != 0){
+								if(toast.equals("off")){
+									audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, curVolume - 1, AudioManager.FLAG_SHOW_UI);
+									return new PluginResult(PluginResult.Status.OK, curVolume - 1);
+								}else{
+									audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, curVolume - 1, AudioManager.FLAG_SHOW_UI);
+									return new PluginResult(PluginResult.Status.OK, curVolume - 1);
+								}
+							}else{
+								
+								String minVol = "min";
+								return new PluginResult(PluginResult.Status.OK, minVol);
+								
+							}
+						}
+						
+						if(vol.equals("mute")){						
+							if(toast.equals("off")){
+								audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
+								String muteTrue = "mute";
+								return new PluginResult(PluginResult.Status.OK, muteTrue);
+							}else{
+								audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_SHOW_UI);
+								String muteTrue = "mute";
+								return new PluginResult(PluginResult.Status.OK, muteTrue);
+							}
+						}
+						return new PluginResult(PluginResult.Status.OK);
 					}
-					
-				
-				
 				}
+					
+				
+				
+				
 				
 			 //int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
 					//audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, AudioManager.FLAG_SHOW_UI);
 				
 				if(type.equals("ringer")){
 					
-					if(vol.equals("up")){
-						int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);										
-						int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
-					
-						if(curVolume != maxVolume){
-							audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);	
-							audioManager.setStreamVolume(AudioManager.STREAM_RING, curVolume + 1, AudioManager.FLAG_SHOW_UI);
-							return new PluginResult(PluginResult.Status.OK, curVolume + 1);
-							
-							
-						}else{
-							
-							String maxVol = "max";
-							return new PluginResult(PluginResult.Status.OK, maxVol);
-							
-						}
-					}
-		
-					if(vol.equals("down")){	
-						Log.d(id, "Down Yes");									
-						int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+					if(percentVal >= 0){
 						
-						if(curVolume != 0){
+						int volumeVal = (percentVal  * audioManager.getStreamMaxVolume(AudioManager.STREAM_RING)) / 100;
+						
+						if(toast.equals("off")){
+							audioManager.setStreamVolume(AudioManager.STREAM_RING, volumeVal, 0);
+							return new PluginResult(PluginResult.Status.OK, volumeVal);
+						}else{
+							audioManager.setStreamVolume(AudioManager.STREAM_RING, volumeVal, AudioManager.FLAG_SHOW_UI);
+							return new PluginResult(PluginResult.Status.OK, volumeVal);
+						}
+					}else{
+					
+					
+					
+						if(vol.equals("up")){
+							int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);										
+							int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+						
+							if(curVolume != maxVolume){
+								if(toast.equals("off")){
+									audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);	
+									audioManager.setStreamVolume(AudioManager.STREAM_RING, curVolume + 1, 0);
+									return new PluginResult(PluginResult.Status.OK, curVolume + 1);
+								}else{
+									audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);	
+									audioManager.setStreamVolume(AudioManager.STREAM_RING, curVolume + 1, AudioManager.FLAG_SHOW_UI);
+									return new PluginResult(PluginResult.Status.OK, curVolume + 1);
+								}
+								
+							}else{
+								
+								String maxVol = "max";
+								return new PluginResult(PluginResult.Status.OK, maxVol);
+								
+							}
+						}
+			
+						if(vol.equals("down")){	
+							Log.d(id, "Down Yes");									
+							int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+							
+							if(curVolume != 0){
+								if(toast.equals("off")){
+									audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+									audioManager.setStreamVolume(AudioManager.STREAM_RING, curVolume - 1, 0);
+									return new PluginResult(PluginResult.Status.OK, curVolume - 1);
+								}else{
+									audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+									audioManager.setStreamVolume(AudioManager.STREAM_RING, curVolume - 1, AudioManager.FLAG_SHOW_UI);
+									return new PluginResult(PluginResult.Status.OK, curVolume - 1);
+								}
+							}else{
+								
+								String minVol = "min";
+								return new PluginResult(PluginResult.Status.OK, minVol);						
+							}
+						}				
+					
+						if(vol.equals("vibrate")){	
+												
+							if(ringerMode == 1){	
+								audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+								String vibNorm = "normal";Log.d(id, "Ringer Mode:  " +ringerMode);
+								return new PluginResult(PluginResult.Status.OK, vibNorm);
+							
+							}else{Log.d(id, "Ringer Mode:  " +ringerMode);
+								audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+								String ringerVib = "vibrate";
+								return new PluginResult(PluginResult.Status.OK, ringerVib);
+							}
+						}							
+							
+						
+						if(vol.equals("silent")){	
+							
+							if(ringerMode == 0){
+							
 							audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-							audioManager.setStreamVolume(AudioManager.STREAM_RING, curVolume - 1, AudioManager.FLAG_SHOW_UI);
-							return new PluginResult(PluginResult.Status.OK, curVolume - 1);
-							
-						}else{
-							
-							String minVol = "min";
-							return new PluginResult(PluginResult.Status.OK, minVol);						
-						}
-					}				
-				
-					if(vol.equals("vibrate")){	
-											
-						if(ringerMode == 1){	
-						audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-						String vibNorm = "normal";Log.d(id, "Ringer Mode:  " +ringerMode);
-						return new PluginResult(PluginResult.Status.OK, vibNorm);
-						
-						}else{Log.d(id, "Ringer Mode:  " +ringerMode);
-							audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
-							String ringerVib = "vibrate";
-							return new PluginResult(PluginResult.Status.OK, ringerVib);
-						}
-					}							
-						
-					
-					if(vol.equals("silent")){	
-						
-						if(ringerMode == 0){
-						
-						audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-						String ringerNorm = "normal";
-						return new PluginResult(PluginResult.Status.OK, ringerNorm);
-
-						}else{
-							audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-						String ringerSil = "silent";
-						return new PluginResult(PluginResult.Status.OK, ringerSil);
-						}			
-					}					
-					
-								
-					if(vol.equals("normal")){	
-											
-					audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-					String ringerNorm = "normal";
-					return new PluginResult(PluginResult.Status.OK, ringerNorm);
-
-					}		
-								
-				
-				
-				
-				}
-				
-				
-				
-			
+							String ringerNorm = "normal";
+							return new PluginResult(PluginResult.Status.OK, ringerNorm);
 	
-			
-			
+							}else{
+								audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+							String ringerSil = "silent";
+							return new PluginResult(PluginResult.Status.OK, ringerSil);
+							}			
+						}					
+						
+									
+						if(vol.equals("normal")){	
+												
+						audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+						
+						int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+						return new PluginResult(PluginResult.Status.OK, curVolume);
+	
+						}											
+					}
+					return new PluginResult(PluginResult.Status.OK);
+				}			
+			}	
+
 		 } catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();				 
 		 }
 		 
 		 
-		 	
-		 	return new PluginResult(PluginResult.Status.OK);
-		    
-		
-        
-		   
-    	
-        
-		    
-		    
-		    //Log.d(id, "is connected:" + bleh);
-			
-
+		 return new PluginResult(PluginResult.Status.OK);	    
 	}  
-	
-	
-	
-
-	  
-	
-
 }
      
 
