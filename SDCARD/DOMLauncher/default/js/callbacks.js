@@ -1,3 +1,68 @@
+clockTimer = null;
+missedcallsTimer = null;
+missedsmsTimer = null;
+
+function themeLoaded(){
+	
+
+	appList({refreshIcons:false});
+	document.addEventListener("pause", onPause, false);
+	document.addEventListener("resume", onResume, false);
+	clockTimer = setInterval(clock, 1000 );
+	switches();
+	toggleStatusbar({check:"true"});
+	toggleWifi({check:"true"});
+	toggleData({check:"true"});
+	cellSiganl({action:"start"});
+	batteryLevel();
+	toggleAirplane({check:"true"});
+	volumeControls({check:"true", type:"media"});
+	volumeControls({check:"true", type:"ringer"});
+	missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
+	missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
+
+	
+	/*	document.getElementById('systemControls').ontouchstart = function(e){
+		leftVal = parseInt(this.style.left, 10);
+		touch = event.touches[0];
+		x = touch.pageX;
+		
+			this.ontouchmove = function(e){
+				pos = e.changedTouches[0].pageX;
+				
+				if( pos < x){
+					this.style.left = leftVal - (x - pos)+"px";
+				}
+				
+				if( pos > x){
+					this.style.left = leftVal + (pos - x)+"px";
+				}
+				
+			}
+		}*/
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // requestedPercentageVolume / 100 * getSteamMaxVolume()
 function applistCallback(appList){	
 		//Parse the appList
@@ -38,7 +103,6 @@ function applistCallback(appList){
 
 //@ clockTimer - Nulls the setInterval object.
 //@ clockSec, clockHour, clockMin - Caches repeatedly Called DOM element.
-	var clockTimer = null;
 function clock() {
 	var date = new Date()
  
@@ -54,6 +118,7 @@ function clock() {
 
 
 
+
 /*Switches Widget Plugin
 *	This plugin creates native-like switches.  Each element with the secified class
 *		and correct DOM structure will create a working switch.  There is no 'universal'
@@ -62,16 +127,17 @@ function clock() {
 function switches(){
 	$( ".switch>div:first-child" ).each(function(){
 		$(this).draggable({containment: "parent",distance:0,
-			create: function( event, ui ) {$('#slider>ul, #slider, #slider>ul>li').on('touchmove', function(e){e.stopPropagation();});},
+			create: function( event, ui ) {
+			},
 			stop: function( event, ui ) {
 				var handle = $(this); //Switch Handle
 				var switchID = $(handle).parent('.switch').attr('id');
 				var handlePOS =  parseInt($(handle).css('left'))
 				
 				//Controls the switch state response on touch end.  Animates and called the switchCallback function passing its state and switch ID.
-				if(handlePOS >= 49){if(handlePOS != 100){$(handle).animate({left:'100px'}, 250).addClass('on');}  switchCallback({state:"on", id:switchID});}
-				if(handlePOS <= 50){$(handle).animate({left:'0px'}, 250).removeClass('on'); switchCallback({state:"off", id:switchID});}	  
-				
+				if(handlePOS >= 49){if(handlePOS != 100){$(handle).css('left', '100px').addClass('on');}  switchCallback({state:"on", id:switchID});}
+				if(handlePOS <= 50){$(handle).css('left', '0px').removeClass('on'); switchCallback({state:"off", id:switchID});}	  
+				 
 				var handlePOS = null;
 				var switchID = null;
 				var handle = null;
@@ -85,7 +151,7 @@ function switches(){
 				if( handlePOS >= 49  && $(handle).hasClass('on') == false){$(handle).addClass('on'); }
 				if(handlePOS <= 50 && $(handle).hasClass('on') == true){$(handle).removeClass('on');}  
 				//Prevents the screen scroll while interacting with a switch.
-				   
+
 				
 				var handlePOS = null;
 				var handle = null;
@@ -213,10 +279,10 @@ function volumecontrolsCallback(args){
 	var toast = args.toast
 	/*Begin Theme Specific Editible Code*/
 		if(type == "ringer"){
-			$('#slider_ringerVol').siblings('div').text('Ringer Volume: ' + returnVal);	
+			document.getElementById('slider_ringerVol').parentNode.childNodes[1].innerHTML = 'Ringer Volume: ' + returnVal;
 		}
 		if(type == "media"){
-			$('#slider_mediaVol').siblings('div').text('Media Volume: ' + returnVal);	
+			document.getElementById('slider_mediaVol').parentNode.childNodes[1].innerHTML = 'Media Volume: ' + returnVal;
 		}
 	/*End Theme Specific Editible Code*/
 }
@@ -237,12 +303,16 @@ function toggleairplaneCallback(args){
 		
 
 	/*Begin Theme Specific Editible Code*/
-		if(returnVal === false && $('#toggle_Airplane>div:first-child').hasClass('on') === true){
-			$('#toggle_Airplane>div:first-child').css('left', '0px').removeClass('on');
+		if(returnVal === false && document.getElementById('toggle_Airplane').firstChild.classList.contains('on') === true){
+			//$('#toggle_Airplane>div').css('left', '0px').removeClass('on');
+			document.getElementById('toggle_Airplane').firstChild.style.left = "0px";
+			document.getElementById('toggle_Airplane').firstChild.className = "";
 		}
 		
-		if(returnVal === true && $('#toggle_Airplane>div:first-child').hasClass('on') === false){
-			$('#toggle_Airplane>div:first-child').css('left', '100px').addClass('on');	
+		if(returnVal === true && document.getElementById('toggle_Airplane').firstChild.classList.contains('on') === false){
+			//$('#toggle_Airplane>div').css('left', '100px').addClass('on');	
+			document.getElementById('toggle_Airplane').firstChild.style.left = "100px";
+			document.getElementById('toggle_Airplane').firstChild.className = "on";
 		}
 		setTimeout(function(){toggleWifi({check:"true"});}, 10000);
 	/*End Theme Specific Editible Code*/
@@ -258,9 +328,11 @@ function fullscreentoggleCallback(args){
 	var returnVal = args.returnVal
 	/*Begin Theme Specific Editible Code*/
 		if(returnVal != true){
-			$('#toggle_fullScreen>div:first-child').css('left', '0px').removeClass('on');
+			document.getElementById('toggle_fullScreen').firstChild.style.left = "0px";
+			document.getElementById('toggle_fullScreen').firstChild.className = "";
 		}else{
-			$('#toggle_fullScreen>div:first-child').css('left', '100px').addClass('on');
+			document.getElementById('toggle_fullScreen').firstChild.style.left = "100px";
+			document.getElementById('toggle_fullScreen').firstChild.className = "on";
 		}
 	/*End Theme Specific Editible Code*/
 }
@@ -277,11 +349,13 @@ function togglewifiCallback(args){
 	var state = args.state
 	
 	/*Begin Theme Specific Editible Code*/
-		if(returnVal === true && $('#toggle_wifi>div:first-child').hasClass('on') === false){
-			$('#toggle_wifi>div:first-child').animate({left: '100px'}, 250).addClass('on');
+		if(returnVal === true && document.getElementById('toggle_wifi').firstChild.classList.contains('on') === false){
+			document.getElementById('toggle_wifi').firstChild.style.left = "100px";
+			document.getElementById('toggle_wifi').firstChild.className = "on";
 		}
-		if(returnVal === false && $('#toggle_wifi>div:first-child').hasClass('on') === true){
-			$('#toggle_wifi>div:first-child').animate({left: '0px'}, 250).removeClass('on');
+		if(returnVal === false && document.getElementById('toggle_wifi').firstChild.classList.contains('on') === true){
+			document.getElementById('toggle_wifi').firstChild.style.left = "0px";
+			document.getElementById('toggle_wifi').firstChild.className = "";
 		}
 		//Until there is a 'state listener' for when connections turn on and off, this timeout is needed to correctly respond to if the data connecton is active or not.
 		setTimeout(function(){toggleData({check:"true"});}, 10000);
@@ -299,11 +373,13 @@ function toggledataCallback(args){
 	 var state = args.state 
 	 
 	/*Begin Theme Specific Editible Code*/
-		if(returnVal === true && $('#toggle_data>div:first-child').hasClass('on') === false){
-			$('#toggle_data>div:first-child').animate({left: '100px'}, 250).addClass('on');
+		if(returnVal === true && document.getElementById('toggle_data').firstChild.classList.contains('on') === false){
+			document.getElementById('toggle_data').firstChild.style.left = "100px";
+			document.getElementById('toggle_data').firstChild.className = "on";
 		}
-		if(returnVal === false && $('#toggle_data>div:first-child').hasClass('on') === true){
-			$('#toggle_data>div:first-child').animate({left: '0px'}, 250).removeClass('on');
+		if(returnVal === false && document.getElementById('toggle_data').firstChild.classList.contains('on') === true){
+			document.getElementById('toggle_data').firstChild.style.left = "0px";
+			document.getElementById('toggle_data').firstChild.className = "";
 		}
 	/*End Theme Specific Editible Code*/
 }
@@ -355,8 +431,8 @@ function wifisignalCallback(strengthDbm){
 }
 	//Used with the Wifi Signal Callback Function.
 	function wifiChange(percentage){
-		$('#meter_Wifi').siblings('div').text('Wifi Signal: ' + percentage + '%');
-		$('#meter_Wifi').children('div').css('width', percentage + '%');
+		document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: ' + percentage + '%';
+		document.getElementById('meter_Wifi').firstChild.style.width = percentage + '%';
 	}
 
 
@@ -374,24 +450,25 @@ function wifisignalCallback(strengthDbm){
 	//		DO NOT CHANGE THE FUNCTION CALL BACK NAMESPACE!
 function cellsignalCallback(strengthDbm){
 	/*Begin Theme Specific Editible Code*/
-		if (strengthDbm <= -97.75) { cellsignalChange(0); 
-		} else if (strengthDbm > -97.75 && strengthDbm <= -95.5) { cellsignalChange(10);  
-		} else if (strengthDbm > -95.5 && strengthDbm <= -93.25) { cellsignalChange(20);
-		} else if (strengthDbm > -93.25 && strengthDbm <= -91) { cellsignalChange(30);
-		} else if (strengthDbm > -91 && strengthDbm <= -88.75) { cellsignalChange(40);
-		} else if (strengthDbm > -88.75 && strengthDbm <= -86.5) { cellsignalChange(50);
-		} else if (strengthDbm > -86.5 && strengthDbm <= -84.25) { cellsignalChange(60);
-		} else if (strengthDbm > -84.25 && strengthDbm <= -82) { cellsignalChange(70);
-		} else if (strengthDbm > -82 && strengthDbm <= -79.75) { cellsignalChange(80);
-		} else if (strengthDbm > -79.75 && strengthDbm <= -77.5) { cellsignalChange(90);
-		} else if (strengthDbm > -77.5 && strengthDbm <= -75.25) { cellsignalChange(100);
+		if (strengthDbm <= -97.75) { cellsignalChange("0%"); 
+		} else if (strengthDbm > -97.75 && strengthDbm <= -95.5) { cellsignalChange("10%");  
+		} else if (strengthDbm > -95.5 && strengthDbm <= -93.25) { cellsignalChange("20%");
+		} else if (strengthDbm > -93.25 && strengthDbm <= -91) { cellsignalChange("30%");
+		} else if (strengthDbm > -91 && strengthDbm <= -88.75) { cellsignalChange("40%");
+		} else if (strengthDbm > -88.75 && strengthDbm <= -86.5) { cellsignalChange("50%");
+		} else if (strengthDbm > -86.5 && strengthDbm <= -84.25) { cellsignalChange("60%");
+		} else if (strengthDbm > -84.25 && strengthDbm <= -82) { cellsignalChange("70%");
+		} else if (strengthDbm > -82 && strengthDbm <= -79.75) { cellsignalChange("80%");
+		} else if (strengthDbm > -79.75 && strengthDbm <= -77.5) { cellsignalChange("90%");
+		} else if (strengthDbm > -77.5 && strengthDbm <= -75.25) { cellsignalChange("100%");
 		}
 	/*End Theme Specific Editible Code*/
 }
 	//Used with the Cellular Signal Callback Function.
 	function cellsignalChange(percentage){
-		$('#meter_Cellular').siblings('div').text('Cellular Signal: ' + percentage + '%');
-		$('#meter_Cellular').children('div').css('width', percentage + '%');
+		document.getElementById('meter_Cellular').previousSibling.innerHTML = 'Cellular Signal: ' + percentage;
+		document.getElementById('meter_Cellular').firstChild.style.width = percentage;
+		//$('#meter_Cellular').children('div').css('width', percentage + '%');
 	}
 
 
@@ -403,11 +480,11 @@ function cellsignalCallback(strengthDbm){
 function batterylevelCallback(info){ 
 	/*Begin Theme Specific Editible Code*/
 		if(info.isPlugged != false){
-			$('#meter_Battery').siblings('div').text('Battery Charging:  '+info.level+'%');  
-			$('#meter_Battery').children('div').css('width', info.level + '%');
+			document.getElementById('meter_Battery').parentNode.childNodes[1].innerHTML = 'Battery Charging:  '+info.level+'%';
+			document.getElementById('meter_Battery').firstChild.style.width = info.level + '%';
 		}else{
-			$('#meter_Battery').siblings('div').text('Battery Level:  '+info.level+'%'); 
-			$('#meter_Battery').children('div').css('width', info.level + '%');
+			document.getElementById('meter_Battery').parentNode.childNodes[1].innerHTML = 'Battery Level:  '+info.level+'%';
+			document.getElementById('meter_Battery').firstChild.style.width = info.level + '%';
 		}
 	/*End Theme Specific Editible Code*/
 }
@@ -429,14 +506,52 @@ function launchappsCallback(args){
 }
 
 
+//Missed Communications Callback
+	// @ type - returns the type of value checked (will be 'sms' or 'calls')
+	// @ returnVal - returns an integer or OK.
+function missedcommunicationsCallback(args){
+		var type = args.type;
+		var returnVal = args.returnVal
+	/*Begin Theme Specific Editible Code*/
+		if(type == "calls"){
+			$('#dialer_mainScreen').attr('data-missed', returnVal);
+			if(returnVal != 0 && $('#dialer_mainScreen').hasClass('missedCommunications') === true){
+				$('#dialer_mainScreen').addClass('missedCommunications')	
+			}
+			if(returnVal === 0 && $('#txtmsg_mainScreen').hasClass('missedCommunications') === false){
+				$('#txtmsg_mainScreen').removeClass('missedCommunications')	
+			}
+		}
+		
+		if(type == "sms"){
+			$('#txtmsg_mainScreen').attr('data-missed', returnVal);
+			if(returnVal != 0 && $('#txtmsg_mainScreen').hasClass('missedCommunications') === false){
+				$('#txtmsg_mainScreen').addClass('missedCommunications');
+			}
+			if(returnVal === 0 && $('#txtmsg_mainScreen').hasClass('missedCommunications') === true){
+				$('#txtmsg_mainScreen').removeClass('missedCommunications');
+			}
+			
+		}
+		
+		
+	/*End Theme Specific Editible Code*/
+}
 
     // Handle the pause event
     function onPause() {
 		clearInterval(clockTimer);
+		clearInterval(missedcallsTimer);
+		clearInterval(missedsmsTimer);
+		clockTimer = null;
+		missedcallsTimer = null;
+		missedsmsTimer = null;	
 	}
 
 	
 	// Handle the resume event
 	function onResume() {
 		clockTimer = setInterval(clock, 1000);
+		missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 30000);
+		missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 30000);
 	}

@@ -69,7 +69,7 @@ public class Volumecontrols extends Plugin {
 					if(percentVal >= 0){
 						
 						int mediaVal = (percentVal * audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)) / 100;
-				
+						
 						if(toast.equals("off")){
 							audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mediaVal, 0);
 							return new PluginResult(PluginResult.Status.OK, mediaVal );

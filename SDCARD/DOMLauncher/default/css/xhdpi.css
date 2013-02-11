@@ -58,7 +58,23 @@ body
 }
 
 
-
+.missedCommunications:after
+{
+	display:block;
+	height:25px;
+	width:25px;
+	border-radius:25px;
+	background-image: -webkit-radial-gradient(0% 0%, ellipse cover, #F3C5BD 10%, #E86C57 50%, #EA2803 51%, #F60 75%, #C72200 100%);	border:3px solid white;
+	font-size:140%;
+	content:attr(data-missed);	
+	position:absolute;
+	top:-5px;
+	right:-5px;	
+	line-height:25px;
+	color:white;
+	font-weight:bold;
+	-webkit-box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, .5);
+}
 
 .app, .btn
 {
@@ -189,7 +205,7 @@ body
 {
 	position: absolute;
 	top:10px;
-	right:25px;
+	left:300%;
 	width: 600px;
 	height: 600px;
 	background: url(file:///mnt/sdcard/DOMLauncher/default/images/clockface.png);
@@ -311,7 +327,9 @@ body
 	color:#ccedfe;
 	z-index:2;
 	left:0px;
-}
+	-webkit-transition: left .1s;
+/*-webkit-transition: all 0.3s ease-out;
+*/}
 
 .switch>div:first-child:before
 {
@@ -383,8 +401,10 @@ body
 		margin-top:50px;*/
 		position:absolute;
 		top:50px;
-		left:50px;
-		width:500px;			
+		left:120%;
+		width:500px;
+		max-height:75%;
+		overflow:scroll;
 	}
 	
 	
@@ -441,6 +461,33 @@ body
 
 
 
+
+
+
+
+input[type='range'] {
+    -webkit-appearance: none !important;
+	text-align: left; 	
+	width:200px;
+	height:10px;
+	border:2px solid  #393939;
+	background-color:#141414;
+	border-radius:10px;
+	margin-top:20px;
+}
+
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+	display:block; 
+	width:40px; 
+	height:50px; 
+	border:2px solid  #393939;
+	background-image: -webkit-linear-gradient(bottom, rgb(82,147,63) 55%, rgb(112,198,86) 100%);
+	border-radius:10px;
+	z-index:2;
+	position:relative;
+	border-radius:10px;
+}
 
 
 

@@ -22,13 +22,3 @@ $(document).on('click', '*[appLaunch], *[settings]', function() {
 });
 
 
-/*$('.switch>div:last-child').on('touchend', function(){
-	handle = $(this).siblings('div');
-	switchID = $(this).parent('.switch').attr('id');
-	handlePOS = parseInt($(handle).css('left'));
-	
-	if(handlePOS <= 49){$(handle).animate({left:'100px'}, 250).addClass('on'); switchCallback({state:"on", id:switchID});}
-	if(handlePOS >= 50){$(handle).animate({left:'0px'}, 250).removeClass('on');switchCallback({state:"off", id:switchID});}	  
-	handlePOS = null;
-	handle = null;
-});	*/

@@ -66,6 +66,9 @@
 						$('body').load('file:///mnt/sdcard/DOMLauncher/'+tmPath+'/index.html',    function (responseText, textStatus, XMLHttpRequest) {
 							if (textStatus == "error") {
 							  $('body').load('noIndex.html');
+							}else{
+								
+								themeLoaded();
 							}
 						}); 
 			
