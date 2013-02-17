@@ -1,72 +1,122 @@
+<!DOCTYPE html>
 
-<div id='slider'  style="overflow:scroll; position:absolute; top:0px; left:0px; right:0px; bottom:125px;">
-	<div style="height:100%; width:300%;">
-        <div class="app" appLaunch="com.netflix.mediaclient"><span>Netflix</span></div>
-        <div class="app" appLaunch="com.opera.browser"><span>Opera</span></div>
-        <ul class="controlList" id="systemControls">
-            <li>
-                <div>FULLSCREEN</div><div id="toggle_fullScreen" class="switch"><div></div></div>
-            </li>
-            <li> 
-                <div>WIFI</div><div id="toggle_wifi" class="switch"><div></div></div>
-            </li>
-            <li> 
-                <div>DATA</div><div id="toggle_data" class="switch"><div></div></div>
-            </li>
-            <li> 
-                <div>AIRPLANE</div><div id="toggle_Airplane" class="switch"><div></div></div>
-            </li>
-            <li> 
-                <div>AUTO-BRIGHTNESS</div><div id="toggle_autoBrightness" class="switch"><div></div></div>
-            </li>
-            <li> 
-                <div>Wifi Signal:</div><div id="meter_Wifi" class="meter"><div></div></div>
-            </li>
-            <li> 
-                <div>Cellular Signal:</div><div id="meter_Cellular" class="meter"><div></div></div>
-            </li>
-            <li> 
-                <div>Battery Level:</div><div id="meter_Battery" class="meter"><div></div></div>
-            </li>
-            <li> 
-                <div>Brightness:</div> <input type="range" min="1" max="255" step="1" ontouchend="screenBrightness({value:this.value})"/> 
-            </li>
-            <li> 
-                <div>Media Volumn:</div><input type="range" min="0" max="100" step="1" id="slider_mediaVol" onchange="volumeControls({type:'media', percentage:this.value})"/> 
-            </li>
-            <li> 
-                <div>Ringer Volumn:</div><input type="range" min="0" max="100" step="1" id="slider_ringerVol" onchange="volumeControls({type:'ringer', toast:'off', percentage:this.value})"/>
-            </li>
-            <li> 
-                <div>Ringer Silent</div><div id="toggle_ringerSilent" class="switch"><div></div></div>
-            </li>
-            <li> 
-                <div>Ringer Vibrate</div><div id="toggle_ringerVibrate" class="switch"><div></div></div>
-            </li>
-        </ul>
-        <ul id="clock" applaunch="com.sec.android.app.clockpackage" appactivity=".ClockPackage" appname="Clock">	
-            <li id="sec"><div></div></li>
-            <li id="hour"></li>
-            <li id="min"></li>
-        </ul>
-    </div>
-</div>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <meta http-equiv='cache-control' content='no-cache'>
+        <meta http-equiv='expires' content='0'>
+        <meta http-equiv='pragma' content='no-cache'>
+        
+        <title>DOMLauncher</title>
+        
+        <script type="text/javascript" src="file:///android_asset/www/cordova.js"></script>  
+        <script type="text/javascript" src="file:///android_asset/www/js/launch.js"></script>  
+        <script type="text/javascript" src="file:///android_asset/www/js/test.js"></script>  
+        <script type="text/javascript" src="file:///android_asset/www/js/airplane.js"></script>  
+        <script type="text/javascript" src="file:///android_asset/www/js/applist.js"></script>  
+        <script type="text/javascript" src="file:///android_asset/www/js/fullscreentoggle.js"></script>  
+        <script type="text/javascript" src="file:///android_asset/www/js/volumecontrols.js"></script>  
+        <script type="text/javascript" src="file:///android_asset/www/js/cellularsignalgetter.js"></script>  
+        <script type="text/javascript" src="file:///android_asset/www/js/mobiledatatoggler.js"></script>  
+        <script type="text/javascript" src="file:///android_asset/www/js/simplesave.js"></script>  
+        <script type="text/javascript" src="file:///android_asset/www/js/screenbrightness.js"></script>  
+        <script type="text/javascript" src="file:///android_asset/www/js/missedcommunications.js"></script>  
+        <script type="text/javascript" src="file:///android_asset/www/js/wificontrols.js"></script>  
+		<script type="text/javascript" src="file:///android_asset/www/js/functions.js"></script>
+		
+		<script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.10.0.custom.min.js"></script>
+        <script type="text/javascript" src="js/jquery.animate-enhanced.min.js"></script>		 
+        <script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>       
+        
+    <!--<script src="http://debug.phonegap.com/target/target-script-min.js#awaa"></script>-->        
+       
+        <link rel="stylesheet" id="iconsCss" href="../settings/icons/icons.css" type="text/css" media="screen" charset="utf-8" />
 
-<div class="quickBar">
-    <a href="tel:" class="app dialer" data-missed="0" id="dialer_mainScreen" appName="default_Dialer"></a>
-    <div class="app" appLaunch="com.android.contacts" appActivity=".DialtactsContactsEntryActivity" appName="Contacts"></div>
-    <div class="app" data-missed="0"  id="txtmsg_mainScreen" appLaunch="com.android.mms"></div>
-    <div class="app" id="appPanel_Show" style="background-image:url(file:///mnt/sdcard/DOMLauncher/default/images/icon_apps.png);"></div>
-    <div class="app" appLaunch="com.android.settings" appActivity=".Settings" appName="Settings"></div>   
-</div>
+		<style>
+            *[appName="default_Dialer"]
+            {
+                background-image:url(file:///android_asset/www/img/icon_Dialer.png);
+                text-decoration:none;
+                color:inherit;	   
+            }			
+        </style>
+        
+        <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 0.75)" href="css/ldpi.css" />
+        <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.0)" href="css/mdpi.css" />
+        <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.5)" href="css/hdpi.css" />
+        <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 2.0)" href="css/xhdpi.css" />		
 
-<div class="appPanel"><div class="appPanel_Content"></div><div id="refresh_appPanel">Refresh</div><div id="close_appPanel">Close</div></div>
+    </head>
+    <body>
+        <div id='slider'  style="overflow:scroll; position:absolute; top:0px; left:0px; right:0px; bottom:125px;">
+            <div style="height:100%; width:300%;">
+                <div class="app" appLaunch="com.netflix.mediaclient"><span>Netflix</span></div>
+                <div class="app" appLaunch="com.opera.browser"><span>Opera</span></div>
+                <ul class="controlList" id="systemControls">
+                    <li>
+                        <div>FULLSCREEN</div><div id="toggle_fullScreen" class="switch"><div></div></div>
+                    </li>
+                    <li> 
+                        <div>WIFI</div><div id="toggle_wifi" class="switch"><div></div></div>
+                    </li>
+                    <li> 
+                        <div>DATA</div><div id="toggle_data" class="switch"><div></div></div>
+                    </li>
+                    <li> 
+                        <div>AIRPLANE</div><div id="toggle_Airplane" class="switch"><div></div></div>
+                    </li>
+                    <li> 
+                        <div>AUTO-BRIGHTNESS</div><div id="toggle_autoBrightness" class="switch"><div></div></div>
+                    </li>
+                    <li> 
+                        <div>Wifi Signal:</div><div id="meter_Wifi" class="meter"><div></div></div>
+                    </li>
+                    <li> 
+                        <div>Cellular Signal:</div><div id="meter_Cellular" class="meter"><div></div></div>
+                    </li>
+                    <li> 
+                        <div>Battery Level:</div><div id="meter_Battery" class="meter"><div></div></div>
+                    </li>
+                    <li> 
+                        <div>Brightness:</div> <input type="range" min="1" max="255" step="1" ontouchend="screenBrightness({value:this.value})"/> 
+                    </li>
+                    <li> 
+                        <div>Media Volumn:</div><input type="range" min="0" max="100" step="1" id="slider_mediaVol" onchange="volumeControls({type:'media', percentage:this.value})"/> 
+                    </li>
+                    <li> 
+                        <div>Ringer Volumn:</div><input type="range" min="0" max="100" step="1" id="slider_ringerVol" onchange="volumeControls({type:'ringer', toast:'off', percentage:this.value})"/>
+                    </li>
+                    <li> 
+                        <div>Ringer Silent</div><div id="toggle_ringerSilent" class="switch"><div></div></div>
+                    </li>
+                    <li> 
+                        <div>Ringer Vibrate</div><div id="toggle_ringerVibrate" class="switch"><div></div></div>
+                    </li>
+                </ul>
+                <ul id="clock" applaunch="com.sec.android.app.clockpackage" appactivity=".ClockPackage" appname="Clock">	
+                    <li id="sec"><div></div></li>
+                    <li id="hour"></li>
+                    <li id="min"></li>
+                </ul>
+            </div>
+        </div>
 
+        <div class="quickBar">
+            <a href="tel:" class="app dialer" data-missed="0" id="dialer_mainScreen" appName="default_Dialer"></a>
+            <div class="app" appLaunch="com.android.contacts" appActivity=".DialtactsContactsEntryActivity" appName="Contacts"></div>
+            <div class="app" data-missed="0"  id="txtmsg_mainScreen" appLaunch="com.android.mms"></div>
+            <div class="app" id="appPanel_Show" style="background-image:url(images/icon_apps.png);"></div>
+            <div class="app" appLaunch="com.android.settings" appActivity=".Settings" appName="Settings"></div>   
+        </div>
+        
+        <div class="appPanel"><div class="appPanel_Content"></div><div id="refresh_appPanel">Refresh</div><div id="close_appPanel">Close</div></div>
+           
+        <script type="text/javascript" src="js/callbacks.js"></script>  
+        <script type="text/javascript" src="js/events.js"></script>  
+    </body>
+</html>
 
-<link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 0.75)" href="file:///mnt/sdcard/DOMLauncher/default/css/ldpi.css" />
-<link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.0)" href="file:///mnt/sdcard/DOMLauncher/default/css/mdpi.css" />
-<link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.5)" href="file:///mnt/sdcard/DOMLauncher/default/css/hdpi.css" />
-<link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 2.0)" href="file:///mnt/sdcard/DOMLauncher/default/css/xhdpi.css" />		
-<script type="text/javascript" src="file:///mnt/sdcard/DOMLauncher/default/js/callbacks.js"></script>  
-<script type="text/javascript" src="file:///mnt/sdcard/DOMLauncher/default/js/events.js"></script>  
 

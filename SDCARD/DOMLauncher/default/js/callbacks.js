@@ -1,3 +1,22 @@
+
+			document.addEventListener("deviceready", deviceReady, false);
+			
+			function deviceReady() { 
+			
+	
+								themeLoaded();
+
+			
+				
+		}	
+
+
+
+
+
+
+
+
 clockTimer = null;
 missedcallsTimer = null;
 missedsmsTimer = null;
@@ -515,23 +534,23 @@ function missedcommunicationsCallback(args){
 	/*Begin Theme Specific Editible Code*/
 		if(type == "calls"){
 			$('#dialer_mainScreen').attr('data-missed', returnVal);
-			if(returnVal != 0 && $('#dialer_mainScreen').hasClass('missedCommunications') === true){
+/*			if(returnVal != 0 && $('#dialer_mainScreen').hasClass('missedCommunications') === true){
 				$('#dialer_mainScreen').addClass('missedCommunications')	
 			}
-			if(returnVal === 0 && $('#txtmsg_mainScreen').hasClass('missedCommunications') === false){
-				$('#txtmsg_mainScreen').removeClass('missedCommunications')	
+			if(returnVal === 0 && $('#dialer_mainScreen').hasClass('missedCommunications') === false){
+				$('#dialer_mainScreen').removeClass('missedCommunications')	
 			}
-		}
+*/		}
 		
 		if(type == "sms"){
 			$('#txtmsg_mainScreen').attr('data-missed', returnVal);
-			if(returnVal != 0 && $('#txtmsg_mainScreen').hasClass('missedCommunications') === false){
+/*			if(returnVal != 0 && $('#txtmsg_mainScreen').hasClass('missedCommunications') === false){
 				$('#txtmsg_mainScreen').addClass('missedCommunications');
 			}
 			if(returnVal === 0 && $('#txtmsg_mainScreen').hasClass('missedCommunications') === true){
 				$('#txtmsg_mainScreen').removeClass('missedCommunications');
 			}
-			
+*/			
 		}
 		
 		
