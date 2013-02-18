@@ -333,8 +333,8 @@ body
 	color:#ccedfe;
 	z-index:2;
 	left:0px;
-	-webkit-transition: left .1s;
-/*-webkit-transition: all 0.3s ease-out;
+/*	-webkit-transition: left .1s;
+-webkit-transition: all 0.3s ease-out;
 */}
 
 .switch>div:first-child:before

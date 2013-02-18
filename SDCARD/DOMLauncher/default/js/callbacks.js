@@ -1,21 +1,4 @@
-
-			document.addEventListener("deviceready", deviceReady, false);
-			
-			function deviceReady() { 
-			
-	
-								themeLoaded();
-
-			
-				
-		}	
-
-
-
-
-
-
-
+document.addEventListener("deviceready", themeLoaded, false);
 
 clockTimer = null;
 missedcallsTimer = null;
@@ -23,7 +6,6 @@ missedsmsTimer = null;
 
 function themeLoaded(){
 	
-
 	appList({refreshIcons:false});
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("resume", onResume, false);
@@ -40,25 +22,11 @@ function themeLoaded(){
 	missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
 	missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
 
+
+
+
+
 	
-	/*	document.getElementById('systemControls').ontouchstart = function(e){
-		leftVal = parseInt(this.style.left, 10);
-		touch = event.touches[0];
-		x = touch.pageX;
-		
-			this.ontouchmove = function(e){
-				pos = e.changedTouches[0].pageX;
-				
-				if( pos < x){
-					this.style.left = leftVal - (x - pos)+"px";
-				}
-				
-				if( pos > x){
-					this.style.left = leftVal + (pos - x)+"px";
-				}
-				
-			}
-		}*/
 }
 
 
@@ -144,39 +112,58 @@ function clock() {
 *		Widget solution for every theme.  It should be customized.
 */
 function switches(){
-	$( ".switch>div:first-child" ).each(function(){
-		$(this).draggable({containment: "parent",distance:0,
-			create: function( event, ui ) {
-			},
-			stop: function( event, ui ) {
-				var handle = $(this); //Switch Handle
-				var switchID = $(handle).parent('.switch').attr('id');
-				var handlePOS =  parseInt($(handle).css('left'))
-				
-				//Controls the switch state response on touch end.  Animates and called the switchCallback function passing its state and switch ID.
-				if(handlePOS >= 49){if(handlePOS != 100){$(handle).css('left', '100px').addClass('on');}  switchCallback({state:"on", id:switchID});}
-				if(handlePOS <= 50){$(handle).css('left', '0px').removeClass('on'); switchCallback({state:"off", id:switchID});}	  
-				 
-				var handlePOS = null;
-				var switchID = null;
-				var handle = null;
-				
-			},
-			drag: function( event, ui ) {  
-				var handle = $(this); //Switch Handle
-				var handlePOS = parseInt($(handle).css('left'));
-				
-				//Controls the switch state response while dragging.  
-				if( handlePOS >= 49  && $(handle).hasClass('on') == false){$(handle).addClass('on'); }
-				if(handlePOS <= 50 && $(handle).hasClass('on') == true){$(handle).removeClass('on');}  
-				//Prevents the screen scroll while interacting with a switch.
 
+	var switches = document.getElementsByClassName('switch');
+	
+	for (var i = 0; i < switches.length; i++)
+	{
+		switches[i].firstChild.ontouchstart = function(e)
+		{
+				leftVal = parseInt(this.style.left, 10);
+				touch = event.touches[0];
+				x = touch.pageX;
+			
+				this.ontouchmove = function(e){
+					pos = e.changedTouches[0].pageX;
+					curleftVal = parseInt(this.style.left, 10);
+					if( pos < x){
+						if(curleftVal> 0){
+							this.style.left = leftVal - (x - pos)+"px";
+							if( curleftVal >= 49  && this.classList.contains('on') === false){this.className = "on"; }
+							if(curleftVal <= 50 && this.classList.contains('on') === true){this.className = "";}  
+	
+						}else{
+							this.style.left = 0+"px";
+							this.className = "";	
+						}
+					}
+					
+					if( pos > x){
+						if(curleftVal<100){
+							this.style.left = leftVal + (pos - x)+"px";
+							
+							if( curleftVal >= 49  && this.classList.contains('on') === false){this.className = "on"; }
+							if(curleftVal <= 50 && this.classList.contains('on') === true){this.className = "";}  
+	
+						}else{
+							this.style.left = 100+"px";	
+							this.className = "on"; 
+						}
+					}
+					
+				}
 				
-				var handlePOS = null;
-				var handle = null;
-			}
-		});
-	});
+				this.ontouchend = function(e){
+					curleftVal = parseInt(this.style.left, 10);
+					switchID = this.parentNode.id
+					if(curleftVal >= 49){if(curleftVal != 100){this.style.left = "100px"; this.className = "on";}  switchCallback({state:"on", id:switchID});}
+					if(curleftVal <= 50){if(curleftVal != 100){this.style.left = "0px"; this.className = "";} switchCallback({state:"off", id:switchID});}	  	
+				}
+		}
+	}
+
+
+
 }
 
 //Switch Widget Callback
@@ -533,24 +520,18 @@ function missedcommunicationsCallback(args){
 		var returnVal = args.returnVal
 	/*Begin Theme Specific Editible Code*/
 		if(type == "calls"){
-			$('#dialer_mainScreen').attr('data-missed', returnVal);
-/*			if(returnVal != 0 && $('#dialer_mainScreen').hasClass('missedCommunications') === true){
-				$('#dialer_mainScreen').addClass('missedCommunications')	
+			var dialerMissed = document.getElementById('dialer_mainScreen').dataset.missed;
+
+			if(dialerMissed >= 0 && returnVal >0 || dialerMissed > 0 && returnVal === 0  ){	
+				document.getElementById('dialer_mainScreen').dataset.missed =  returnVal;
 			}
-			if(returnVal === 0 && $('#dialer_mainScreen').hasClass('missedCommunications') === false){
-				$('#dialer_mainScreen').removeClass('missedCommunications')	
-			}
-*/		}
+		}
 		
 		if(type == "sms"){
-			$('#txtmsg_mainScreen').attr('data-missed', returnVal);
-/*			if(returnVal != 0 && $('#txtmsg_mainScreen').hasClass('missedCommunications') === false){
-				$('#txtmsg_mainScreen').addClass('missedCommunications');
+			var smsUnread = document.getElementById('txtmsg_mainScreen').dataset.missed;
+			if(smsUnread >= 0 && returnVal >0 || smsUnread > 0 && returnVal === 0  ){
+				document.getElementById('txtmsg_mainScreen').dataset.missed =  returnVal;
 			}
-			if(returnVal === 0 && $('#txtmsg_mainScreen').hasClass('missedCommunications') === true){
-				$('#txtmsg_mainScreen').removeClass('missedCommunications');
-			}
-*/			
 		}
 		
 		
@@ -573,4 +554,9 @@ function missedcommunicationsCallback(args){
 		clockTimer = setInterval(clock, 1000);
 		missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 30000);
 		missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 30000);
+	
+		toggleWifi({check:"true"});
+		toggleAirplane({check:"true"});
+		volumeControls({check:"true", type:"media"});
+		volumeControls({check:"true", type:"ringer"});	
 	}
