@@ -20,10 +20,10 @@
 /*App/Activity Launcher*/
 function launchApps(object){ //Object var represents a DOM Elements that holds the meta information for app or activity.
 	//These pull all needed information from the passed DOM Object.
-	 var appName = $(object).attr('appLaunch') || false;  //com.class.name
-	 var appActivity = $(object).attr('appActivity') || false;  //.ActivityCall
+	 var appName = object.getAttribute('appLaunch') || false;  //com.class.name
+	 var appActivity = object.getAttribute('appActivity') || false;  //.ActivityCall
 	 var activityFull = appName+appActivity || false;  //Pieces the the com.class.name and the .ActivityCall into one string.
-	 var settings = $(object).attr('settings') || false; //Signifies launch specified settings sub category.
+	 var settings = object.getAttribute('settings') || false; //Signifies launch specified settings sub category.
 	
 	//Initiates the Cordova Plugin
 	window.plugins.launch.show({appName: appName, appActivity: activityFull, settings:settings  }, //Passes the retrived information above to the Cordova Plugin
@@ -197,27 +197,35 @@ function refresh_iconCSS(args){
 	var  refreshIcons = args.refreshIcons || false
 	window.plugins.applist.show({refreshIcons:refreshIcons}, //App Package Name
 		function(appList) {
-			var appListArray = JSON.parse(appList);
-			var styleVar = $('<style id="iconsCss">');
 			
-			$.each(appListArray, function(e) {
-				var appName = this.name
-				var appLaunch = this.package
-				var appActivity = this.intent
+				var element = document.getElementById('iconsCss');
+				element.parentNode.removeChild(element);
+			
+				var appListArray = JSON.parse(appList);
 				
-					if(this.package === "com.android.settings"){
-						$(styleVar).append('*[appLaunch="com.android.settings"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/com.android.settings.png);}');
-						$(styleVar).append('*[appName="doml_Settings"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/com.android.settings.png);}');
-					}else if(this.package === "com.android.contacts"){
-						$(styleVar).append('*[appLaunch="com.android.contacts"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/com.android.contacts.png);}');
+				var newStyle = document.createElement('style');
+				newStyle.setAttribute('id', 'iconsCss');
+				
+				for(var I = 0; I < appListArray.length; I++) {  
+					var appInfo = appListArray[I];
+					var appName = appInfo.name; 
+					var appLaunch = appInfo.package; 
+					var appActivity = appInfo.intent;
+				
+					if(this.package == "com.android.settings"){
+						newStyle.innerHTML += '*[appLaunch="com.android.settings"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/com.android.settings.png);}';
+						newStyle.innerHTML += '*[appName="default_Dialer"]{background-image:url(file:///android_asset/www/img/icon_Dialer.png); color:inherit;	 text-decoration:none;  }';
+					}else if(this.package == "com.android.contacts"){
+						newStyle.innerHTML += '*[appLaunch="com.android.contacts"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/com.android.contacts.png);}';
 					}else{
-						$(styleVar).append('*[appLaunch="'+appLaunch+'"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/'+appLaunch+'.png);}');
+						newStyle.innerHTML += '*[appLaunch="'+appLaunch+'"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/'+appLaunch+'.png);}';
 					}
-			});
-				$('#iconsCss').remove();
-				$('head').append(styleVar);
+				}	
+					
+				document.getElementsByTagName('head')[0].appendChild(newStyle);
+				var styleText = newStyle.innerHTML;
 				
-				window.plugins.simplesave.show({fileObject:styleVar.text(), filePlace:"/mnt/sdcard/DOMLauncher/settings/icons/icons.css"}, 
+				window.plugins.simplesave.show({fileObject:styleText, filePlace:"/mnt/sdcard/DOMLauncher/settings/icons/icons.css"}, 
 				
 				function() { //Success Function
 					
@@ -230,3 +238,5 @@ function refresh_iconCSS(args){
 			}, // Success function
 		function() {alert('Refresh Icons Failed')}); // Failure function						
 } 
+
+

@@ -25,12 +25,7 @@
         <script type="text/javascript" src="file:///android_asset/www/js/missedcommunications.js"></script>  
         <script type="text/javascript" src="file:///android_asset/www/js/wificontrols.js"></script>  
 		<script type="text/javascript" src="file:///android_asset/www/js/functions.js"></script>
-		
-		<script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
-        <script type="text/javascript" src="js/jquery-ui-1.10.0.custom.min.js"></script>
-        <script type="text/javascript" src="js/jquery.animate-enhanced.min.js"></script>		 
-        <script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>       
-        
+
     <!--<script src="http://debug.phonegap.com/target/target-script-min.js#awaa"></script>  -->      
        
         <link rel="stylesheet" id="iconsCss" href="../settings/icons/icons.css" type="text/css" media="screen" charset="utf-8" />
@@ -53,8 +48,8 @@
     <body>
         <div id='slider'  style="overflow:scroll; position:absolute; top:0px; left:0px; right:0px; bottom:125px;">
             <div style="height:100%; width:300%;">
-                <div class="app" appLaunch="com.netflix.mediaclient"><span>Netflix</span></div>
-                <div class="app" appLaunch="com.opera.browser"><span>Opera</span></div>
+                <div class="app" appLaunch="com.netflix.mediaclient" appName="Netflix"></div>
+                <div class="app" appLaunch="com.opera.browser" appName="Opera"></div>
                 <ul class="controlList" id="systemControls">
                     <li>
                         <div>FULLSCREEN</div><div id="toggle_fullScreen" class="switch"><div></div></div>
@@ -112,7 +107,7 @@
             <div class="app" appLaunch="com.android.settings" appActivity=".Settings" appName="Settings"></div>   
         </div>
         
-        <div class="appPanel"><div class="appPanel_Content"></div><div id="refresh_appPanel">Refresh</div><div id="close_appPanel">Close</div></div>
+        <div id="appPanel"><div id="appPanel_Content"></div><div id="refresh_appPanel">Refresh</div><div id="close_appPanel">Close</div></div>
            
         <script type="text/javascript" src="js/callbacks.js"></script>  
         <script type="text/javascript" src="js/events.js"></script>  

@@ -95,7 +95,7 @@ body
 	display:inline-block;
 }  
 
-.app span, .btn span
+.app:before , .btn:before 
 {
 	position:absolute;
 	text-align:center;
@@ -107,6 +107,8 @@ body
 	bottom:-25px;
 	left:0px;
 	right:0px;
+	display:block;
+	content:attr(appName);
 }
 
 
@@ -139,9 +141,12 @@ body
 	margin:10px;
 }
 
+.quickBar .app:before , .quickBar .btn:before 
+{
+	display:none;	
+}
 
-
-.appPanel
+#appPanel
 {
 	position:absolute;
 	top:0px;
@@ -157,13 +162,13 @@ body
 	display:none;		
 }
 
-.appPanel.visible
+#appPanel.visible
 {	display:block;
 	opacity:1;
 	-webkit-transition: opacity .25s;		
 }
 
-.appPanel_Content
+#appPanel_Content
 {
 	position:absolute;
 	top:0px;

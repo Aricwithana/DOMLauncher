@@ -1,24 +1,19 @@
-$('#close_appPanel, #appPanel_Show').on('click', function(){
-	
-	if($('.appPanel').hasClass('visible')){
-		$('.appPanel').removeClass('visible');
-		setTimeout(function(){$('.appPanel').css('display', 'none');}, 500);
+document.getElementById("close_appPanel").addEventListener("click", hs_appPanel, false);
+document.getElementById("appPanel_Show").addEventListener("click", hs_appPanel, false);
+
+function hs_appPanel(){
+	if(document.getElementById('appPanel').classList.contains('visible') === true){
+		document.getElementById('appPanel').className = "";
+		setTimeout(function(){document.getElementById('appPanel').style.display = "none;";}, 500);
 	}else{
-		
-		$('.appPanel').css('display', 'block');
-		
-		setTimeout(function(){$('.appPanel').addClass('visible');}, 10);
+		document.getElementById('appPanel').style.display = "block";
+		setTimeout(function(){document.getElementById('appPanel').className = "visible";}, 10);
 	}
+}
 
-});
+document.getElementById("refresh_appPanel").addEventListener("click", refresh_appPanel, false);
 
-$('#refresh_appPanel').on('click', function(){
+function refresh_appPanel(){
 	refresh_iconCSS({refreshIcons:false});
-	appList({refreshIcons:true})	
-});
-
-$(document).on('click', '*[appLaunch], *[settings]', function() {
-	launchApps(this);
-});
-
-
+	appList({refreshIcons:true});		
+}

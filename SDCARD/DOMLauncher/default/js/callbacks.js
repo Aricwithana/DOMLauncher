@@ -21,12 +21,6 @@ function themeLoaded(){
 	volumeControls({check:"true", type:"ringer"});
 	missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
 	missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
-
-
-
-
-
-	
 }
 
 
@@ -49,7 +43,7 @@ function themeLoaded(){
 
 
 
-
+/*
 // requestedPercentageVolume / 100 * getSteamMaxVolume()
 function applistCallback(appList){	
 		//Parse the appList
@@ -80,6 +74,77 @@ function applistCallback(appList){
 		var appListArray = null;
 		var $appPanel = null
 }
+*/
+
+
+function applistCallback(appList){	
+	//Parse the appList
+	
+	var previous_appIntent = document.querySelectorAll('*[appLaunch]');
+	
+	for (var i = 0; i < previous_appIntent.length; i++)
+	{//alert('bleh');
+		previous_appIntent[i].removeEventListener("click", function(){launchApps(this);}, false);
+	}
+	
+	
+	
+	var appListArray = JSON.parse(appList);
+	var appPanel = document.getElementById('appPanel_Content'); 
+	appPanel.innerHTML = ''; 
+	
+	for(var I = 0; I < appListArray.length; I++) {  
+		var appInfo = appListArray[I];
+		var appName = appInfo.name; 
+		var appLaunch = appInfo.package; 
+		var appActivity = appInfo.intent;
+	
+		if(this.package == "com.android.settings"){
+			
+			var newdiv = document.createElement('div');
+			newdiv.setAttribute('class', 'app');
+			newdiv.setAttribute('appLaunch', appLaunch);
+			newdiv.setAttribute('appActivity', appActivity);
+			newdiv.setAttribute('appName', appName);
+			appPanel.appendChild(newdiv);
+			
+			var newa = document.createElement('a');
+			newa.setAttribute('class', 'app');
+			newa.setAttribute('appLaunch', "com.android.settings");
+			newa.setAttribute('appActivity', ".Settings");
+			newa.setAttribute('appName', appName);
+			appPanel.appendChild(newa);
+
+		}else if(this.package == "com.android.contacts"){
+			
+			var newdiv = document.createElement('div');
+			newdiv.setAttribute('class', 'app');
+			newdiv.setAttribute('appLaunch', "com.android.contacts");
+			newdiv.setAttribute('appActivity', ".DialtactsContactsEntryActivity");
+			newdiv.setAttribute('appName', appName);
+			appPanel.appendChild(newdiv);
+		
+		}else{
+			
+			var newdiv = document.createElement('div');
+			newdiv.setAttribute('class', 'app');
+			newdiv.setAttribute('appLaunch', appLaunch);
+			newdiv.setAttribute('appActivity', appActivity);
+			newdiv.setAttribute('appName', appName);
+			appPanel.appendChild(newdiv);
+		
+		}
+	}
+	
+	var final_appIntent = document.querySelectorAll('*[appLaunch]');
+	
+	for (var i = 0; i < final_appIntent.length; i++)
+	{//alert('bleh');
+		final_appIntent[i].addEventListener("click", function(){launchApps(this);}, false);
+	}
+		
+}
+
 
 /*Clock CSS
 	http://css-tricks.com/css3-clock/
@@ -155,9 +220,9 @@ function switches(){
 				
 				this.ontouchend = function(e){
 					curleftVal = parseInt(this.style.left, 10);
-					switchID = this.parentNode.id
-					if(curleftVal >= 49){if(curleftVal != 100){this.style.left = "100px"; this.className = "on";}  switchCallback({state:"on", id:switchID});}
-					if(curleftVal <= 50){if(curleftVal != 100){this.style.left = "0px"; this.className = "";} switchCallback({state:"off", id:switchID});}	  	
+					switchID = this.parentNode.id;
+					if(curleftVal >= 50){if(curleftVal != 100){this.style.left = "100px"; this.className = "on";}  switchCallback({state:"on", id:switchID});}
+					if(curleftVal <= 49){if(curleftVal != 0){this.style.left = "0px"; this.className = "";} switchCallback({state:"off", id:switchID});}	  	
 				}
 		}
 	}
