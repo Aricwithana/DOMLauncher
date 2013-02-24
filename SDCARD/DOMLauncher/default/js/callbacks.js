@@ -49,7 +49,7 @@ function applistCallback(appList){
 	dialer.setAttribute('appName', 'Dialer');
 	appPanel.appendChild(dialer);
 
-	for(var I = 0; I < appListArray.length; I++) {  
+	for(var i = 0; i < appListArray.length; I++) {  
 		var appInfo = appListArray[I];
 		var appName = appInfo.name; 
 		var appPackage = appInfo.package; 
@@ -330,28 +330,9 @@ function toggledataCallback(args){
 function wifisignalCallback(strengthDbm){
 	
 	/*Begin Theme Specific Editible Code*/
-		if (strengthDbm <= -97.75) { wifiChange(0); 
-		} else if (strengthDbm > -97.75 && strengthDbm <= -95.5) { wifiChange(5);  
-		} else if (strengthDbm > -95.5 && strengthDbm <= -93.25) { wifiChange(10);
-		} else if (strengthDbm > -93.25 && strengthDbm <= -91) { wifiChange(15);
-		} else if (strengthDbm > -91 && strengthDbm <= -88.75) { wifiChange(20);
-		} else if (strengthDbm > -88.75 && strengthDbm <= -86.5) { wifiChange(25);
-		} else if (strengthDbm > -86.5 && strengthDbm <= -84.25) { wifiChange(30);
-		} else if (strengthDbm > -84.25 && strengthDbm <= -82) { wifiChange(35);
-		} else if (strengthDbm > -82 && strengthDbm <= -79.75) { wifiChange(40);
-		} else if (strengthDbm > -79.75 && strengthDbm <= -77.5) { wifiChange(45);
-		} else if (strengthDbm > -77.5 && strengthDbm <= -75.25) { wifiChange(50);
-		} else if (strengthDbm > -75.25 && strengthDbm <= -73) { wifiChange(55);
-		} else if (strengthDbm > -73 && strengthDbm <= -70.75) { wifiChange(60);
-		} else if (strengthDbm > -70.75 && strengthDbm <= -68.5) { wifiChange(65);
-		} else if (strengthDbm > -68.5 && strengthDbm <= -66.25) { wifiChange(70);
-		} else if (strengthDbm > -66.25 && strengthDbm <= -64) { wifiChange(75);
-		} else if (strengthDbm > -64 && strengthDbm <= -61.75) { wifiChange(80);
-		} else if (strengthDbm > -61.75 && strengthDbm <= -59.5) { wifiChange(85);
-		} else if (strengthDbm > -59.5 && strengthDbm <= -57.25) { wifiChange(90);
-		} else if (strengthDbm > -57.25 && strengthDbm <= -55) { wifiChange(95);
-		} else if (strengthDbm > -55) { wifiChange(100);
-		}	
+		maxStrength = -50; 
+		minStrength = -100; 
+		wifiChange(Math.round(100 - Math.max(0, Math.min((strengthDbm - maxStrength) / (minStrength - maxStrength), 1) * 100)))	
 	/*End Theme Specific Editible Code*/
 }
 	//Used with the Wifi Signal Callback Function.
@@ -366,25 +347,15 @@ function wifisignalCallback(strengthDbm){
 /*Cellular Signal Callback*/
 function cellsignalCallback(strengthDbm){
 	/*Begin Theme Specific Editible Code*/
-		if (strengthDbm <= -97.75) { cellsignalChange("0%"); 
-			} else if (strengthDbm > -97.75 && strengthDbm <= -95.5) { cellsignalChange("10%");  
-			} else if (strengthDbm > -95.5 && strengthDbm <= -93.25) { cellsignalChange("20%");
-			} else if (strengthDbm > -93.25 && strengthDbm <= -91) { cellsignalChange("30%");
-			} else if (strengthDbm > -91 && strengthDbm <= -88.75) { cellsignalChange("40%");
-			} else if (strengthDbm > -88.75 && strengthDbm <= -86.5) { cellsignalChange("50%");
-			} else if (strengthDbm > -86.5 && strengthDbm <= -84.25) { cellsignalChange("60%");
-			} else if (strengthDbm > -84.25 && strengthDbm <= -82) { cellsignalChange("70%");
-			} else if (strengthDbm > -82 && strengthDbm <= -79.75) { cellsignalChange("80%");
-			} else if (strengthDbm > -79.75 && strengthDbm <= -77.5) { cellsignalChange("90%");
-			} else if (strengthDbm > -77.5 && strengthDbm <= -75.25) { cellsignalChange("100%");
-		}
+		maxStrength = -70; 
+		minStrength = -100; 
+		cellsignalChange(Math.round(100 - Math.max(0, Math.min((strengthDbm - maxStrength) / (minStrength - maxStrength), 1) * 100)))	
 	/*End Theme Specific Editible Code*/
 }
 	//Used with the Cellular Signal Callback Function.
 	function cellsignalChange(percentage){
 		document.getElementById('meter_Cellular').previousSibling.innerHTML = 'Cellular Signal: ' + percentage;
-		document.getElementById('meter_Cellular').firstChild.style.width = percentage;
-		//$('#meter_Cellular').children('div').css('width', percentage + '%');
+		document.getElementById('meter_Cellular').firstChild.style.width = percentage + "%";
 	}
 
 
@@ -453,9 +424,6 @@ function onPause() {
 	clearInterval(clockTimer);
 	clearInterval(missedcallsTimer);
 	clearInterval(missedsmsTimer);
-	clockTimer = null;
-	missedcallsTimer = null;
-	missedsmsTimer = null;	
 }
 
 	

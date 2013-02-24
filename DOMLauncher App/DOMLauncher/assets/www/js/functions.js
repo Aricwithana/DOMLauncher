@@ -205,21 +205,12 @@ function refresh_iconCSS(args){
 				
 				var newStyle = document.createElement('style');
 				newStyle.setAttribute('id', 'iconsCss');
-				
+				newStyle.innerHTML += '*[appName="Dialer"]{background-image:url(file:///android_asset/www/img/icon_Dialer.png); color:inherit;	 text-decoration:none;  }';
 				for(var I = 0; I < appListArray.length; I++) {  
 					var appInfo = appListArray[I];
-					var appName = appInfo.name; 
-					var appLaunch = appInfo.package; 
-					var appActivity = appInfo.intent;
-				
-					if(this.package == "com.android.settings"){
-						newStyle.innerHTML += '*[appPackage="com.android.settings"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/com.android.settings.png);}';
-						newStyle.innerHTML += '*[appName="Dialer"]{background-image:url(file:///android_asset/www/img/icon_Dialer.png); color:inherit;	 text-decoration:none;  }';
-					}else if(this.package == "com.android.contacts"){
-						newStyle.innerHTML += '*[appPackage="com.android.contacts"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/com.android.contacts.png);}';
-					}else{
-						newStyle.innerHTML += '*[appPackage="'+appLaunch+'"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/'+appLaunch+'.png);}';
-					}
+					var appPackage = appInfo.package; 
+					
+					newStyle.innerHTML += '*[appPackage="'+appPackage+'"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/'+appPackage+'.png);}';
 				}	
 					
 				document.getElementsByTagName('head')[0].appendChild(newStyle);
