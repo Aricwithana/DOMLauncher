@@ -4,7 +4,7 @@ document.getElementById("appPanel_Show").addEventListener("click", hs_appPanel, 
 function hs_appPanel(){
 	if(document.getElementById('appPanel').classList.contains('visible') === true){
 		document.getElementById('appPanel').className = "";
-		setTimeout(function(){document.getElementById('appPanel').style.display = "none;";}, 500);
+		setTimeout(function(){document.getElementById('appPanel').style.display = "none";}, 500);
 	}else{
 		document.getElementById('appPanel').style.display = "block";
 		setTimeout(function(){document.getElementById('appPanel').className = "visible";}, 10);
@@ -14,6 +14,6 @@ function hs_appPanel(){
 document.getElementById("refresh_appPanel").addEventListener("click", refresh_appPanel, false);
 
 function refresh_appPanel(){
-	refresh_iconCSS({refreshIcons:false});
-	appList({refreshIcons:true});		
+	refresh_iconCSS({refreshIcons:true});
+	appList({refreshIcons:false});		
 }

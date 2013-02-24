@@ -1,16 +1,18 @@
+/*Document Ready*/
 document.addEventListener("deviceready", themeLoaded, false);
 
+//setInterval Timer Variable Names
 clockTimer = null;
 missedcallsTimer = null;
 missedsmsTimer = null;
 
+/*Document Ready Success Function*/
 function themeLoaded(){
-	
+	scrollSwitch();
 	appList({refreshIcons:false});
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("resume", onResume, false);
 	clockTimer = setInterval(clock, 1000 );
-	switches();
 	toggleStatusbar({check:"true"});
 	toggleWifi({check:"true"});
 	toggleData({check:"true"});
@@ -22,139 +24,57 @@ function themeLoaded(){
 	missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
 	missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
 }
+/*End Document Ready*/
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-// requestedPercentageVolume / 100 * getSteamMaxVolume()
+/*App Panel Generation & App Launcher Event Bindings*/
 function applistCallback(appList){	
-		//Parse the appList
-		var appListArray = JSON.parse(appList);
-		//For each item in the JSON Array
-			//@ appName - Application Name ('DOMLauncher')
-			//@ appLaunch - Package class name ('com.awaa.domlauncher')
-			//@ appActivity - Acivity Intent ('.DialtactsContactsEntryActivity')
-		var	$appPanel = $('.appPanel_Content');
-			$appPanel.empty();
-		$.each(appListArray, function(e) {
-			 appName = this.name
-			 appLaunch = this.package
-			 appActivity = this.intent
-			
-			if(this.package === "com.android.settings"){
-				$appPanel.append('<div class="app" appLaunch="com.android.settings" appActivity=".Settings" appName="'+appName+'"><span>'+appName+'</span></div>');
-				$appPanel.append('<a href="tel:" class="app dialer" appName="default_Dialer"><span>Dialer</span></a>');
-			}else if(this.package === "com.android.contacts"){
-				$appPanel.append('<div class="app" appLaunch="com.android.contacts" appActivity=".DialtactsContactsEntryActivity" appName="'+appName+'"><span>'+appName+'</span></div>');
-			}else{
-				$appPanel.append('<div class="app" appLaunch="'+appLaunch+'" appActivity="'+appActivity+'" appName="'+appName+'"><span>'+appName+'</span></div>');
-			}
-			var	 appName = null
-			var appLaunch = null
-			var appActivity = null
-		});
-		var appListArray = null;
-		var $appPanel = null
-}
-*/
-
-
-function applistCallback(appList){	
-	//Parse the appList
 	
-	var previous_appIntent = document.querySelectorAll('*[appLaunch]');
+	var previous_appIntent = document.querySelectorAll('*[appPackage]');
 	
 	for (var i = 0; i < previous_appIntent.length; i++)
-	{//alert('bleh');
+	{
 		previous_appIntent[i].removeEventListener("click", function(){launchApps(this);}, false);
 	}
-	
-	
 	
 	var appListArray = JSON.parse(appList);
 	var appPanel = document.getElementById('appPanel_Content'); 
 	appPanel.innerHTML = ''; 
 	
+	var dialer = document.createElement('a');
+	dialer.setAttribute('class', 'app dialer');
+	dialer.setAttribute('href', 'tel:');
+	dialer.setAttribute('appName', 'Dialer');
+	appPanel.appendChild(dialer);
+
 	for(var I = 0; I < appListArray.length; I++) {  
 		var appInfo = appListArray[I];
 		var appName = appInfo.name; 
-		var appLaunch = appInfo.package; 
-		var appActivity = appInfo.intent;
+		var appPackage = appInfo.package; 
+		var appActivity = appInfo.activity;
 	
-		if(this.package == "com.android.settings"){
-			
-			var newdiv = document.createElement('div');
-			newdiv.setAttribute('class', 'app');
-			newdiv.setAttribute('appLaunch', appLaunch);
-			newdiv.setAttribute('appActivity', appActivity);
-			newdiv.setAttribute('appName', appName);
-			appPanel.appendChild(newdiv);
-			
-			var newa = document.createElement('a');
-			newa.setAttribute('class', 'app');
-			newa.setAttribute('appLaunch', "com.android.settings");
-			newa.setAttribute('appActivity', ".Settings");
-			newa.setAttribute('appName', appName);
-			appPanel.appendChild(newa);
-
-		}else if(this.package == "com.android.contacts"){
-			
-			var newdiv = document.createElement('div');
-			newdiv.setAttribute('class', 'app');
-			newdiv.setAttribute('appLaunch', "com.android.contacts");
-			newdiv.setAttribute('appActivity', ".DialtactsContactsEntryActivity");
-			newdiv.setAttribute('appName', appName);
-			appPanel.appendChild(newdiv);
-		
-		}else{
-			
-			var newdiv = document.createElement('div');
-			newdiv.setAttribute('class', 'app');
-			newdiv.setAttribute('appLaunch', appLaunch);
-			newdiv.setAttribute('appActivity', appActivity);
-			newdiv.setAttribute('appName', appName);
-			appPanel.appendChild(newdiv);
-		
-		}
+		var newdiv = document.createElement('div');
+		newdiv.setAttribute('class', 'app');
+		newdiv.setAttribute('appPackage', appPackage);
+		newdiv.setAttribute('appActivity', appActivity);
+		newdiv.setAttribute('appName', appName);
+		appPanel.appendChild(newdiv);
 	}
 	
-	var final_appIntent = document.querySelectorAll('*[appLaunch]');
+	var final_appIntent = document.querySelectorAll('*[appPackage]');
 	
 	for (var i = 0; i < final_appIntent.length; i++)
-	{//alert('bleh');
+	{
 		final_appIntent[i].addEventListener("click", function(){launchApps(this);}, false);
 	}
 		
 }
 
 
-/*Clock CSS
-	http://css-tricks.com/css3-clock/
-	PUBLISHED NOVEMBER 17, 2008
-	Toby Pitman http://www.tobypitman.com/
-	Modified by Aricwithana
-*/
 
-//@ clockTimer - Nulls the setInterval object.
-//@ clockSec, clockHour, clockMin - Caches repeatedly Called DOM element.
+/*Clock CSS*/
 function clock() {
 	var date = new Date()
  
@@ -168,90 +88,57 @@ function clock() {
 
 
 
+/*Slider Switches Widget Plugin*/
+function scrollSwitch(){
 
-
-
-/*Switches Widget Plugin
-*	This plugin creates native-like switches.  Each element with the secified class
-*		and correct DOM structure will create a working switch.  There is no 'universal'
-*		Widget solution for every theme.  It should be customized.
-*/
-function switches(){
-
-	var switches = document.getElementsByClassName('switch');
+	var switches = document.getElementsByClassName('scrollSwitch');
 	
 	for (var i = 0; i < switches.length; i++)
 	{
-		switches[i].firstChild.ontouchstart = function(e)
-		{
-				leftVal = parseInt(this.style.left, 10);
-				touch = event.touches[0];
-				x = touch.pageX;
+		choosenElement = switches[i];
+		choosenElement.scrollLeft = 100;
+		choosenElement.ontouchstart = function(e)
+		{			
+			this.style.overflow = "auto";
+			switchStart = this.dataset.state;
+			this.onscroll = function(e)
+			{			
+				var position = this.scrollLeft;
+				if(position <= 49 ){this.dataset.state = "on";}
+				if(position >= 50){this.dataset.state = "off";}  
+			}		
+						
+			this.ontouchend = function(e)
+			{
+				var element = this;
+				var switchID = element.id;
 			
-				this.ontouchmove = function(e){
-					pos = e.changedTouches[0].pageX;
-					curleftVal = parseInt(this.style.left, 10);
-					if( pos < x){
-						if(curleftVal> 0){
-							this.style.left = leftVal - (x - pos)+"px";
-							if( curleftVal >= 49  && this.classList.contains('on') === false){this.className = "on"; }
-							if(curleftVal <= 50 && this.classList.contains('on') === true){this.className = "";}  
-	
-						}else{
-							this.style.left = 0+"px";
-							this.className = "";	
-						}
-					}
-					
-					if( pos > x){
-						if(curleftVal<100){
-							this.style.left = leftVal + (pos - x)+"px";
-							
-							if( curleftVal >= 49  && this.classList.contains('on') === false){this.className = "on"; }
-							if(curleftVal <= 50 && this.classList.contains('on') === true){this.className = "";}  
-	
-						}else{
-							this.style.left = 100+"px";	
-							this.className = "on"; 
-						}
-					}
-					
-				}
-				
-				this.ontouchend = function(e){
-					curleftVal = parseInt(this.style.left, 10);
-					switchID = this.parentNode.id;
-					if(curleftVal >= 50){if(curleftVal != 100){this.style.left = "100px"; this.className = "on";}  switchCallback({state:"on", id:switchID});}
-					if(curleftVal <= 49){if(curleftVal != 0){this.style.left = "0px"; this.className = "";} switchCallback({state:"off", id:switchID});}	  	
-				}
+				setTimeout(function()
+				{
+					var switchState = element.dataset.state;
+					if(switchState == "on"){element.style.overflow = "hidden"; element.scrollLeft = "0"; if(switchState != switchStart){switchCallback({state:"on", id:switchID});}}
+					if(switchState == "off"){ element.style.overflow = "hidden";element.scrollLeft = "100"; if(switchState != switchStart){switchCallback({state:"off", id:switchID});} }	  	
+				}, 300);
+			}
 		}
-	}
-
-
-
+	}	
 }
 
-//Switch Widget Callback
-	//@ switchID - ID of the switch
-	//@ state - Current end state of the switch
+
+
+/*Switch Widget Callback*/
 function switchCallback(args){
 	var switchID = args.id || null;
 	var state = args.state || null;
 	
 	/*Begin Theme Specific Editible Code*/
+		
+		//Toggle FullScreen 
 		if(switchID === "toggle_fullScreen"){ 
-			//Toggle Full Screen Call Function
-				// @ toggleStatusbar({}) - Just call it, the app restarts with full screen toggled on or off.
-				//Also accepts {check:"true"} to just check the if the app is fullscreen or not.
 			toggleStatusbar({}); 
 		}
 		
-		//Toggle Wifi Call Function
-			// @ toggleWifi({}) - Call Function
-			// @ {check:"on/off"} - Sets the state of the Wifi Connection.
-				//Also accepts {check:"true"} to just check the current wifi connection state.
-				//Also accepts {state:"toggle"} to just toggle the connection.
-			//The plugin automatically creates a listener for the signal value which requires a callback function provided below.
+		//Toggle Wifi
 		if(switchID === "toggle_wifi" && state === "on"){
 			toggleWifi({state:"on"});
 		}
@@ -259,11 +146,7 @@ function switchCallback(args){
 			toggleWifi({state:"off"});
 		}
 		
-		//Toggle Data Call Function
-			// @ toggleData({}) - Call Function
-			// @ state - Sets the state of the Data Connection.
-				//Also accepts {check:"true"} to just check the current Data connection state.
-				//Also accepts {state:"toggle"} to just toggle the connection.
+		//Toggle Data 
 		if(switchID === "toggle_data" && state === "off"){
 			toggleData({state:"off"});
 		}
@@ -271,7 +154,7 @@ function switchCallback(args){
 			toggleData({state:"on"});
 		}
 		
-		
+		//Toggle Airplane
 		if(switchID === "toggle_Airplane" && state === "off"){
 			toggleAirplane({state:"off"});
 		}
@@ -279,6 +162,7 @@ function switchCallback(args){
 			toggleAirplane({state:"on"});
 		}
 		
+		//Toggle AutoBrightness 
 		if(switchID === "toggle_autoBrightness" && state === "off"){
 			screenBrightness({auto:"off"});
 		}
@@ -286,6 +170,7 @@ function switchCallback(args){
 			screenBrightness({auto:"on"});
 		}		
 		
+		//Toggle Ringer Silent
 		if(switchID === "toggle_ringerSilent" && state === "off"){
 			volumeControls({type:"ringer", vol:"normal"});
 		}
@@ -293,23 +178,18 @@ function switchCallback(args){
 			volumeControls({type:"ringer", vol:"silent"});
 		}	
 		
+		//Toggle AutoBrightness
 		if(switchID === "toggle_ringerVibrate" && state === "off"){
 			volumeControls({type:"ringer", vol:"normal"});
 		}
 		if(switchID === "toggle_ringerVibrate" && state === "on"){
 			volumeControls({type:"ringer", vol:"vibrate"});
 		}	
-		
-			
 	/*End Theme Specific Editible Code*/
 }	
 	
 
-//Screenbrightness Controls Callback
-	// @ type - returns the type of value checked (will be 'sms' or 'calls')
-	// @ returnVal - returns an integer or OK.
-		// @ object_toggleWifi 
-
+/*Screenbrightness Controls Callback*/
 function screenbrightnessCallback(args){
 	var value = args.value;
 	var check = args.check;
@@ -318,29 +198,25 @@ function screenbrightnessCallback(args){
 	var auto = args.auto;
 	var returnVar = args.returnVar;	
 	
-	if(mode == "auto" && returnVar == 1 || check == "mode" && returnVar == 1){
+	/*Begin Theme Specific Editible Code*/
+		if(mode == "auto" && returnVar == 1 || check == "mode" && returnVar == 1){
+				
+		}
+		
+		if(mode == "auto" && returnVar == 0 || check == "mode" && returnVar == 0){
 			
-	}
-	
-	if(mode == "auto" && returnVar == 0 || check == "mode" && returnVar == 0){
+		}
 		
-	}
-	
-	if(value > 0){
-		
-	}
-
+		if(value > 0){
+			
+		}
+	/*End Theme Specific Editible Code*/
 }
 
 
-//Volume Control Callback
-	// @ vol - returns the supplied volume type specified 'up/down/mute/silent/vibrate'
-	// @ type - returns the supplised volume control type 'media/ringer/mode/maxRinger/normal'
-	// @ check - returns the boolean true/false if the function is just being used to check information.
-	// @ returnVal - returns integers, strings or booleans depending on the combination of input commands when the initial function is called.
-		// @ object_toggle34G 
-	
-	 
+
+
+/*Volume Control Callback*/
 function volumecontrolsCallback(args){
 	var vol = args.vol
 	var type = args.type
@@ -348,10 +224,12 @@ function volumecontrolsCallback(args){
 	var returnVal = args.returnVal
 	var percentage = args.percentage
 	var toast = args.toast
+	
 	/*Begin Theme Specific Editible Code*/
 		if(type == "ringer"){
 			document.getElementById('slider_ringerVol').parentNode.childNodes[1].innerHTML = 'Ringer Volume: ' + returnVal;
 		}
+		
 		if(type == "media"){
 			document.getElementById('slider_mediaVol').parentNode.childNodes[1].innerHTML = 'Media Volume: ' + returnVal;
 		}
@@ -361,29 +239,21 @@ function volumecontrolsCallback(args){
 
 
 
-
-
-
-
-
-//Air Plane Mode Toggle
+/*Air Plane Mode Toggle*/
 function toggleairplaneCallback(args){
-	var returnVal = args.returnVal //Returns boolean - true/false
-	var state = args.state //Returns string - on/off
-	var check = args.check //Returns boolean - true/false
+	var returnVal = args.returnVal 
+	var state = args.state 
+	var check = args.check 
 		
-
 	/*Begin Theme Specific Editible Code*/
-		if(returnVal === false && document.getElementById('toggle_Airplane').firstChild.classList.contains('on') === true){
-			//$('#toggle_Airplane>div').css('left', '0px').removeClass('on');
-			document.getElementById('toggle_Airplane').firstChild.style.left = "0px";
-			document.getElementById('toggle_Airplane').firstChild.className = "";
+		if(returnVal === false && document.getElementById('toggle_Airplane').dataset.state === "on"){
+			document.getElementById('toggle_Airplane').scrollLeft = 100;
+			document.getElementById('toggle_Airplane').dataset.state = "off";
 		}
 		
-		if(returnVal === true && document.getElementById('toggle_Airplane').firstChild.classList.contains('on') === false){
-			//$('#toggle_Airplane>div').css('left', '100px').addClass('on');	
-			document.getElementById('toggle_Airplane').firstChild.style.left = "100px";
-			document.getElementById('toggle_Airplane').firstChild.className = "on";
+		if(returnVal === true && document.getElementById('toggle_Airplane').dataset.state === "off"){
+			document.getElementById('toggle_Airplane').scrollLeft = 0;
+			document.getElementById('toggle_Airplane').dataset.state = "on";
 		}
 		setTimeout(function(){toggleWifi({check:"true"});}, 10000);
 	/*End Theme Specific Editible Code*/
@@ -392,41 +262,39 @@ function toggleairplaneCallback(args){
 
 
 
-
-//Fullscreen Toggle Callback
-	// @ returnVal - returns boolean true/false depending on if the app is full screen or not.
+/*Fullscreen Toggle Callback*/
 function fullscreentoggleCallback(args){
 	var returnVal = args.returnVal
+	
 	/*Begin Theme Specific Editible Code*/
 		if(returnVal != true){
-			document.getElementById('toggle_fullScreen').firstChild.style.left = "0px";
-			document.getElementById('toggle_fullScreen').firstChild.className = "";
+			document.getElementById('toggle_fullScreen').scrollLeft = 100;
+			document.getElementById('toggle_fullScreen').dataset.state = "off";
 		}else{
-			document.getElementById('toggle_fullScreen').firstChild.style.left = "100px";
-			document.getElementById('toggle_fullScreen').firstChild.className = "on";
+			document.getElementById('toggle_fullScreen').scrollLeft = 0;
+			document.getElementById('toggle_fullScreen').dataset.state = "on";
 		}
 	/*End Theme Specific Editible Code*/
 }
 
 
 
-//Wifi Toggle Callback
-	// @ check - returns the boolean true/false if the function is just being used to check information.
-	// @ returnVal - returns boolean true/false depending on if the data connection is on or off.
-	// @ state - returns the state on/off/toggle that was supplied in the original call.
+
+/*Wifi Toggle Callback*/
 function togglewifiCallback(args){
 	var check = args.check
 	var returnVal = args.returnVal
 	var state = args.state
 	
 	/*Begin Theme Specific Editible Code*/
-		if(returnVal === true && document.getElementById('toggle_wifi').firstChild.classList.contains('on') === false){
-			document.getElementById('toggle_wifi').firstChild.style.left = "100px";
-			document.getElementById('toggle_wifi').firstChild.className = "on";
+		if(returnVal === true && document.getElementById('toggle_wifi').dataset.state === "off"){
+			document.getElementById('toggle_wifi').scrollLeft = 0;
+			document.getElementById('toggle_wifi').dataset.state = "on";
 		}
-		if(returnVal === false && document.getElementById('toggle_wifi').firstChild.classList.contains('on') === true){
-			document.getElementById('toggle_wifi').firstChild.style.left = "0px";
-			document.getElementById('toggle_wifi').firstChild.className = "";
+		
+		if(returnVal === false && document.getElementById('toggle_wifi').dataset.state === "on"){
+			document.getElementById('toggle_wifi').scrollLeft = 100;
+			document.getElementById('toggle_wifi').dataset.state = "off";
 		}
 		//Until there is a 'state listener' for when connections turn on and off, this timeout is needed to correctly respond to if the data connecton is active or not.
 		setTimeout(function(){toggleData({check:"true"});}, 10000);
@@ -435,22 +303,22 @@ function togglewifiCallback(args){
 
 
 
-//Data Toggle Callback
-	// @ check - returns the boolean true/false if the function is just being used to check information.
-	// @ returnVal - returns boolean true/false depending on if the data connection is on or off.
+
+/*Data Toggle Callback*/
 function toggledataCallback(args){
 	 var returnVal = args.returnVal
 	 var check = args.check
 	 var state = args.state 
 	 
 	/*Begin Theme Specific Editible Code*/
-		if(returnVal === true && document.getElementById('toggle_data').firstChild.classList.contains('on') === false){
-			document.getElementById('toggle_data').firstChild.style.left = "100px";
-			document.getElementById('toggle_data').firstChild.className = "on";
+		if(returnVal === true && document.getElementById('toggle_data').dataset.state === "off"){
+			document.getElementById('toggle_data').scrollLeft = 0;
+			document.getElementById('toggle_data').dataset.state = "on";
 		}
-		if(returnVal === false && document.getElementById('toggle_data').firstChild.classList.contains('on') === true){
-			document.getElementById('toggle_data').firstChild.style.left = "0px";
-			document.getElementById('toggle_data').firstChild.className = "";
+		
+		if(returnVal === false && document.getElementById('toggle_data').dataset.state === "on"){
+			document.getElementById('toggle_data').scrollLeft = 100;
+			document.getElementById('toggle_data').dataset.state = "off";
 		}
 	/*End Theme Specific Editible Code*/
 }
@@ -458,21 +326,7 @@ function toggledataCallback(args){
 
 
 
-
-
-
-
-//Wifi Signal Callback - A REQUIRED FUNCTION IF WIFI CONTROLS PLUGIN IS USED.
-	// @ returnVal - returns a negative integer, -dBm
-	// Since people in the past have bickered about the correctness
-	// 		of the displayed signal value, any user can decide for 
-	//		themselves to remove any chance of complaint.
-	// @ wifiChange() - Sends the converted number (conversion is based 
-	// 		on desired users wants) to the function that changes the UI.
-	//		This was done to simply the code, not a neccessary thing.
-	//	This function is called directly from within the Cordova API Java Plugin.
-	//		DO NOT CHANGE THE FUNCTION CALL BACK NAMESPACE!
-
+/*Wifi Signal Callback - A REQUIRED FUNCTION IF WIFI CONTROLS PLUGIN IS USED.*/
 function wifisignalCallback(strengthDbm){
 	
 	/*Begin Theme Specific Editible Code*/
@@ -508,30 +362,21 @@ function wifisignalCallback(strengthDbm){
 
 
 
-//Cellular Signal Callback
-	// @ strengthDbm - returns a negative integer, -dBm
-	// Since people in the past have bickered about the correctness
-	// 		of the displayed signal value, any user can decide for 
-	//		themselves to remove any chance of complaint.
-	// @ cellsignalChange() - Sends the converted number (conversion is based 
-	// 		on desired users wants) to the function that changes the UI.
-	//		This was done to simply the code, not a neccessary thing.
-	//
-	//	This function is called directly from within the Cordova API Java Plugin.
-	//		DO NOT CHANGE THE FUNCTION CALL BACK NAMESPACE!
+
+/*Cellular Signal Callback*/
 function cellsignalCallback(strengthDbm){
 	/*Begin Theme Specific Editible Code*/
 		if (strengthDbm <= -97.75) { cellsignalChange("0%"); 
-		} else if (strengthDbm > -97.75 && strengthDbm <= -95.5) { cellsignalChange("10%");  
-		} else if (strengthDbm > -95.5 && strengthDbm <= -93.25) { cellsignalChange("20%");
-		} else if (strengthDbm > -93.25 && strengthDbm <= -91) { cellsignalChange("30%");
-		} else if (strengthDbm > -91 && strengthDbm <= -88.75) { cellsignalChange("40%");
-		} else if (strengthDbm > -88.75 && strengthDbm <= -86.5) { cellsignalChange("50%");
-		} else if (strengthDbm > -86.5 && strengthDbm <= -84.25) { cellsignalChange("60%");
-		} else if (strengthDbm > -84.25 && strengthDbm <= -82) { cellsignalChange("70%");
-		} else if (strengthDbm > -82 && strengthDbm <= -79.75) { cellsignalChange("80%");
-		} else if (strengthDbm > -79.75 && strengthDbm <= -77.5) { cellsignalChange("90%");
-		} else if (strengthDbm > -77.5 && strengthDbm <= -75.25) { cellsignalChange("100%");
+			} else if (strengthDbm > -97.75 && strengthDbm <= -95.5) { cellsignalChange("10%");  
+			} else if (strengthDbm > -95.5 && strengthDbm <= -93.25) { cellsignalChange("20%");
+			} else if (strengthDbm > -93.25 && strengthDbm <= -91) { cellsignalChange("30%");
+			} else if (strengthDbm > -91 && strengthDbm <= -88.75) { cellsignalChange("40%");
+			} else if (strengthDbm > -88.75 && strengthDbm <= -86.5) { cellsignalChange("50%");
+			} else if (strengthDbm > -86.5 && strengthDbm <= -84.25) { cellsignalChange("60%");
+			} else if (strengthDbm > -84.25 && strengthDbm <= -82) { cellsignalChange("70%");
+			} else if (strengthDbm > -82 && strengthDbm <= -79.75) { cellsignalChange("80%");
+			} else if (strengthDbm > -79.75 && strengthDbm <= -77.5) { cellsignalChange("90%");
+			} else if (strengthDbm > -77.5 && strengthDbm <= -75.25) { cellsignalChange("100%");
 		}
 	/*End Theme Specific Editible Code*/
 }
@@ -544,11 +389,10 @@ function cellsignalCallback(strengthDbm){
 
 
 
-//Battery Level Receiver 
-	// @.isPlugged - boolean true/false if the device is plugged in.
-	// @ .level - integer 0-100, battery level value
-	// @ info  - MUST be used as the callback Variable!  This is a Cordova requirement, not mine.
+
+/*Battery Level Receiver */
 function batterylevelCallback(info){ 
+	
 	/*Begin Theme Specific Editible Code*/
 		if(info.isPlugged != false){
 			document.getElementById('meter_Battery').parentNode.childNodes[1].innerHTML = 'Battery Charging:  '+info.level+'%';
@@ -561,28 +405,28 @@ function batterylevelCallback(info){
 }
 
 
-//Launch App/Acitivity/Setting Callback
-	// @ name - com.class.name that was supplised
-	// @ activity - fully compiled activity call intent
-	// @ settings - settings subgroup to be launched
-	// @ object - DOM object original information was attached to. 
+
+
+/*Launch App/Acitivity/Setting Callback*/
 function launchappsCallback(args){
-	var name = args.name
+	var package = args.package
 	var activity = args.activityFull
 	var settings = args.settings
 	var object = args.object
+	
 	/*Begin Theme Specific Editible Code*/
 		//There is no response code supplised for this theme.  
 	/*End Theme Specific Editible Code*/
 }
 
 
-//Missed Communications Callback
-	// @ type - returns the type of value checked (will be 'sms' or 'calls')
-	// @ returnVal - returns an integer or OK.
+
+
+/*Missed Communications Callback*/
 function missedcommunicationsCallback(args){
-		var type = args.type;
-		var returnVal = args.returnVal
+	var type = args.type;
+	var returnVal = args.returnVal
+	
 	/*Begin Theme Specific Editible Code*/
 		if(type == "calls"){
 			var dialerMissed = document.getElementById('dialer_mainScreen').dataset.missed;
@@ -598,30 +442,33 @@ function missedcommunicationsCallback(args){
 				document.getElementById('txtmsg_mainScreen').dataset.missed =  returnVal;
 			}
 		}
-		
-		
 	/*End Theme Specific Editible Code*/
 }
 
-    // Handle the pause event
-    function onPause() {
-		clearInterval(clockTimer);
-		clearInterval(missedcallsTimer);
-		clearInterval(missedsmsTimer);
-		clockTimer = null;
-		missedcallsTimer = null;
-		missedsmsTimer = null;	
-	}
+
+
+
+/*Handle the pause event*/
+function onPause() {
+	clearInterval(clockTimer);
+	clearInterval(missedcallsTimer);
+	clearInterval(missedsmsTimer);
+	clockTimer = null;
+	missedcallsTimer = null;
+	missedsmsTimer = null;	
+}
 
 	
-	// Handle the resume event
-	function onResume() {
-		clockTimer = setInterval(clock, 1000);
-		missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 30000);
-		missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 30000);
 	
-		toggleWifi({check:"true"});
-		toggleAirplane({check:"true"});
-		volumeControls({check:"true", type:"media"});
-		volumeControls({check:"true", type:"ringer"});	
-	}
+	
+/*Handle the resume event*/
+function onResume() {
+	clockTimer = setInterval(clock, 1000);
+	missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
+	missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
+
+	toggleWifi({check:"true"});
+	toggleAirplane({check:"true"});
+	volumeControls({check:"true", type:"media"});
+	volumeControls({check:"true", type:"ringer"});	
+}

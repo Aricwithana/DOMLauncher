@@ -20,14 +20,14 @@
 /*App/Activity Launcher*/
 function launchApps(object){ //Object var represents a DOM Elements that holds the meta information for app or activity.
 	//These pull all needed information from the passed DOM Object.
-	 var appName = object.getAttribute('appLaunch') || false;  //com.class.name
+	 var appPackage = object.getAttribute('appPackage') || false;  //com.class.name
 	 var appActivity = object.getAttribute('appActivity') || false;  //.ActivityCall
-	 var activityFull = appName+appActivity || false;  //Pieces the the com.class.name and the .ActivityCall into one string.
+	 var activityFull = appPackage+appActivity || false;  //Pieces the the com.class.name and the .ActivityCall into one string.
 	 var settings = object.getAttribute('settings') || false; //Signifies launch specified settings sub category.
 	
 	//Initiates the Cordova Plugin
-	window.plugins.launch.show({appName: appName, appActivity: activityFull, settings:settings  }, //Passes the retrived information above to the Cordova Plugin
-		function() {launchappsCallback({name:name, activity:activityFull, settings:settings, object:object});}, // Cordova Plugin Success function.  Triggers callback and passes back all sent varibles.
+	window.plugins.launch.show({appPackage: appPackage, appActivity: activityFull, settings:settings  }, //Passes the retrived information above to the Cordova Plugin
+		function() {launchappsCallback({package:appPackage, activity:activityFull, settings:settings, object:object});}, // Cordova Plugin Success function.  Triggers callback and passes back all sent varibles.
 		function() {alert('Application/Activity Launch Failed')}); // Cordova Plugin Failure function
 }
 
@@ -213,12 +213,12 @@ function refresh_iconCSS(args){
 					var appActivity = appInfo.intent;
 				
 					if(this.package == "com.android.settings"){
-						newStyle.innerHTML += '*[appLaunch="com.android.settings"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/com.android.settings.png);}';
-						newStyle.innerHTML += '*[appName="default_Dialer"]{background-image:url(file:///android_asset/www/img/icon_Dialer.png); color:inherit;	 text-decoration:none;  }';
+						newStyle.innerHTML += '*[appPackage="com.android.settings"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/com.android.settings.png);}';
+						newStyle.innerHTML += '*[appName="Dialer"]{background-image:url(file:///android_asset/www/img/icon_Dialer.png); color:inherit;	 text-decoration:none;  }';
 					}else if(this.package == "com.android.contacts"){
-						newStyle.innerHTML += '*[appLaunch="com.android.contacts"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/com.android.contacts.png);}';
+						newStyle.innerHTML += '*[appPackage="com.android.contacts"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/com.android.contacts.png);}';
 					}else{
-						newStyle.innerHTML += '*[appLaunch="'+appLaunch+'"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/'+appLaunch+'.png);}';
+						newStyle.innerHTML += '*[appPackage="'+appLaunch+'"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/'+appLaunch+'.png);}';
 					}
 				}	
 					

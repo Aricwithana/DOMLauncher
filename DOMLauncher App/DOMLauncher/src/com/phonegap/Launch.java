@@ -17,11 +17,11 @@ public class Launch extends Plugin {
 	public PluginResult execute(String action, JSONArray args, String callbackId) {
 		
 		try {
-			JSONObject appName = args.getJSONObject(0);
+			JSONObject appPackage = args.getJSONObject(0);
 			JSONObject appActivity = args.getJSONObject(0);
 			JSONObject appSettings = args.getJSONObject(0);
 			
-			launchApp(appName.getString("appName"), appActivity.getString("appActivity"), appSettings.getString("settings") ); 
+			launchApp(appPackage.getString("appPackage"), appActivity.getString("appActivity"), appSettings.getString("settings") ); 
 			return new PluginResult(PluginResult.Status.OK);
 		} catch (JSONException e) {
 			return new PluginResult(PluginResult.Status.JSON_EXCEPTION);
@@ -29,7 +29,7 @@ public class Launch extends Plugin {
 	}
 	
 	
-private void launchApp(String aName, String aI, String setting) {	
+private void launchApp(String aPackage, String aI, String setting) {	
 		
 	//Intent appActivity = new Intent(Intent.ACTION_VIEW);
 	//appActivity.setClassName(aName, aActivity);
@@ -37,14 +37,14 @@ private void launchApp(String aName, String aI, String setting) {
 	if(setting.equals("false")){
 			try
 		{
-			Intent intent = this.cordova.getActivity().getPackageManager().getLaunchIntentForPackage(aName);		
+			Intent intent = this.cordova.getActivity().getPackageManager().getLaunchIntentForPackage(aPackage);		
 			
 			this.cordova.getActivity().startActivity(intent);
 		}
 		catch(Exception e)
 		{
 			Intent activityIntent = new Intent(Intent.ACTION_VIEW);
-			activityIntent.setClassName(aName, aI);
+			activityIntent.setClassName(aPackage, aI);
 			this.cordova.getActivity().startActivity(activityIntent);
 		}
 	}else if(setting.equals("accessability")){

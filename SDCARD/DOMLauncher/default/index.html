@@ -5,9 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-<!--    <meta http-equiv='cache-control' content='no-cache'>
+	    <meta http-equiv='cache-control' content='no-cache'>
         <meta http-equiv='expires' content='0'>
-        <meta http-equiv='pragma' content='no-cache'>-->
+        <meta http-equiv='pragma' content='no-cache'>
         
         <title>DOMLauncher</title>
         
@@ -26,19 +26,10 @@
         <script type="text/javascript" src="file:///android_asset/www/js/wificontrols.js"></script>  
 		<script type="text/javascript" src="file:///android_asset/www/js/functions.js"></script>
 
-    <!--<script src="http://debug.phonegap.com/target/target-script-min.js#awaa"></script>  -->      
+		<script src="http://debug.phonegap.com/target/target-script-min.js#awaa"></script>        
        
         <link rel="stylesheet" id="iconsCss" href="../settings/icons/icons.css" type="text/css" media="screen" charset="utf-8" />
 
-		<style>
-            *[appName="default_Dialer"]
-            {
-                background-image:url(file:///android_asset/www/img/icon_Dialer.png);
-                text-decoration:none;
-                color:inherit;	   
-            }			
-        </style>
-        
         <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 0.75)" href="css/ldpi.css" />
         <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.0)" href="css/mdpi.css" />
         <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.5)" href="css/hdpi.css" />
@@ -47,24 +38,24 @@
     </head>
     <body>
         <div id='slider'  style="overflow:scroll; position:absolute; top:0px; left:0px; right:0px; bottom:125px;">
-            <div style="height:100%; width:300%;">
-                <div class="app" appLaunch="com.netflix.mediaclient" appName="Netflix"></div>
-                <div class="app" appLaunch="com.opera.browser" appName="Opera"></div>
+            <div style="height:100%; width:300%;" id="sliderInternal">
+                <div class="app" appPackage="com.netflix.mediaclient" appName="Netflix"></div>
+                <div class="app" appPackage="com.opera.browser" appName="Opera"></div>
                 <ul class="controlList" id="systemControls">
                     <li>
-                        <div>FULLSCREEN</div><div id="toggle_fullScreen" class="switch"><div></div></div>
+                        <div>FULLSCREEN</div><div id="toggle_fullScreen" class="scrollSwitch" data-state="off"></div>
                     </li>
                     <li> 
-                        <div>WIFI</div><div id="toggle_wifi" class="switch"><div></div></div>
+                        <div>WIFI</div><div id="toggle_wifi" class="scrollSwitch" data-state="off"></div>
                     </li>
                     <li> 
-                        <div>DATA</div><div id="toggle_data" class="switch"><div></div></div>
+                        <div>DATA</div><div id="toggle_data" class="scrollSwitch" data-state="off"></div>
                     </li>
                     <li> 
-                        <div>AIRPLANE</div><div id="toggle_Airplane" class="switch"><div></div></div>
+                        <div>AIRPLANE</div><div id="toggle_Airplane" class="scrollSwitch" data-state="off"></div>
                     </li>
                     <li> 
-                        <div>AUTO-BRIGHTNESS</div><div id="toggle_autoBrightness" class="switch"><div></div></div>
+                        <div>AUTO-BRIGHTNESS</div><div id="toggle_autoBrightness" class="scrollSwitch" data-state="off"></div>
                     </li>
                     <li> 
                         <div>Wifi Signal:</div><div id="meter_Wifi" class="meter"><div></div></div>
@@ -85,13 +76,13 @@
                         <div>Ringer Volumn:</div><input type="range" min="0" max="100" step="1" id="slider_ringerVol" onchange="volumeControls({type:'ringer', toast:'off', percentage:this.value})"/>
                     </li>
                     <li> 
-                        <div>Ringer Silent</div><div id="toggle_ringerSilent" class="switch"><div></div></div>
+                        <div>Ringer Silent</div><div id="toggle_ringerSilent" class="scrollSwitch" data-state="off"></div>
                     </li>
                     <li> 
-                        <div>Ringer Vibrate</div><div id="toggle_ringerVibrate" class="switch"><div style="left:0px;"></div></div>
+                        <div>Ringer Vibrate</div><div id="toggle_ringerVibrate" class="scrollSwitch" data-state="off"></div>
                     </li>
                 </ul>
-                <ul id="clock" applaunch="com.sec.android.app.clockpackage" appactivity=".ClockPackage" appname="Clock">	
+                <ul id="clock" appPackage="com.sec.android.app.clockpackage" appactivity=".ClockPackage" appname="Clock">	
                     <li id="sec"><div></div></li>
                     <li id="hour"></li>
                     <li id="min"></li>
@@ -100,11 +91,11 @@
         </div>
 
         <div class="quickBar">
-            <a href="tel:" class="app dialer" data-missed="0" id="dialer_mainScreen" appName="default_Dialer"></a>
-            <div class="app" appLaunch="com.android.contacts" appActivity=".DialtactsContactsEntryActivity" appName="Contacts"></div>
-            <div class="app" data-missed="0"  id="txtmsg_mainScreen" appLaunch="com.android.mms"></div>
+            <a href="tel:" class="app dialer" data-missed="0" id="dialer_mainScreen" appName="Dialer"></a>
+            <div class="app" appPackage="com.android.contacts" appActivity=".DialtactsContactsEntryActivity" appName="Contacts"></div>
+            <div class="app" data-missed="0"  id="txtmsg_mainScreen" appPackage="com.android.mms"></div>
             <div class="app" id="appPanel_Show" style="background-image:url(images/icon_apps.png);"></div>
-            <div class="app" appLaunch="com.android.settings" appActivity=".Settings" appName="Settings"></div>   
+            <div class="app" appPackage="com.android.settings" appActivity=".Settings" appName="Settings"></div>   
         </div>
         
         <div id="appPanel"><div id="appPanel_Content"></div><div id="refresh_appPanel">Refresh</div><div id="close_appPanel">Close</div></div>

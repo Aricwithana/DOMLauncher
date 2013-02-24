@@ -82,7 +82,7 @@ private String generateList() {
 
 					
 					JSONObject json = new JSONObject();
-					json.put("name", appName).put("intent", appIFormated).put("package", pkgName);				
+					json.put("name", appName).put("activity", appIFormated).put("package", pkgName);				
 					jArray.put(json);
 				}
 			

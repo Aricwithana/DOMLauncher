@@ -93,7 +93,7 @@ body
 	height:96px;
 	margin:25px; 
 	display:inline-block;
-}  
+hates it }  
 
 .app:before , .btn:before 
 {
@@ -501,7 +501,11 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 
-
+				.scrollSwitch{width:200px;height:50px; position:relative; overflow:auto;	border:2px solid  #393939;background-color:#141414;border-radius:10px;}
+				.scrollSwitch:before{display:block; content:""; width:150%; height:50px;}
+				.scrollSwitch:after{display:block; content:attr(data-state); border-radius:8px;width:100px; position:absolute; left:100px;top:0px; height:50px;text-align:center;line-height:50px;font-size:24px;text-transform:uppercase;}
+				.scrollSwitch[data-state="on"]:after{	background-image: -webkit-linear-gradient(bottom, rgb(82,147,63) 55%, rgb(112,198,86) 100%); color:#efff97;}
+				.scrollSwitch[data-state="off"]:after{	background-image: -webkit-linear-gradient(bottom, rgb(96,111,117) 54%, rgb(134,154,161) 91%); color:#ccedfe;}
 
 
 /*!
