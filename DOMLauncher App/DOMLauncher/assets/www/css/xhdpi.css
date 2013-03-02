@@ -1,6 +1,33 @@
 @charset "utf-8";
 /* CSS Document */
 
-.app{width:96px; height:96px;		margin:25px;
-}
+.app
+{
+	background-position:left top;
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	position:relative;
+	display: inline-block;
+	width:96px; 
+	height:96px;
+	margin:25px; 
+	display:inline-block;
+}  
 
+.app:before
+{
+	position:absolute;
+	text-align:center;
+	overflow: hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	background-color:rgba(0,0,0,.75);
+	color:white;
+	bottom:-30px;
+	left:0px;
+	right:0px;
+	display:block;
+	content:attr(appName);
+	padding:5px;
+	border-radius:8px;
+}

@@ -31,6 +31,15 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
+* {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+}
+
+
 body {
 	line-height: 1;
 }
@@ -286,7 +295,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	top:20px;
 	background-image:none;
 	-webkit-box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, .75);
-	zoom:7.5;
+	zoom:.75;
 }
 
 .clock:before /*Line:*/

@@ -9,7 +9,7 @@
         
         <title>CHome</title>
         
-        <script type="text/javascript" src="cordova-2.3.0.js"></script>  
+        <script type="text/javascript" src="cordova.js"></script>  
         <script type="text/javascript" src="js/launch.js"></script>  
         <script type="text/javascript" src="js/test.js"></script>  
         <script type="text/javascript" src="js/airplane.js"></script>  
@@ -21,112 +21,86 @@
         <script type="text/javascript" src="js/simplesave.js"></script>  
         <script type="text/javascript" src="js/missedcommunications.js"></script>  
         <script type="text/javascript" src="js/wificontrols.js"></script>  
-        <link rel="stylesheet" id="iconsCss" href="file:///mnt/sdcard/DOMLauncher/icons/icons.css" type="text/css" media="screen" charset="utf-8" />
         <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 0.75)" href="css/ldpi.css" />
         <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.0)" href="css/mdpi.css" />
         <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.5)" href="css/hdpi.css" />
         <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 2.0)" href="css/xhdpi.css" />		
-		<script src="js/jquery-1.9.0.min.js"></script>
-        <!--<script src="js/jquery-ui-1.8.23.custom.min.js"></script>-->        
 		<script src="js/functions.js"></script>
         <script>
         
 			function onLoad() {document.addEventListener("deviceready", deviceReady, false);}
 			
 			function deviceReady() { 
-				refresh_iconCSS({refreshIcons:false});
-				appList({refreshIcons:true});
+				appList({refreshIcons:false});
 			
 			
 			}
 
-			$(document).on('click', '*[appLaunch], *[settings]', function() {
-				launchApps(this);
-			});
+
 	
-        function applistCallback(appList){
-				//Parse the appList
-					appListArray = JSON.parse(appList);
-					//For each item in the JSON Array
-						// @ appName - Application Name ('DOMLauncher')
-						// @ appLaunch - Package class name ('com.awaa.domlauncher')
-						// @ appActivity - Acivity Intent ('.DialtactsContactsEntryActivity')
-					$appPanel = $('.appPanel');
-					$.each(appListArray, function(e) {
-						var appName = this.name
-						var appLaunch = this.package
-						var appActivity = this.intent
-						
-						if(this.package === "com.android.settings"){
-							$appPanel.append('<div class="app" appLaunch="com.android.settings" appActivity=".Settings" appName="'+appName+'"><span>'+appName+'</span></div>');
-							$appPanel.append('<a href="tel:" class="app dialer" appName="default_Dialer"><span>Dialer</span></a>');
-						}else if(this.package === "com.android.contacts"){
-							$appPanel.append('<div class="app" appLaunch="com.android.contacts" appActivity=".DialtactsContactsEntryActivity" appName="'+appName+'"><span>'+appName+'</span></div>');
-						}else{
-							$appPanel.append('<div class="app" appLaunch="'+appLaunch+'" appActivity="'+appActivity+'" appName="'+appName+'"><span>'+appName+'</span></div>');
-						}
-						 appName = null
-						 appLaunch = null
-						 appActivity = null
-					});
-				
-				
-					appListArray = null;
-					$appPanel = null
-					
+       /*App Panel Generation & App Launcher Event Bindings*/
+function applistCallback(appList){	
+	
+	var previous_appIntent = document.querySelectorAll('*[appPackage]');
+	
+	for (var i = 0; i < previous_appIntent.length; i++)
+	{
+		previous_appIntent[i].removeEventListener("click", function(){launchApps(this);}, false);
+	}
+	
+	var appListArray = JSON.parse(appList);
+	var appPanel = document.getElementById('appPanel'); 
+	appPanel.innerHTML = ''; 
+	
+	var dialer = document.createElement('a');
+	dialer.setAttribute('class', 'app dialer');
+	dialer.setAttribute('href', 'tel:');
+	dialer.setAttribute('appName', 'Dialer');
+	appPanel.appendChild(dialer);
+
+	for(var ii = 0; ii < appListArray.length; ii++) {  
+		var appInfo = appListArray[ii];
+		var appName = appInfo.name; 
+		var appPackage = appInfo.package; 
+		var appActivity = appInfo.activity;
+	
+		var newdiv = document.createElement('div');
+		newdiv.setAttribute('class', 'app');
+		newdiv.setAttribute('appPackage', appPackage);
+		newdiv.setAttribute('appActivity', appActivity);
+		newdiv.setAttribute('appName', appName);
+		appPanel.appendChild(newdiv);
+	}
+	
+	var final_appIntent = document.querySelectorAll('*[appPackage]');
+	
+	for (var iii = 0; iii < final_appIntent.length; iii++)
+	{
+		final_appIntent[iii].addEventListener("click", function(){launchApps(this);}, false);
+	}
+		
 }
 
 
 
         </script>
-   <style>
-   .app{
-		background-position:left top;
-		background-repeat:no-repeat;
-		background-size:100% 100%;
-		position:relative;
-		display: inline-block; 
-	}  
-	.app span
-	{
-		position:absolute;
-		text-align:center;
-		overflow: hidden;
-		white-space:nowrap;
-		text-overflow:ellipsis;
-		background-color:rgba(0,0,0,.75);
-		color:white;
-		bottom:-25px;
-		left:0px;
-		right:0px;
-	}
-		*[appName="default_Dialer"]
-            {
-                background-image:url(img/icon_Dialer.png);
-                text-decoration:none;
-                color:inherit;	   
-            }
-            *[appName="doml_Settings"]
-            {
-                background-image:url(file:///data/data/com.awaa.domlauncher/icons/com.android.settings.png);
-                text-decoration:none;
-                color:inherit;	   
-            }
 
-    </style>
+<style>
+.app{background-color:grey; border-radius:50%;}
+</style>
     </head>
     
     <body onLoad="onLoad()">
 
         <span style="font-size:24px;"> DOMLauncher  </span>
     
-        	<h1>WOAH!</h1>
-            <p>Well it looks like your external SDCARD is mounted!.  This is a dummy area which stays non-fullscreen and allows access to your apps.  Unmount your external sdcard and reload DOMLauncher.</p>
+        	<h1>Well hello there!</h1>
+            <p>You are seeing me because of a few possibilities.  First your external sdcard is no accessable.  DOMLauncher prefers that its asset files are are on the internal SD CARD but not all phones have this feature.  If DOMLauncher can not default to the internal the external will be used. </p>
           
        
         	<h1>Icon Cache</h1>
-            <p>The Icon Cache is the folder 'icons' in the DOMLauncher folder.  Here all installed applications have their icon exported in the png format.  There is also an auto-generated css file holding the standard DOMLauncher references for easy icon placement within the UI Plugins.</p>
-            <input type="button" value="Rebuild Cache" onClick="refreshIcons()"/>
+            <p>The Icon Cache is the folder 'icons' in the DOMLauncher folder.  This will only work if your SD CARD (either internal or external) is accessible.  Here all installed applications have their icon exported in the png format.  There is also an auto-generated css file holding the standard DOMLauncher references for easy icon placement within the UI Plugins.</p>
+            <input type="button" value="Rebuild Cache" onClick="refresh_iconCSS({refreshIcons:true});"/>
           
         
         
