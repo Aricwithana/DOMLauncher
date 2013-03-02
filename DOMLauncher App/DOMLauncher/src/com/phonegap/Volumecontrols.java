@@ -27,25 +27,34 @@ public class Volumecontrols extends Plugin {
 			String type = args.getJSONObject(0).getString("type");
 			String check = args.getJSONObject(0).getString("check");
 			String percentage = args.getJSONObject(0).getString("percentage");
-			int percentVal = Integer.parseInt(percentage);
 			int ringerMode = audioManager.getRingerMode();
-			
+			 
 			if(check.equals("true")){
 				
 				if(type.equals("media")){
-				
-					int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 					
-					return new PluginResult(PluginResult.Status.OK, curVolume);				
+					if(percentage.equals("true")){
+						int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+						float curPercent = (curVolume* 100) / audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) ;
+						return new PluginResult(PluginResult.Status.OK, curPercent);	
+					}else{
+						int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+						return new PluginResult(PluginResult.Status.OK, curVolume);	
+						
+					}				
+					
 				}
 	
 				if(type.equals("ringer")){	
 													
-					int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
-					int mode = audioManager.getRingerMode();	
-				
-					Log.d(id, "Current Mode: " + mode);				
-						return new PluginResult(PluginResult.Status.OK, curVolume);												
+					if(percentage.equals("true")){
+						int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+						float curPercent = (curVolume* 100) / audioManager.getStreamMaxVolume(AudioManager.STREAM_RING) ;
+						return new PluginResult(PluginResult.Status.OK, curPercent);							
+					}else{					
+						int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);		
+						return new PluginResult(PluginResult.Status.OK, curVolume);							
+					}			
 				}
 				
 				if(type.equals("mode")){	
@@ -63,6 +72,7 @@ public class Volumecontrols extends Plugin {
 				}
 			
 			}else{
+				int percentVal = Integer.parseInt(percentage);
 				if(type.equals("media")){
 									
 					
@@ -72,10 +82,10 @@ public class Volumecontrols extends Plugin {
 						
 						if(toast.equals("off")){
 							audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mediaVal, 0);
-							return new PluginResult(PluginResult.Status.OK, mediaVal );
+							return new PluginResult(PluginResult.Status.OK, percentVal );
 						}else{
 							audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mediaVal, AudioManager.FLAG_SHOW_UI);
-							return new PluginResult(PluginResult.Status.OK, mediaVal );
+							return new PluginResult(PluginResult.Status.OK, percentVal );
 						}
 					}else{
 						if(vol.equals("up")){
@@ -148,15 +158,12 @@ public class Volumecontrols extends Plugin {
 						
 						if(toast.equals("off")){
 							audioManager.setStreamVolume(AudioManager.STREAM_RING, volumeVal, 0);
-							return new PluginResult(PluginResult.Status.OK, volumeVal);
+							return new PluginResult(PluginResult.Status.OK, percentVal);
 						}else{
 							audioManager.setStreamVolume(AudioManager.STREAM_RING, volumeVal, AudioManager.FLAG_SHOW_UI);
-							return new PluginResult(PluginResult.Status.OK, volumeVal);
+							return new PluginResult(PluginResult.Status.OK, percentVal);
 						}
-					}else{
-					
-					
-					
+					}else{				
 						if(vol.equals("up")){
 							int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);										
 							int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);

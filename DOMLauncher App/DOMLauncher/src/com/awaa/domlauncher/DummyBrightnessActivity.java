@@ -44,7 +44,7 @@ public class DummyBrightnessActivity extends DroidGap{
         
         File sdcard = Environment.getExternalStorageDirectory();
    
-        File fstxtfile = new File(sdcard,"/DOMLauncher/settings/isFullscreen.txt");
+        File fstxtfile = new File(sdcard,"/DOMLauncher/settings/fullscreenEnabled");
      
   		if(fstxtfile.exists()){ 
   			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 

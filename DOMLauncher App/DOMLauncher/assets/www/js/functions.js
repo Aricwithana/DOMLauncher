@@ -45,7 +45,7 @@ function volumeControls(args){
 	//Initisates the Volumn Control Cordova Plugin
 	window.plugins.volumecontrols.show({vol:vol, type:type, check:check, percentage:percentage, toast:toast}, //Passes the retrived information to the Cordova Plugin.
 		function(returnVal) {volumecontrolsCallback({vol:vol, type:type, check:check, returnVal:returnVal, percentage:percentage});},// Cordova Plugin Success Function.  Triggers callback, passes back all sent variables and returned var.
-		function() {alert('Vol Change Error');}); // Cordova Plugin Failure function
+		function(error) {alert('Vol Change Error' + error);}); // Cordova Plugin Failure function
 }
 
 
@@ -129,7 +129,7 @@ function toggleAirplane(args){
 	window.plugins.airplane.show({state:state, check:check}, 
 		function(returnVal) {
 			toggleairplaneCallback({returnVal:returnVal, state:state, check:check});
-		}, // Cordova Plugin Success function.  Auto-clears the built in Wifi Signal Getter Timer.  Returns the Airplane mode value.
+		}, // Cordova Plugin Success function.  Returns the Airplane mode value 1/0.
 		function() {alert('Airplane Toggle Failed')}); // Failure function
 }
 
@@ -145,8 +145,8 @@ function screenBrightness(args){
 	 var auto = args.auto || false
 	 var toggle = args.auto || null
 	window.plugins.screenbrightness.show({check:check, value:value, auto:auto, float:float, toggle:toggle}, 
-		function(returnVar) { 
-		screenbrightnessCallback({value:value, check:check, float:float, auto:auto, returnVar:returnVar, toggle:toggle})},//Success Function
+		function(returnVal) { 
+		screenbrightnessCallback({value:value, check:check, float:float, auto:auto, returnVal:returnVal, toggle:toggle})},//Success Function
 		function(error) {alert('missed calls error' + error);}); // Failure function
 }
 
@@ -177,7 +177,7 @@ function appList(args){
 		function(appList) {//appList is a JSON Object needing to be parsed.
 			applistCallback(appList);	
 	}, // Success function
-	function() {alert('Loading App List Failed')}); // Failure function
+	function(error) {alert('Loading App List Failed' + error);}); // Failure function
 
 }
 

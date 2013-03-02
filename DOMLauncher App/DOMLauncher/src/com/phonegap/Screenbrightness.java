@@ -29,7 +29,7 @@ public class Screenbrightness extends Plugin {
 			float floaterFinal = floater/255;
 		
 			
-			if(check.equals("percentage")){
+			if(check.equals("value")){
 				
 				int getBright = Settings.System.getInt(this.cordova.getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
 				return new PluginResult(PluginResult.Status.OK, getBright);

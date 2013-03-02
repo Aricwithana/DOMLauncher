@@ -19,13 +19,16 @@ function themeLoaded(){
 	cellSiganl({action:"start"});
 	batteryLevel();
 	toggleAirplane({check:"true"});
-	volumeControls({check:"true", type:"media"});
-	volumeControls({check:"true", type:"ringer"});
+	volumeControls({check:"true", type:"media", percentage:"true"});
+	volumeControls({check:"true", type:"ringer", percentage:"true"});
+	volumeControls({check:"true", type:"mode"});
 	missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
 	missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
+	screenBrightness({check:"value"});
+	screenBrightness({check:"mode"});
+
 }
 /*End Document Ready*/
-
 
 
 
@@ -49,8 +52,8 @@ function applistCallback(appList){
 	dialer.setAttribute('appName', 'Dialer');
 	appPanel.appendChild(dialer);
 
-	for(var i = 0; i < appListArray.length; I++) {  
-		var appInfo = appListArray[I];
+	for(var ii = 0; ii < appListArray.length; ii++) {  
+		var appInfo = appListArray[ii];
 		var appName = appInfo.name; 
 		var appPackage = appInfo.package; 
 		var appActivity = appInfo.activity;
@@ -65,9 +68,9 @@ function applistCallback(appList){
 	
 	var final_appIntent = document.querySelectorAll('*[appPackage]');
 	
-	for (var i = 0; i < final_appIntent.length; i++)
+	for (var iii = 0; iii < final_appIntent.length; iii++)
 	{
-		final_appIntent[i].addEventListener("click", function(){launchApps(this);}, false);
+		final_appIntent[iii].addEventListener("click", function(){launchApps(this);}, false);
 	}
 		
 }
@@ -101,8 +104,9 @@ function scrollSwitch(){
 		{			
 			this.style.overflow = "auto";
 			switchStart = this.dataset.state;
+			scrollTotal = this.scrollWidth;
 			this.onscroll = function(e)
-			{			
+			{			 
 				var position = this.scrollLeft;
 				if(position <= 49 ){this.dataset.state = "on";}
 				if(position >= 50){this.dataset.state = "off";}  
@@ -178,7 +182,7 @@ function switchCallback(args){
 			volumeControls({type:"ringer", vol:"silent"});
 		}	
 		
-		//Toggle AutoBrightness
+		//Toggle Ringer Vibrate
 		if(switchID === "toggle_ringerVibrate" && state === "off"){
 			volumeControls({type:"ringer", vol:"normal"});
 		}
@@ -196,20 +200,28 @@ function screenbrightnessCallback(args){
 	var float = args.float;
 	var toggle = args.toggle;
 	var auto = args.auto;
-	var returnVar = args.returnVar;	
-	
+	var returnVal = args.returnVal;	
+
 	/*Begin Theme Specific Editible Code*/
-		if(mode == "auto" && returnVar == 1 || check == "mode" && returnVar == 1){
-				
+		if(value > -1){
+			document.getElementById('slider_brightness').parentNode.childNodes[1].innerHTML = 'Brightness: ' + returnVal;
 		}
 		
-		if(mode == "auto" && returnVar == 0 || check == "mode" && returnVar == 0){
-			
+		if(check == "value"){
+			document.getElementById('slider_brightness').value = returnVal;	
+			document.getElementById('slider_brightness').parentNode.childNodes[1].innerHTML = 'Brightness: ' + returnVal;
 		}
 		
-		if(value > 0){
-			
+		if(check == "mode"){
+			if(returnVal == 0){
+				document.getElementById('toggle_autoBrightness').scrollLeft = 100;
+				document.getElementById('toggle_autoBrightness').dataset.state = "off";
+			}else{
+				document.getElementById('toggle_autoBrightness').scrollLeft = 0;
+				document.getElementById('toggle_autoBrightness').dataset.state = "on";
+			}
 		}
+		
 	/*End Theme Specific Editible Code*/
 }
 
@@ -226,13 +238,85 @@ function volumecontrolsCallback(args){
 	var toast = args.toast
 	
 	/*Begin Theme Specific Editible Code*/
-		if(type == "ringer"){
+		if(type == "ringer" && percentage >= 0){
 			document.getElementById('slider_ringerVol').parentNode.childNodes[1].innerHTML = 'Ringer Volume: ' + returnVal;
+			if(returnVal <= 14 && returnVal != 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "off" || returnVal >= 15 && returnVal != 0 && document.getElementById('toggle_ringerSilent').dataset.state === "on"){
+				document.getElementById('toggle_ringerVibrate').scrollLeft = 0;
+				document.getElementById('toggle_ringerVibrate').dataset.state = "on";
+				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
+				document.getElementById('toggle_ringerSilent').dataset.state = "off";
+			}
+			
+			if(returnVal >= 15 && returnVal != 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "on" || returnVal >= 15 && returnVal != 0 && document.getElementById('toggle_ringerSilent').dataset.state === "on"){
+				document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
+				document.getElementById('toggle_ringerVibrate').dataset.state = "off";
+				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
+				document.getElementById('toggle_ringerSilent').dataset.state = "off";
+			}
+			
+			if(returnVal == 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "off"){
+				document.getElementById('toggle_ringerVibrate').scrollLeft = 0;
+				document.getElementById('toggle_ringerVibrate').dataset.state = "on";
+				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
+				document.getElementById('toggle_ringerSilent').dataset.state = "off";
+			}
 		}
 		
-		if(type == "media"){
+		if(type == "media" && check == "false"){
 			document.getElementById('slider_mediaVol').parentNode.childNodes[1].innerHTML = 'Media Volume: ' + returnVal;
+		} 
+		
+		if(check == "true" && percentage == "true"){
+			if(type == "ringer"){
+				document.getElementById('slider_ringerVol').value = returnVal;	
+				document.getElementById('slider_ringerVol').parentNode.childNodes[1].innerHTML = 'Ringer Volume: ' + returnVal;
+			}
+			
+			if(type == "media" && percentage == "true"){
+				document.getElementById('slider_mediaVol').value = returnVal;	
+				document.getElementById('slider_mediaVol').parentNode.childNodes[1].innerHTML = 'Media Volume: ' + returnVal;
+			}	
 		}
+		
+		if(check == "true" && type == "mode"){
+			if(returnVal == 0){
+				document.getElementById('toggle_ringerSilent').scrollLeft = 0;
+				document.getElementById('toggle_ringerSilent').dataset.state = "on";
+				document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
+				document.getElementById('toggle_ringerVibrate').dataset.state = "off";
+			}
+			if(returnVal == 1){
+				document.getElementById('toggle_ringerVibrate').scrollLeft = 0;
+				document.getElementById('toggle_ringerVibrate').dataset.state = "on";
+				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
+				document.getElementById('toggle_ringerSilent').dataset.state = "off";
+			}
+			if(returnVal == 2){
+				document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
+				document.getElementById('toggle_ringerVibrate').dataset.state = "off";
+				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
+				document.getElementById('toggle_ringerSilent').dataset.state = "off";
+			}
+		}
+		
+		if(type == "ringer" && returnVal == "vibrate"){
+				document.getElementById('toggle_ringerVibrate').scrollLeft = 0;
+				document.getElementById('toggle_ringerVibrate').dataset.state = "on";
+				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
+				document.getElementById('toggle_ringerSilent').dataset.state = "off";
+		}
+		
+		if(type == "ringer" && returnVal == "silent"){
+				document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
+				document.getElementById('toggle_ringerVibrate').dataset.state = "off";
+				document.getElementById('toggle_ringerSilent').scrollLeft = 0;
+				document.getElementById('toggle_ringerSilent').dataset.state = "on";
+		}
+		
+		if(type == "ringer" && returnVal == "normal"){
+			volumeControls({check:"true", type:"ringer", percentage:"true"});
+		}
+
 	/*End Theme Specific Editible Code*/
 }
 
@@ -295,6 +379,8 @@ function togglewifiCallback(args){
 		if(returnVal === false && document.getElementById('toggle_wifi').dataset.state === "on"){
 			document.getElementById('toggle_wifi').scrollLeft = 100;
 			document.getElementById('toggle_wifi').dataset.state = "off";
+			document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: -';
+			document.getElementById('meter_Wifi').firstChild.style.width = '0%';
 		}
 		//Until there is a 'state listener' for when connections turn on and off, this timeout is needed to correctly respond to if the data connecton is active or not.
 		setTimeout(function(){toggleData({check:"true"});}, 10000);
@@ -434,9 +520,13 @@ function onResume() {
 	clockTimer = setInterval(clock, 1000);
 	missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
 	missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
-
+	
+	
+	screenBrightness({check:"mode"});
+	screenBrightness({check:"value"});
 	toggleWifi({check:"true"});
 	toggleAirplane({check:"true"});
-	volumeControls({check:"true", type:"media"});
-	volumeControls({check:"true", type:"ringer"});	
+	volumeControls({check:"true", type:"media", percentage:"true"});
+	volumeControls({check:"true", type:"ringer", percentage:"true"});
+	volumeControls({check:"true", type:"mode"});	
 }
