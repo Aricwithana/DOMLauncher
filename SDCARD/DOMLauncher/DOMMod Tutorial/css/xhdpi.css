@@ -31,18 +31,6 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-
-
-* {
-    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
-    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
-    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
-    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-}
-
-
-
-
 body {
 	line-height: 1;
 }
@@ -62,6 +50,13 @@ table {
 	border-spacing: 0;
 }
 
+* {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+}
+
 
 body
 {	
@@ -75,6 +70,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 
 }
 
+/*Desktop Slider*/
 #slider
 {
 	overflow:scroll; 
@@ -82,10 +78,11 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	top:0px; 
 	left:0px; 
 	right:0px; 
-	bottom:60px;	
+	bottom:120px;	
 }
 
 
+/*Missed Communications CSS Settings for this theme.*/
 *[data-missed]:after
 {
 	display:block;
@@ -110,6 +107,9 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	display:none;
 }
 
+
+
+/*'App' launcher icons.*/
 .app
 {
 	background-position:left top;
@@ -117,8 +117,8 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	background-size:100% 100%;
 	position:relative;
 	display: inline-block;
-	width:36px; 
-	height:36px;
+	width:96px; 
+	height:96px;
 	margin:25px; 
 	display:inline-block;
 }  
@@ -153,7 +153,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 {
 	text-align:center;
 	bottom:0px;
-	height:60px;
+	height:120px;
 	vertical-align:center;
 	position:absolute;
 	left:0px;
@@ -175,7 +175,6 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 {
 	display:none;	
 }
-
 
 /*App Panel Show/Hide Button 'Icon'*/
 #appPanel_Show
@@ -248,7 +247,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 {
 	position:absolute;
 	top:0px;
-	bottom:60px;
+	bottom:120px;
 	left:0px;
 	right:0px;
 	overflow:scroll;
@@ -261,12 +260,13 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	bottom:0px;
 	left:0px;
 	right:50%;
-	height:60px;	
-	line-height:125px;
-	font-size:125%;
+	height:120px;	
+	line-height:200%;
+	font-size:350%;
 	-webkit-box-shadow: -2px -2px 2px 2px rgba(0, 0, 0, .5); 
 	background-color:rgba(34,102,153,.75);
 	color:white;
+	text-transform: uppercase;
 }
 
 #close_appPanel
@@ -275,12 +275,13 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	bottom:0px;
 	right:0px;
 	left:50%;
-	height:60px;	
-	line-height:125px;
-	font-size:125%;
+	height:120px;	
+	line-height:200%;
+	font-size:350%;
 	-webkit-box-shadow: 2px -2px 2px 2px rgba(0, 0, 0, .5);
 	background-color:rgba(34,102,153,.75);
 	color:white;
+	text-transform: uppercase;
 }
 
 
@@ -298,7 +299,6 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	top:20px;
 	background-image:none;
 	-webkit-box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, .75);
-	zoom:.25;
 }
 
 .clock:before /*Line:*/
@@ -311,6 +311,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
     position:absolute;
     top:0px;
     left:49%;
+    z-index:8;
 }
 
 .clock:after /*Line:*/
@@ -324,6 +325,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
     top:0px;
     left:49%;
     -webkit-transform: rotate(90deg);
+    z-index:8;
 }
 
 .innerClock /*Bottom White Layer:*/ 
@@ -348,6 +350,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
     top:0px;
     left:49%;
     -webkit-transform: rotate(30deg);
+    z-index:8;
 }
 
 .innerClock:before /*Line:*/
@@ -361,6 +364,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
     top:0px;
     left:49%;
     -webkit-transform: rotate(60deg);
+    z-index:8;
 }
 
 .blank  /*needed a blank element:*/
@@ -372,7 +376,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
     position:absolute;
     left:25px;
     top:25px;
-    z-index:5;
+    z-index:8;
 }
 
 .blank:before /*Line:*/
@@ -386,7 +390,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
     top:0px;
     left:49%;
     -webkit-transform: rotate(120deg);
-    z-index:4;
+    z-index:8;
 }
 
 .blank:after /*Line:*/
@@ -400,7 +404,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
     top:0px;
     left:49%;
     -webkit-transform: rotate(150deg);
-    z-index:4;
+    z-index:8;
 }
 
 
@@ -621,6 +625,86 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
     bottom:-70px; 
 }
 
+.secTick
+{
+    width:3px;
+    height:360px;
+    position:absolute;
+    left:49%;
+    top:25px;
+    z-index:5;
+    background-color:black
+    
+}
+
+.secTick:before
+{
+    content:"";
+    display:block;
+    width:3px;
+    height:360px;  
+    position:absolute;
+    left:49%;
+    background-color:black;
+    top:0px;
+}
+
+.secTick:after
+{
+    content:"";
+    display:block;
+    width:3px;
+    height:360px;  
+    position:absolute;
+    left:49%;
+    background-color:black;
+    top:0px;
+}
+
+
+.setOne{   -webkit-transform: rotate(6deg);    }
+.setOne:before{    -webkit-transform: rotate(6deg);  }
+.setOne:after{    -webkit-transform: rotate(12deg);   }
+
+.setTwo{   -webkit-transform: rotate(24deg);   }
+.setTwo:before{    -webkit-transform: rotate(12deg); }
+.setTwo:after{    -webkit-transform: rotate(18deg);  }
+
+.setThree{   -webkit-transform: rotate(48deg);   }
+.setThree:before{    -webkit-transform: rotate(6deg);  }
+.setThree:after{    -webkit-transform: rotate(18deg);   }
+
+.setFour{   -webkit-transform: rotate(72deg);   }
+.setFour:before{    -webkit-transform: rotate(6deg);  }
+.setFour:after{    -webkit-transform: rotate(12deg); }
+
+.setFive{   -webkit-transform: rotate(96deg);  }
+.setFive:before{    -webkit-transform: rotate(6deg);  }
+.setFive:after{    -webkit-transform: rotate(12deg);  }
+
+.setSix{   -webkit-transform: rotate(114deg);   }
+.setSix:before{    -webkit-transform: rotate(12deg);  }
+.setSix:after{    -webkit-transform: rotate(18deg); }
+
+.setSeven{   -webkit-transform: rotate(138deg); }
+.setSeven:before{    -webkit-transform: rotate(6deg);  }
+.setSeven:after{    -webkit-transform: rotate(18deg); }
+
+.setEight{   -webkit-transform: rotate(162deg);  }
+.setEight:before{    -webkit-transform: rotate(6deg);   }
+.setEight:after{    -webkit-transform: rotate(12deg);   }
+
+.tickCover
+{
+    position:absolute;
+    width:324px;
+    height:324px;
+    background-color:white;
+    border-radius:50%;
+    left:38px;
+    top:38px;
+    z-index:6;    
+}
 
 
 /*Pre-styled list*/

@@ -25,7 +25,7 @@
         <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.0)" href="css/mdpi.css" />
         <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.5)" href="css/hdpi.css" />
         <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 2.0)" href="css/xhdpi.css" />		
-		<script src="js/functions.js"></script>
+		<script src="js/domlFunctions.js"></script>
         <script>
         
 			function onLoad() {document.addEventListener("deviceready", deviceReady, false);}
@@ -95,7 +95,7 @@ function applistCallback(appList){
         <span style="font-size:24px;"> DOMLauncher  </span>
     
         	<h1>Well hello there!</h1>
-            <p>You are seeing me because of a few possibilities.  First your external sdcard is no accessable.  DOMLauncher prefers that its asset files are are on the internal SD CARD but not all phones have this feature.  If DOMLauncher can not default to the internal the external will be used. </p>
+            <p>You are seeing me because of a few possibilities.  First possility is that your external sdcard is not accessable.  DOMLauncher asset files are are on the internal sdcard but not all phones have this feature.  If DOMLauncher can not default to the internal the external will be used.  If the external sdcard is mounted or otherwise unreadable when DOMLauncher loads, this 'dummy' view will appear.  Second posibility is that the wrong folder name is typed within the 'activeTheme.txt' file within the 'settings' folder.  The last posibility is that the chosen theme does not have an index.html file. </p>
           
        
         	<h1>Icon Cache</h1>
@@ -109,7 +109,7 @@ function applistCallback(appList){
              <input type="button" value="Exit App" onClick="navigator.app.exitApp();"/>
              
              
-             <div class="appPanel" style="text-align:center;"></div>
+             <div id="appPanel" style="text-align:center;"></div>
    
 </body>
 

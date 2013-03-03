@@ -239,7 +239,7 @@ function volumecontrolsCallback(args){
 	
 	/*Begin Theme Specific Editible Code*/
 		if(type == "ringer" && percentage >= 0){
-			document.getElementById('slider_ringerVol').parentNode.childNodes[1].innerHTML = 'Ringer Volume: ' + returnVal;
+			document.getElementById('slider_ringerVol').parentNode.childNodes[1].innerHTML = 'Ringer Volume: ' + returnVal + "%";
 			if(returnVal <= 14 && returnVal != 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "off" || returnVal >= 15 && returnVal != 0 && document.getElementById('toggle_ringerSilent').dataset.state === "on"){
 				document.getElementById('toggle_ringerVibrate').scrollLeft = 0;
 				document.getElementById('toggle_ringerVibrate').dataset.state = "on";
@@ -262,19 +262,19 @@ function volumecontrolsCallback(args){
 			}
 		}
 		
-		if(type == "media" && check == "false"){
-			document.getElementById('slider_mediaVol').parentNode.childNodes[1].innerHTML = 'Media Volume: ' + returnVal;
+		if(type == "media" && percentage >= 0){
+			document.getElementById('slider_mediaVol').parentNode.childNodes[1].innerHTML = 'Media Volume: ' + returnVal + "%";
 		} 
 		
 		if(check == "true" && percentage == "true"){
 			if(type == "ringer"){
 				document.getElementById('slider_ringerVol').value = returnVal;	
-				document.getElementById('slider_ringerVol').parentNode.childNodes[1].innerHTML = 'Ringer Volume: ' + returnVal;
+				document.getElementById('slider_ringerVol').parentNode.childNodes[1].innerHTML = 'Ringer Volume: ' + returnVal + "%";
 			}
 			
 			if(type == "media" && percentage == "true"){
 				document.getElementById('slider_mediaVol').value = returnVal;	
-				document.getElementById('slider_mediaVol').parentNode.childNodes[1].innerHTML = 'Media Volume: ' + returnVal;
+				document.getElementById('slider_mediaVol').parentNode.childNodes[1].innerHTML = 'Media Volume: ' + returnVal + "%";
 			}	
 		}
 		
@@ -333,6 +333,8 @@ function toggleairplaneCallback(args){
 		if(returnVal === false && document.getElementById('toggle_Airplane').dataset.state === "on"){
 			document.getElementById('toggle_Airplane').scrollLeft = 100;
 			document.getElementById('toggle_Airplane').dataset.state = "off";
+			document.getElementById('meter_Cellular').previousSibling.innerHTML = 'Cellular Signal:';
+			document.getElementById('meter_Cellular').firstChild.style.width = "0%";
 		}
 		
 		if(returnVal === true && document.getElementById('toggle_Airplane').dataset.state === "off"){
@@ -374,13 +376,17 @@ function togglewifiCallback(args){
 		if(returnVal === true && document.getElementById('toggle_wifi').dataset.state === "off"){
 			document.getElementById('toggle_wifi').scrollLeft = 0;
 			document.getElementById('toggle_wifi').dataset.state = "on";
+			document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: 100%';
+			document.getElementById('meter_Wifi').firstChild.style.width = '100%';
 		}
 		
 		if(returnVal === false && document.getElementById('toggle_wifi').dataset.state === "on"){
 			document.getElementById('toggle_wifi').scrollLeft = 100;
 			document.getElementById('toggle_wifi').dataset.state = "off";
-			document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: -';
+		}
+		if(returnVal === false && document.getElementById('meter_Wifi').firstChild.style.width != '0%'){
 			document.getElementById('meter_Wifi').firstChild.style.width = '0%';
+			document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: -';
 		}
 		//Until there is a 'state listener' for when connections turn on and off, this timeout is needed to correctly respond to if the data connecton is active or not.
 		setTimeout(function(){toggleData({check:"true"});}, 10000);
@@ -417,7 +423,7 @@ function wifisignalCallback(strengthDbm){
 	
 	/*Begin Theme Specific Editible Code*/
 		maxStrength = -50; 
-		minStrength = -100; 
+		minStrength = -120; 
 		wifiChange(Math.round(100 - Math.max(0, Math.min((strengthDbm - maxStrength) / (minStrength - maxStrength), 1) * 100)))	
 	/*End Theme Specific Editible Code*/
 }
@@ -440,7 +446,7 @@ function cellsignalCallback(strengthDbm){
 }
 	//Used with the Cellular Signal Callback Function.
 	function cellsignalChange(percentage){
-		document.getElementById('meter_Cellular').previousSibling.innerHTML = 'Cellular Signal: ' + percentage;
+		document.getElementById('meter_Cellular').previousSibling.innerHTML = 'Cellular Signal: ' + percentage + "%";
 		document.getElementById('meter_Cellular').firstChild.style.width = percentage + "%";
 	}
 
@@ -517,10 +523,9 @@ function onPause() {
 	
 /*Handle the resume event*/
 function onResume() {
-	clockTimer = setInterval(clock, 1000);
-	missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
-	missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
-	
+	var clockTimer = setInterval(clock, 1000);
+	var missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
+	var missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
 	
 	screenBrightness({check:"mode"});
 	screenBrightness({check:"value"});
