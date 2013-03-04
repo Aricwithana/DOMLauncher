@@ -1,4 +1,276 @@
 /**	
+*Cordova Plugin API 
+*------------------------------------------
+**/
+
+var Wificontrols = function() {};
+            
+Wificontrols.prototype.show = function(content, success, fail) {
+    return cordova.exec( function(args) {
+        success(args);
+    }, function(args) {
+        fail(args);
+    }, 'Wificontrols', '', [content]);
+};
+
+if(!window.plugins) {
+    window.plugins = {};
+}
+if (!window.plugins.wificontrols) {
+    window.plugins.wificontrols = new Wificontrols();
+}
+
+
+
+
+var Airplane = function() {};
+            
+Airplane.prototype.show = function(content, success, fail) {
+    return cordova.exec( function(args) {
+        success(args);
+    }, function(args) {
+        fail(args);
+    }, 'Airplane', '', [content]);
+};
+
+if(!window.plugins) {
+    window.plugins = {};
+}
+if (!window.plugins.airplane) {
+    window.plugins.airplane = new Airplane();
+}
+
+
+var Applist = function() {};
+            
+Applist.prototype.show = function(content, success, fail) {
+    return cordova.exec( function(args) {
+        success(args);
+    }, function(args) {
+        fail(args);
+    }, 'Applist', '', [content]);
+};
+
+if(!window.plugins) {
+    window.plugins = {};
+}
+if (!window.plugins.applist) {
+    window.plugins.applist = new Applist();
+}
+// JavaScript Document
+
+
+
+var Bluetoothcontrols = function() {};
+            
+Bluetoothcontrols.prototype.show = function(content, success, fail) {
+    return cordova.exec( function(args) {
+        success(args);
+    }, function(args) {
+        fail(args);
+    }, 'Bluetoothcontrols', '', [content]);
+};
+
+if(!window.plugins) {
+    window.plugins = {};
+}
+if (!window.plugins.bluetoothcontrols) {
+    window.plugins.bluetoothcontrols = new Bluetoothcontrols();
+}
+
+
+
+var Cellularsignalgetter = function() {};
+            
+Cellularsignalgetter.prototype.show = function(content, success, fail) {
+    return cordova.exec( function(args) {
+        success(args);
+    }, function(args) {
+        fail(args);
+    }, 'Cellularsignalgetter', '', [content]);
+};
+
+if(!window.plugins) {
+    window.plugins = {};
+}
+if (!window.plugins.cellularsignalgetter) {
+    window.plugins.cellularsignalgetter = new Cellularsignalgetter();
+}
+
+
+var Fullscreentoggle = function() {};
+            
+Fullscreentoggle.prototype.show = function(content, success, fail) {
+    return cordova.exec( function(args) {
+        success(args);
+    }, function(args) {
+        fail(args);
+    }, 'Fullscreentoggle', '', [content]);
+};
+
+if(!window.plugins) {
+    window.plugins = {};
+}
+if (!window.plugins.fullscreentoggle) {
+    window.plugins.fullscreentoggle = new Fullscreentoggle();
+}
+
+
+
+var Launch = function() {};
+            
+Launch.prototype.show = function(content, success, fail) {
+    return cordova.exec( function(args) {
+        success(args);
+    }, function(args) {
+        fail(args);
+    }, 'Launch', '', [content]);
+};
+
+if(!window.plugins) {
+    window.plugins = {};
+}
+if (!window.plugins.launch) {
+    window.plugins.launch = new Launch();
+}
+
+
+
+
+
+var Missedcommunications = function() {};
+            
+Missedcommunications.prototype.show = function(content, success, fail) {
+    return cordova.exec( function(args) {
+        success(args);
+    }, function(args) {
+        fail(args);
+    }, 'Missedcommunications', '', [content]);
+};
+
+if(!window.plugins) {
+    window.plugins = {};
+}
+if (!window.plugins.missedcommunications) {
+    window.plugins.missedcommunications = new Missedcommunications();
+}
+
+
+
+
+
+
+
+
+
+var Mobiledatatoggler = function() {};
+            
+Mobiledatatoggler.prototype.show = function(content, success, fail) {
+    return cordova.exec( function(args) {
+        success(args);
+    }, function(args) {
+        fail(args);
+    }, 'Mobiledatatoggler', '', [content]);
+};
+
+if(!window.plugins) {
+    window.plugins = {};
+}
+if (!window.plugins.mobiledatatoggler) {
+    window.plugins.mobiledatatoggler = new Mobiledatatoggler();
+}
+
+
+var Screenbrightness = function() {};
+            
+Screenbrightness.prototype.show = function(content, success, fail) {
+    return cordova.exec( function(args) {
+        success(args);
+    }, function(args) {
+        fail(args);
+    }, 'Screenbrightness', '', [content]);
+};
+
+if(!window.plugins) {
+    window.plugins = {};
+}
+if (!window.plugins.screenbrightness) {
+    window.plugins.screenbrightness = new Screenbrightness();
+}
+
+
+
+var Simplesave = function() {};
+            
+Simplesave.prototype.show = function(content, success, fail) {
+    return cordova.exec( function(args) {
+        success(args);
+    }, function(args) {
+        fail(args);
+    }, 'Simplesave', '', [content]);
+};
+
+if(!window.plugins) {
+    window.plugins = {};
+}
+if (!window.plugins.simplesave) {
+    window.plugins.simplesave = new Simplesave();
+}
+
+
+
+
+
+var Fullscreentoggle = function() {};
+            
+Fullscreentoggle.prototype.show = function(content, success, fail) {
+    return cordova.exec( function(args) {
+        success(args);
+    }, function(args) {
+        fail(args);
+    }, 'Fullscreentoggle', '', [content]);
+};
+
+if(!window.plugins) {
+    window.plugins = {};
+}
+if (!window.plugins.fullscreentoggle) {
+    window.plugins.fullscreentoggle = new Fullscreentoggle();
+}
+
+
+
+var Volumecontrols = function() {};
+            
+Volumecontrols.prototype.show = function(content, success, fail) {
+    return cordova.exec( function(args) {
+        success(args);
+    }, function(args) {
+        fail(args);
+    }, 'Volumecontrols', '', [content]);
+};
+
+if(!window.plugins) {
+    window.plugins = {};
+}
+if (!window.plugins.volumecontrols) {
+    window.plugins.volumecontrols = new Volumecontrols();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**	
 *Cordova Plugin API Javascript Wrappers
 *------------------------------------------
 *	These functions are simply easy to use javascript wrappers to work with
@@ -239,4 +511,10 @@ function refresh_iconCSS(args){
 		function() {alert('Refresh Icons Failed')}); // Failure function						
 } 
 
+
+
+document.addEventListener("deviceready", cordovaBack, false);
+function cordovaBack(){
+	document.addEventListener("backbutton", onBackKeyDown, false);
+}
 

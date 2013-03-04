@@ -249,7 +249,19 @@ function missedcommunicationsCallback(args){
 	/*End Theme Specific Editible Code*/
 }
 
+function bluetoothcontrolsCallback(args){
+	var state = args.state;
+	var check = args.check;
+	var returnVal = args.returnVal;
+	/*Begin Theme Specific Editible Code*/
+	/*End Theme Specific Editible Code*/
+}
 
+
+/*Handle the Back Button.  THIS IS REQUIRED FOR THE APP TO FUNCTION CORRECTLY.*/
+function onBackKeyDown() {
+   
+}
 
 
 /*Handle the pause event*/

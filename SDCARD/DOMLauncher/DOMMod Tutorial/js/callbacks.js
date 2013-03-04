@@ -27,10 +27,14 @@ function themeLoaded(){
 	screenBrightness({check:"value"});
 	screenBrightness({check:"mode"});
 	bluetoothControls({check:"true"});
+
 }
 /*End Document Ready*/
 
-
+/*Back Button Override.  This function must exist in each DOMMod.*/
+function onBackKeyDown() {
+  
+}
 
 /*App Panel Generation & App Launcher Event Bindings*/
 function applistCallback(appList){	
