@@ -26,7 +26,7 @@ function themeLoaded(){
 	missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
 	screenBrightness({check:"value"});
 	screenBrightness({check:"mode"});
-
+	bluetoothControls({check:"true"});
 }
 /*End Document Ready*/
 
@@ -188,6 +188,14 @@ function switchCallback(args){
 		}
 		if(switchID === "toggle_ringerVibrate" && state === "on"){
 			volumeControls({type:"ringer", vol:"vibrate"});
+		}	
+		
+		//Toggle Bluetooth
+		if(switchID === "switch_bluetooth" && state === "off"){
+			bluetoothControls({state:"off"});
+		}
+		if(switchID === "switch_bluetooth" && state === "on"){
+			bluetoothControls({state:"on"});
 		}	
 	/*End Theme Specific Editible Code*/
 }	
@@ -508,7 +516,20 @@ function missedcommunicationsCallback(args){
 	/*End Theme Specific Editible Code*/
 }
 
-
+function bluetoothcontrolsCallback(args){
+	var state = args.state;
+	var check = args.check;
+	var returnVal = args.returnVal;
+	if(check == "true" && returnVal == "on"){
+		document.getElementById('switch_bluetooth').scrollLeft = 0;
+		document.getElementById('switch_bluetooth').dataset.state = "on";	
+	}
+	
+	if(check == "true" && returnVal == "off"){
+		document.getElementById('switch_bluetooth').scrollLeft = 100;
+		document.getElementById('switch_bluetooth').dataset.state = "off";	
+	}
+}
 
 
 /*Handle the pause event*/
@@ -527,6 +548,7 @@ function onResume() {
 	var missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
 	var missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
 	
+	bluetoothControls({check:"true"});
 	screenBrightness({check:"mode"});
 	screenBrightness({check:"value"});
 	toggleWifi({check:"true"});

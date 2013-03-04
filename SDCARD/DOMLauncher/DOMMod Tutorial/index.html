@@ -24,6 +24,7 @@
         <script type="text/javascript" src="file:///android_asset/www/js/screenbrightness.js"></script>  
         <script type="text/javascript" src="file:///android_asset/www/js/missedcommunications.js"></script>  
         <script type="text/javascript" src="file:///android_asset/www/js/wificontrols.js"></script>  
+        <script type="text/javascript" src="file:///android_asset/www/js/bluetoothcontrols.js"></script>  
 		<script type="text/javascript" src="file:///android_asset/www/js/domlFunctions.js"></script>
 <!--
 		<script src="http://debug.phonegap.com/target/target-script-min.js#awaa"></script>        
@@ -41,6 +42,7 @@
             <div style="height:100%; width:300%; position:relative;" id="sliderInternal">
                 <div class="app" appPackage="com.netflix.mediaclient" appName="Netflix"></div>
                 <div class="app" appPackage="com.opera.browser" appName="Opera"></div>
+                <div class="app" appName="Exit App" style="background-color:red;" onClick="navigator.app.exitApp();"></div>
                 <ul class="controlList" id="systemControls">
                     <li>
                         <div>FULLSCREEN</div><div id="toggle_fullScreen" class="scrollSwitch" data-state="off"></div>
@@ -50,6 +52,9 @@
                     </li>
                     <li> 
                         <div>DATA</div><div id="toggle_data" class="scrollSwitch" data-state="off"></div>
+                    </li>
+                    <li> 
+                        <div>Bluetooth</div><div id="switch_bluetooth" class="scrollSwitch" data-state="off"></div>
                     </li>
                     <li> 
                         <div>AIRPLANE</div><div id="toggle_Airplane" class="scrollSwitch" data-state="off"></div>

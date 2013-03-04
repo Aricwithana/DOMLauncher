@@ -182,7 +182,16 @@ function appList(args){
 }
 
 
+function bluetoothControls(args){
+	 var state = args.state || false;
+	 var check = args.check || false;
+	window.plugins.bluetoothcontrols.show({state:state, check:check}, 
+		function(returnVal) {//appList is a JSON Object needing to be parsed.
+			bluetoothcontrolsCallback({returnVal:returnVal, state:state, check:check});	
+	}, // Success function
+	function(error) {alert('Bluetooth' + error);}); // Failure function
 
+}
 
 
 
