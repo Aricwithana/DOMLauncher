@@ -13,13 +13,15 @@ Before going any further understand a couple key points:
 
 3.  This is a luxury launcher replacement.  I only offically support Android 4.0+ but the app CAN work down to version 2.3 if one compiles for themselves.
 
-4. Average memory load is around 40 meg (Note 20), namely because of the webkit view blank app starts around 16meg.  My older device worked fine.
+4. Average memory load is around 40 meg (Note 2), namely because of the webkit view blank app starts around 16meg.  My older device worked fine.
 
-5.  This runs off your SDCARD. Many newer devices allow the internal memory to be the 'sdcard' and the physical card is sdcardext.  A device that doesn't not do this, the app instead references the physical sdcard.  The key factor to remember when a device only has the external sdcard:  The App Will Not Load The DOMMod When The SDCARD IS MOUNTED AND UNREADABLE BY THE DEVICE.  I will have in place a 'dummy' mod that is one page and can access the very basics. This will be baked into the app for this possibility allowing functionality while the sdcard is mounted (when the phone is plugged into a computer and mounted as a drive).
+5.  The 'DOMMod'-what a user loads for a custom UI, loads off your SDCARD. Many newer devices allow the internal memory to be the 'sdcard' and the physical card is sdcardext.  A device that doesn't not do this, the app instead references the external sdcard.  The key factor to remember when a device only has the external sdcard:  The App Will Not Load The DOMMod When The SDCARD IS MOUNTED AND UNREADABLE BY THE DEVICE.  This only matters if the app starts/restarts or if a DOMMod uses live media from the storage space.  I have in place a 'dummy' DOMMod that is one page and can access the very basics and launch the installed apps. This is baked into the app as a last ditch backup so something always load.
 
 If one can handle these things, you have in your hands the ability to create ANY USER INTERFACE you want for your Launcher.  It is all HTML/CSS and some simple javascript if one want to dive into that.  Anything that you can imagine, you can create with the only real limitation is the hardware devices and the webkit view.
 
 Personally, I love LCARS.
+
+
 
 Instructions:
 
@@ -31,20 +33,20 @@ The DOMLauncher folder within the SD CARD folder, just copy to your sdcard.
 
 DEVELOPERS:
 
-The app itself is not extensive.  The 'bulk' of the app comes from the custom DOMMods that I and others will create.  I have written a collection of additional Cordova API Plugins to make this app function, the rest is just HTML/CSS/JS.
+The app itself is not extensive.  The 'bulk' of the app comes from the custom DOMMods that I, you or others will create.  I have written a collection of additional Cordova API Plugins to make this app function, the rest is just HTML/CSS/JS.
 
 These additional plugins include:
 
 Airplane Toggle
 App List-App Icon Generator
-Cellular Signal 
-Full Screen Toggle
+Cellular Signal
+FullScreen Toggle
 App/Activity/Settings Launcher
-Missed Communications (Missed calls/Unread sms)
+Missed Communications (Missed calls/Unread sms
 Mobile Data Controls
 Screenbrightness Controls
 Volume Controls (Media & Ringer)
-Wifi Controls - includes a Wifi Signal feature.
+Wifi Controls - includes a Wifi Signal feature
 Simple Save
 Bluetooth Controls
 
