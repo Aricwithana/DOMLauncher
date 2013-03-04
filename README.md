@@ -46,8 +46,7 @@ Screenbrightness Controls
 Volume Controls (Media & Ringer)
 Wifi Controls - includes a Wifi Signal feature.
 Simple Save
-LED Flashlight - Coming before full release
-Bluetooth Controls - Coming before full release.
+Bluetooth Controls
 
 Many of these plugins are commonly asked for things for the Cordova Library or use in a native application.  Since my background is not in Java, I am looking for people that would like to optimize and tweak the Cordova Plugins since they are not perfect and fully useable outside DOMLauncher!
 
