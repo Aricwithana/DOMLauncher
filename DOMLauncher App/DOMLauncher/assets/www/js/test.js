@@ -1,10 +1,3 @@
-/**
- * 
- * Phonegap share plugin for Android
- * Kevin Schaul 2011
- *
- */
-
 var Test = function() {};
             
 Test.prototype.show = function(content, success, fail) {
