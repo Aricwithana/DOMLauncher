@@ -18,7 +18,7 @@ function themeLoaded(){
 	toggleData({check:"true"});
 	cellSiganl({action:"start"});
 	batteryLevel();
-	toggleAirplane({check:"true"});
+	domLibrary.airplaneCheck();
 	domLibrary.ringerCheck();
 	domLibrary.mediaCheck();
 	domLibrary.ringermodeCheck();
@@ -164,10 +164,10 @@ function switchCallback(args){
 		
 		//Toggle Airplane
 		if(switchID === "toggle_Airplane" && state === "off"){
-			toggleAirplane({state:"off"});
+			domLibrary.airplaneDisable();
 		}
 		if(switchID === "toggle_Airplane" && state === "on"){
-			toggleAirplane({state:"on"});
+			domLibrary.airplaneEnable();
 		}
 		
 		//Toggle AutoBrightness 
@@ -388,6 +388,54 @@ window.domCallbacks = {
 				document.getElementById('toggle_ringerSilent').dataset.state = "off";
 			}
 		/*End Theme Specific Editible Code*/
+	},
+	airplaneToggle: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			if(returnVal === false){
+				document.getElementById('toggle_Airplane').scrollLeft = 100;
+				document.getElementById('toggle_Airplane').dataset.state = "off";
+			}
+			
+			if(returnVal === true){
+				document.getElementById('toggle_Airplane').scrollLeft = 0;
+				document.getElementById('toggle_Airplane').dataset.state = "on";
+				document.getElementById('meter_Cellular').previousSibling.innerHTML = 'Cellular Signal: - ';
+				document.getElementById('meter_Cellular').firstChild.style.width = "0%";			
+				}
+			setTimeout(function(){toggleWifi({check:"true"});}, 10000);		
+		/*End Theme Specific Editible Code*/
+	},
+	airplaneCheck: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			if(returnVal === false){
+				document.getElementById('toggle_Airplane').scrollLeft = 100;
+				document.getElementById('toggle_Airplane').dataset.state = "off";
+			}
+			
+			if(returnVal === true){
+				document.getElementById('toggle_Airplane').scrollLeft = 0;
+				document.getElementById('toggle_Airplane').dataset.state = "on";
+				document.getElementById('meter_Cellular').previousSibling.innerHTML = 'Cellular Signal: - ';
+				document.getElementById('meter_Cellular').firstChild.style.width = "0%";
+			}
+			setTimeout(function(){toggleWifi({check:"true"});}, 10000);		
+		/*End Theme Specific Editible Code*/
+	},
+	airplaneEnable: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			document.getElementById('toggle_Airplane').scrollLeft = 0;
+			document.getElementById('toggle_Airplane').dataset.state = "on";
+			document.getElementById('meter_Cellular').previousSibling.innerHTML = 'Cellular Signal: - ';
+			document.getElementById('meter_Cellular').firstChild.style.width = "0%";
+			setTimeout(function(){toggleWifi({check:"true"});}, 10000);	
+		/*End Theme Specific Editible Code*/
+	},
+	airplaneDisable: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			document.getElementById('toggle_Airplane').scrollLeft = 100;
+			document.getElementById('toggle_Airplane').dataset.state = "off";
+			setTimeout(function(){toggleWifi({check:"true"});}, 10000);	
+		/*End Theme Specific Editible Code*/
 	}
 	
 }
@@ -569,6 +617,7 @@ function onResume() {
 	var missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
 	var missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
 	
+	domLibrary.airplaneCheck();
 	bluetoothControls({check:"true"});
 	screenBrightness({check:"mode"});
 	screenBrightness({check:"value"});

@@ -6484,23 +6484,6 @@ if (!window.plugins.wificontrols) {
 
 
 
-var Airplane = function() {};
-            
-Airplane.prototype.show = function(content, success, fail) {
-    return cordova.exec( function(args) {
-        success(args);
-    }, function(args) {
-        fail(args);
-    }, 'Airplane', '', [content]);
-};
-
-if(!window.plugins) {
-    window.plugins = {};
-}
-if (!window.plugins.airplane) {
-    window.plugins.airplane = new Airplane();
-}
-
 
 var Applist = function() {};
             
@@ -6664,6 +6647,7 @@ if (!window.plugins.simplesave) {
 
 (function(cordova){
 
+	//Fullscreen Controls
 	var Fullscreencontrols = function() {};
 				
 	Fullscreencontrols.prototype.check = function(params, success, fail) {
@@ -6690,7 +6674,7 @@ if (!window.plugins.simplesave) {
 	
 	
 	
-	
+	//Volume COntrols
 	var Volumecontrols = function() {};
 				
 	Volumecontrols.prototype.ringerUp = function(params, success, fail) {
@@ -6826,8 +6810,47 @@ if (!window.plugins.simplesave) {
         window.volumecontrols = new Volumecontrols();
     });
 
-})(window.PhoneGap || window.Cordova || window.cordova);
 
+	//Airplane Mode Controls
+	var Airplane = function() {};
+				
+	Airplane.prototype.check = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Airplane', 'check', [params]);
+	};
+	
+	Airplane.prototype.toggle = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Airplane', 'toggle', [params]);
+	};
+	
+	Airplane.prototype.enable = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Airplane', 'enable', [params]);
+	};		
+	
+	Airplane.prototype.disable = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Airplane', 'disable', [params]);
+	};	
+	
+    cordova.addConstructor(function() {
+        window.airplane = new Airplane();
+    });
+
+})(window.PhoneGap || window.Cordova || window.cordova);
 
 
 
@@ -6863,7 +6886,8 @@ if (!window.plugins.simplesave) {
 
 
 window.domLibrary = {
-		
+	
+	//Fullscreen Controls	
 	fullscreenCheck: function(){
 		window.fullscreencontrols.check({}, 
 			function(returnVal) {domCallbacks.fullscreenCheck(returnVal.returnVal);}, // Success function
@@ -6940,7 +6964,27 @@ window.domLibrary = {
 		window.volumecontrols.ringermodeCheck({}, 
 			function(returnVal) {domCallbacks.ringermodeCheck(returnVal.returnVal);}, // Success function
 			function(error) {alert('Mode Check Failed ' + error)}); // Failure function
-	} 
+	}, 
+	airplaneCheck: function(){
+		window.airplane.check({}, 
+			function(returnVal) {domCallbacks.airplaneCheck(returnVal.returnVal);}, // Success function
+			function(error) {alert('Airplane Check Failed ' + error)}); // Failure function
+	}, 
+	airplaneToggle: function(){
+		window.airplane.toggle({}, 
+			function(returnVal) {domCallbacks.airplaneToggle(returnVal.returnVal);}, // Success function
+			function(error) {alert('Airplane Check Failed ' + error)}); // Failure function
+	}, 
+	airplaneEnable: function(){
+		window.airplane.enable({}, 
+			function(returnVal) {domCallbacks.airplaneEnable(returnVal.returnVal);}, // Success function
+			function(error) {alert('Airplane Enable Failed ' + error)}); // Failure function
+	}, 
+	airplaneDisable: function(){
+		window.airplane.disable({}, 
+			function(returnVal) {domCallbacks.airplaneDisable(returnVal.returnVal);}, // Success function
+			function(error) {alert('Airplane Disable Failed ' + error)}); // Failure function
+	}   
 
 
 
@@ -6963,7 +7007,6 @@ window.domLibrary = {
 
 
 }
-
 
 /*App/Activity Launcher*/
 function launchApps(object){ //Object var represents a DOM Elements that holds the meta information for app or activity.
@@ -7041,16 +7084,7 @@ function batteryLevel(){
  
 
 
-//Toggle Air Plane Mode
-function toggleAirplane(args){	
-	var state = args.state || false;
-	var check = args.check || false;
-	window.plugins.airplane.show({state:state, check:check}, 
-		function(returnVal) {
-			toggleairplaneCallback({returnVal:returnVal, state:state, check:check});
-		}, // Cordova Plugin Success function.  Returns the Airplane mode value 1/0.
-		function() {alert('Airplane Toggle Failed')}); // Failure function
-}
+
 
 
 
