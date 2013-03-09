@@ -6687,15 +6687,140 @@ if (!window.plugins.simplesave) {
     });
 	
 	
+	
+	
+	
+	
 	var Volumecontrols = function() {};
 				
-	Volumecontrols.prototype.startActivity = function(params, success, fail) {
+	Volumecontrols.prototype.ringerUp = function(params, success, fail) {
 		return cordova.exec( function(args) {
 			success(args);
 		}, function(args) {
 			fail(args);
-		}, 'Volumecontrols', '', [params]);
+		}, 'Volumecontrols', 'ringerUp', [params]);
 	};
+	
+
+			
+	Volumecontrols.prototype.ringerDown = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Volumecontrols', 'ringerDown', [params]);
+	};
+
+			
+	Volumecontrols.prototype.ringerPercentage = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Volumecontrols', 'ringerPercentage', [params]);
+	};
+	
+
+			
+	Volumecontrols.prototype.ringerSilent = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Volumecontrols', 'ringerSilent', [params]);
+	};
+	
+
+			
+	Volumecontrols.prototype.ringerVibrate = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Volumecontrols', 'ringerVibrate', [params]);
+	};
+	
+
+			
+	Volumecontrols.prototype.ringerNormal = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Volumecontrols', 'ringerNormal', [params]);
+	};
+	
+
+			
+	Volumecontrols.prototype.mediaUp = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Volumecontrols', 'mediaUp', [params]);
+	};
+	
+
+			
+	Volumecontrols.prototype.mediaDown = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Volumecontrols', 'mediaDown', [params]);
+	};
+	
+
+			
+	Volumecontrols.prototype.mediaPercentage = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Volumecontrols', 'mediaPercentage', [params]);
+	};
+	
+
+			
+	Volumecontrols.prototype.mediaMute = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Volumecontrols', 'mediaMute', [params]);
+	};
+	
+
+			
+	Volumecontrols.prototype.mediaCheck = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Volumecontrols', 'mediaCheck', [params]);
+	};
+	
+
+			
+	Volumecontrols.prototype.ringerCheck = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Volumecontrols', 'ringerCheck', [params]);
+	};
+	
+
+			
+	Volumecontrols.prototype.ringermodeCheck = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Volumecontrols', 'ringermodeCheck', [params]);
+	};
+	
+
 	
     cordova.addConstructor(function() {
         window.volumecontrols = new Volumecontrols();
@@ -6721,7 +6846,7 @@ if (!window.plugins.simplesave) {
 
 
 /**	
-*Cordova Plugin API Javascript Wrappers
+*DOMLauncher API Library
 *------------------------------------------
 *	These functions are simply easy to use javascript wrappers to work with
 * 	the Cordova Plugin API Calls.  The Plugin Calls can be called seperately
@@ -6741,19 +6866,82 @@ window.domLibrary = {
 		
 	fullscreenCheck: function(){
 		window.fullscreencontrols.check({}, 
-			function(returnVal) {fullscreencontrolsCallback(returnVal.returnVal);}, // Success function
+			function(returnVal) {domCallbacks.fullscreenCheck(returnVal.returnVal);}, // Success function
 			function(error) {alert('Toggle Bar Failed Check ' + error)}); // Failure function
 	}, 
 	fullscreenToggle: function(arg){
 		window.fullscreencontrols.toggle({}, 
-			function(returnVal) {fullscreencontrolsCallback(returnVal.returnVal);}, // Success function
+			function(returnVal) {domCallbacks.fullscreenToggle(returnVal.returnVal);}, // Success function
 			function(error) {alert('Toggle Bar Failed Toggle ' + error)}); // Failure function
 	}, 
+	
+	//Volume Calls
 	ringerUp: function(arg){
-		window.volumecontrols.ringerUp({}, 
-			function(returnVal) {fullscreencontrolsCallback(returnVal.returnVal);}, // Success function
-			function(error) {alert('Ringer Up Failed ' + error)}); // Failure function
-	}
+		window.volumecontrols.ringerUp({toast:arg || false}, 
+			function(returnVal) {domCallbacks.ringerUp(returnVal.returnVal, arg);}, // Success function
+			function(error) {alert('Ringer Up Failed' + error)}); // Failure function
+	}, 
+	ringerDown: function(arg){
+		window.volumecontrols.ringerDown({toast:arg || false}, 
+			function(returnVal) {domCallbacks.ringerDown(returnVal.returnVal, arg);}, // Success function
+			function(error) {alert('Ringer Down Failed ' + error)}); // Failure function
+	}, 
+	ringerPercentage: function(val, arg){
+		window.volumecontrols.ringerPercentage({percentage:val, toast:arg || false}, 
+			function(returnVal) {domCallbacks.ringerPercentage(returnVal.returnVal, arg);}, // Success function
+			function(error) {alert('Ringer Percentage Failed ' + error)}); // Failure function
+	}, 
+	ringerSilent: function(){
+		window.volumecontrols.ringerSilent({}, 
+			function(returnVal) {domCallbacks.ringerSilent();}, // Success function
+			function(error) {alert('Ringer Silent Failed ' + error)}); // Failure function
+	}, 
+	ringerVibrate: function(){
+		window.volumecontrols.ringerVibrate({}, 
+			function(returnVal) {domCallbacks.ringerVibrate();}, // Success function
+			function(error) {alert('Ringer Vibrate Failed ' + error)}); // Failure function
+	}, 
+	ringerNormal: function(){
+		window.volumecontrols.ringerNormal({}, 
+			function(returnVal) {domCallbacks.ringerNormal(returnVal.returnVal);}, // Success function
+			function(error) {alert('Ringer Normal Failed ' + error)}); // Failure function
+	}, 
+	mediaUp: function(arg){
+		window.volumecontrols.mediaUp({toast:arg || false}, 
+			function(returnVal) {domCallbacks.mediaUp(returnVal.returnVal, arg);}, // Success function
+			function(error) {alert('Media Up Failed ' + error)}); // Failure function
+	}, 
+	mediaDown: function(arg){
+		window.volumecontrols.mediaDown({toast:arg || false}, 
+			function(returnVal) {domCallbacks.mediaDown(returnVal.returnVal, arg);}, // Success function
+			function(error) {alert('Media Down Failed ' + error)}); // Failure function
+	}, 
+	mediaPercentage: function(val, arg){
+		window.volumecontrols.mediaPercentage({percentage:val, toast:arg || false}, 
+			function(returnVal) {domCallbacks.mediaPercentage(returnVal.returnVal, arg);}, // Success function
+			function(error) {alert('Media Percentage Failed ' + error)}); // Failure function
+	}, 
+	mediaMute: function(arg){
+		window.volumecontrols.mediaMute({toast:arg || false}, 
+			function(returnVal) {domCallbacks.mediaMute(returnVal.returnVal, arg);}, // Success function
+			function(error) {alert('Toggle Bar Failed ' + error)}); // Failure function
+	}, 
+	mediaCheck: function(arg){
+		window.volumecontrols.mediaCheck({check:arg || false}, 
+			function(returnVal) {domCallbacks.mediaCheck(returnVal.returnVal, arg);}, // Success function
+			function(error) {alert('Media Check Failed ' + error)}); // Failure function
+	}, 
+	ringerCheck: function(arg){
+		window.volumecontrols.ringerCheck({check:arg || false}, 
+			function(returnVal) {domCallbacks.ringerCheck(returnVal.returnVal, arg);}, // Success function
+			function(error) {alert('Ringer Check Failed ' + error)}); // Failure function
+	}, 
+	ringermodeCheck: function(){
+		window.volumecontrols.ringermodeCheck({}, 
+			function(returnVal) {domCallbacks.ringermodeCheck(returnVal.returnVal);}, // Success function
+			function(error) {alert('Mode Check Failed ' + error)}); // Failure function
+	} 
+
 
 
 
@@ -6790,25 +6978,6 @@ function launchApps(object){ //Object var represents a DOM Elements that holds t
 		function() {launchappsCallback({package:appPackage, activity:activityFull, settings:settings, object:object});}, // Cordova Plugin Success function.  Triggers callback and passes back all sent varibles.
 		function() {alert('Application/Activity Launch Failed')}); // Cordova Plugin Failure function
 }
-
-
-
-
-//Volume Controls-Ringer, Media & Ringer Mode
-function volumeControls(args){
-	//Information pulled from the sent {}
-	 var vol = args.vol || false; 
-	 var type = args.type || false;
-	 var check = args.check || false;
-	 var percentage = args.percentage || -1;
-	 var toast = args.toast || true
-	//Initisates the Volumn Control Cordova Plugin
-	window.volumecontrols.startActivity({vol:vol, type:type, check:check, percentage:percentage, toast:toast}, //Passes the retrived information to the Cordova Plugin.
-		function(returnVal) {volumecontrolsCallback({vol:vol, type:type, check:check, returnVal:returnVal, percentage:percentage});},// Cordova Plugin Success Function.  Triggers callback, passes back all sent variables and returned var.
-		function(error) {alert('Vol Change Error' + error);}); // Cordova Plugin Failure function
-}
-
-
 
 
 //Toggle Wifi Plugin

@@ -58,10 +58,10 @@
                         <div>Brightness:</div> <input type="range" min="1" max="255" step="1" id="slider_brightness" ontouchend="screenBrightness({value:this.value})"/> 
                     </li>
                     <li> 
-                        <div>Media Volumn:</div><input type="range" min="0" max="100" step="1" id="slider_mediaVol" onchange="volumeControls({type:'media', percentage:this.value})"/> 
+                        <div>Media Volumn:</div><input type="range" min="0" max="100" step="1" id="slider_mediaVol" onchange="domLibrary.mediaPercentage(this.value)"/> 
                     </li>
                     <li> 
-                        <div>Ringer Volumn:</div><input type="range" min="0" max="100" step="1" id="slider_ringerVol" value="0" onchange="volumeControls({type:'ringer', toast:'off', percentage:this.value})"/>
+                        <div>Ringer Volumn:</div><input type="range" min="0" max="100" step="1" id="slider_ringerVol" value="0" onchange="domLibrary.ringerPercentage(this.value)"/>
                     </li>
                     <li> 
                         <div>Ringer Silent</div><div id="toggle_ringerSilent" class="scrollSwitch" data-state="off"></div>

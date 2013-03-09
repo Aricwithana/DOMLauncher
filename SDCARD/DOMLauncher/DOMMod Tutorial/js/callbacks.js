@@ -19,9 +19,9 @@ function themeLoaded(){
 	cellSiganl({action:"start"});
 	batteryLevel();
 	toggleAirplane({check:"true"});
-	volumeControls({check:"true", type:"media", percentage:"true"});
-	volumeControls({check:"true", type:"ringer", percentage:"true"});
-	volumeControls({check:"true", type:"mode"});
+	domLibrary.ringerCheck();
+	domLibrary.mediaCheck();
+	domLibrary.ringermodeCheck();
 	missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
 	missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
 	screenBrightness({check:"value"});
@@ -180,18 +180,18 @@ function switchCallback(args){
 		
 		//Toggle Ringer Silent
 		if(switchID === "toggle_ringerSilent" && state === "off"){
-			volumeControls({type:"ringer", vol:"normal"});
+			domLibrary.ringerNormal();
 		}
 		if(switchID === "toggle_ringerSilent" && state === "on"){
-			volumeControls({type:"ringer", vol:"silent"});
+			domLibrary.ringerSilent();
 		}	
 		
 		//Toggle Ringer Vibrate
 		if(switchID === "toggle_ringerVibrate" && state === "off"){
-			volumeControls({type:"ringer", vol:"normal"});
+			domLibrary.ringerNormal();
 		}
 		if(switchID === "toggle_ringerVibrate" && state === "on"){
-			volumeControls({type:"ringer", vol:"vibrate"});
+			domLibrary.ringerVibrate();
 		}	
 		
 		//Toggle Bluetooth
@@ -240,100 +240,6 @@ function screenbrightnessCallback(args){
 
 
 
-/*Volume Control Callback*/
-function volumecontrolsCallback(args){
-	var vol = args.vol
-	var type = args.type
-	var check = args.check
-	var returnVal = args.returnVal
-	var percentage = args.percentage
-	var toast = args.toast
-	
-	/*Begin Theme Specific Editible Code*/
-		if(type == "ringer" && percentage >= 0){
-			document.getElementById('slider_ringerVol').parentNode.childNodes[1].innerHTML = 'Ringer Volume: ' + returnVal + "%";
-			if(returnVal <= 14 && returnVal != 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "off" || returnVal >= 15 && returnVal != 0 && document.getElementById('toggle_ringerSilent').dataset.state === "on"){
-				document.getElementById('toggle_ringerVibrate').scrollLeft = 0;
-				document.getElementById('toggle_ringerVibrate').dataset.state = "on";
-				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
-				document.getElementById('toggle_ringerSilent').dataset.state = "off";
-			}
-			
-			if(returnVal >= 15 && returnVal != 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "on" || returnVal >= 15 && returnVal != 0 && document.getElementById('toggle_ringerSilent').dataset.state === "on"){
-				document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
-				document.getElementById('toggle_ringerVibrate').dataset.state = "off";
-				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
-				document.getElementById('toggle_ringerSilent').dataset.state = "off";
-			}
-			
-			if(returnVal == 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "off"){
-				document.getElementById('toggle_ringerVibrate').scrollLeft = 0;
-				document.getElementById('toggle_ringerVibrate').dataset.state = "on";
-				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
-				document.getElementById('toggle_ringerSilent').dataset.state = "off";
-			}
-		}
-		
-		if(type == "media" && percentage >= 0){
-			document.getElementById('slider_mediaVol').parentNode.childNodes[1].innerHTML = 'Media Volume: ' + returnVal + "%";
-		} 
-		
-		if(check == "true" && percentage == "true"){
-			if(type == "ringer"){
-				document.getElementById('slider_ringerVol').value = returnVal;	
-				document.getElementById('slider_ringerVol').parentNode.childNodes[1].innerHTML = 'Ringer Volume: ' + returnVal + "%";
-			}
-			
-			if(type == "media" && percentage == "true"){
-				document.getElementById('slider_mediaVol').value = returnVal;	
-				document.getElementById('slider_mediaVol').parentNode.childNodes[1].innerHTML = 'Media Volume: ' + returnVal + "%";
-			}	
-		}
-		
-		if(check == "true" && type == "mode"){
-			if(returnVal == 0){
-				document.getElementById('toggle_ringerSilent').scrollLeft = 0;
-				document.getElementById('toggle_ringerSilent').dataset.state = "on";
-				document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
-				document.getElementById('toggle_ringerVibrate').dataset.state = "off";
-			}
-			if(returnVal == 1){
-				document.getElementById('toggle_ringerVibrate').scrollLeft = 0;
-				document.getElementById('toggle_ringerVibrate').dataset.state = "on";
-				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
-				document.getElementById('toggle_ringerSilent').dataset.state = "off";
-			}
-			if(returnVal == 2){
-				document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
-				document.getElementById('toggle_ringerVibrate').dataset.state = "off";
-				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
-				document.getElementById('toggle_ringerSilent').dataset.state = "off";
-			}
-		}
-		
-		if(type == "ringer" && returnVal == "vibrate"){
-				document.getElementById('toggle_ringerVibrate').scrollLeft = 0;
-				document.getElementById('toggle_ringerVibrate').dataset.state = "on";
-				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
-				document.getElementById('toggle_ringerSilent').dataset.state = "off";
-		}
-		
-		if(type == "ringer" && returnVal == "silent"){
-				document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
-				document.getElementById('toggle_ringerVibrate').dataset.state = "off";
-				document.getElementById('toggle_ringerSilent').scrollLeft = 0;
-				document.getElementById('toggle_ringerSilent').dataset.state = "on";
-		}
-		
-		if(type == "ringer" && returnVal == "normal"){
-			volumeControls({check:"true", type:"ringer", percentage:"true"});
-		}
-
-	/*End Theme Specific Editible Code*/
-}
-
-
-
 
 /*Air Plane Mode Toggle*/
 function toggleairplaneCallback(args){
@@ -359,21 +265,131 @@ function toggleairplaneCallback(args){
 
 
 
-
-/*Fullscreen Controls Callback*/
-function fullscreencontrolsCallback(returnVal){  //Returns true/false
+window.domCallbacks = {
+	fullscreenCheck: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			if(returnVal == false){
+				document.getElementById('toggle_fullScreen').scrollLeft = 100;
+				document.getElementById('toggle_fullScreen').dataset.state = "off";
+			}
+			
+			if(returnVal == true){
+				document.getElementById('toggle_fullScreen').scrollLeft = 0;
+				document.getElementById('toggle_fullScreen').dataset.state = "on";
+			}
+		/*End Theme Specific Editible Code*/
+	},
+	fullscreenToggle: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+		/*End Theme Specific Editible Code*/
+	},
+	//Volume Controls
+	ringerUp: function(returnVal, toast){
+		/*Begin Theme Specific Editible Code*/
+		/*End Theme Specific Editible Code*/
+	},
+	ringerDown: function(returnVal, toast){
+		/*Begin Theme Specific Editible Code*/
+		/*End Theme Specific Editible Code*/
+	},
+	ringerPercentage: function(returnVal, toast){
+		/*Begin Theme Specific Editible Code*/
+			document.getElementById('slider_ringerVol').parentNode.childNodes[1].innerHTML = 'Ringer Volume: ' + returnVal + "%";
+			if(returnVal <= 14 && returnVal != 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "off" || returnVal >= 15 && returnVal != 0 && document.getElementById('toggle_ringerSilent').dataset.state === "on"){
+				document.getElementById('toggle_ringerVibrate').scrollLeft = 0;
+				document.getElementById('toggle_ringerVibrate').dataset.state = "on";
+				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
+				document.getElementById('toggle_ringerSilent').dataset.state = "off";
+			}
+			
+			if(returnVal >= 15 && returnVal != 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "on" || returnVal >= 15 && returnVal != 0 && document.getElementById('toggle_ringerSilent').dataset.state === "on"){
+				document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
+				document.getElementById('toggle_ringerVibrate').dataset.state = "off";
+				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
+				document.getElementById('toggle_ringerSilent').dataset.state = "off";
+			}
+			
+			if(returnVal == 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "off"){
+				document.getElementById('toggle_ringerVibrate').scrollLeft = 0;
+				document.getElementById('toggle_ringerVibrate').dataset.state = "on";
+				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
+				document.getElementById('toggle_ringerSilent').dataset.state = "off";
+			}		
+		/*End Theme Specific Editible Code*/
+	},
+	ringerSilent: function(){
+		/*Begin Theme Specific Editible Code*/
+			document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
+			document.getElementById('toggle_ringerVibrate').dataset.state = "off";
+		/*End Theme Specific Editible Code*/
+	},
+	ringerVibrate: function(){
+		/*Begin Theme Specific Editible Code*/
+			document.getElementById('toggle_ringerSilent').scrollLeft = 100;
+			document.getElementById('toggle_ringerSilent').dataset.state = "off";
+		/*End Theme Specific Editible Code*/
+	},
+	ringerNormal: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			document.getElementById('slider_ringerVol').parentNode.childNodes[1].innerHTML = 'Ringer Volume: ' + returnVal + "%";
+			document.getElementById('toggle_ringerSilent').scrollLeft = 100;
+			document.getElementById('toggle_ringerSilent').dataset.state = "off";
+			document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
+			document.getElementById('toggle_ringerVibrate').dataset.state = "off";
+		/*End Theme Specific Editible Code*/
+	},
+	mediaUp: function(returnVal, toast){
+		/*Begin Theme Specific Editible Code*/
+		/*End Theme Specific Editible Code*/
+	},
+	mediaDown: function(returnVal, toast){
+		/*Begin Theme Specific Editible Code*/
+		/*End Theme Specific Editible Code*/
+	},
+	mediaPercentage: function(returnVal, toast){
+		/*Begin Theme Specific Editible Code*/
+			document.getElementById('slider_mediaVol').parentNode.childNodes[1].innerHTML = 'Media Volume: ' + returnVal + "%";
+		/*End Theme Specific Editible Code*/
+	},
+	mediaMute: function(returnVal, toast){
+		/*Begin Theme Specific Editible Code*/
+		/*End Theme Specific Editible Code*/
+	},
+	mediaCheck: function(returnVal, type){
+		/*Begin Theme Specific Editible Code*/
+				document.getElementById('slider_mediaVol').value = returnVal;	
+				document.getElementById('slider_mediaVol').parentNode.childNodes[1].innerHTML = 'Media Volume: ' + returnVal + "%";			
+		/*End Theme Specific Editible Code*/
+	},
+	ringerCheck: function(returnVal, type){
+		/*Begin Theme Specific Editible Code*/
+				document.getElementById('slider_ringerVol').value = returnVal;	
+				document.getElementById('slider_ringerVol').parentNode.childNodes[1].innerHTML = 'Ringer Volume: ' + returnVal + "%";
+		/*End Theme Specific Editible Code*/
+	},
+	ringermodeCheck: function(returnVal, type){
+		/*Begin Theme Specific Editible Code*/
+			if(returnVal == 0){
+				document.getElementById('toggle_ringerSilent').scrollLeft = 0;
+				document.getElementById('toggle_ringerSilent').dataset.state = "on";
+				document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
+				document.getElementById('toggle_ringerVibrate').dataset.state = "off";
+			}
+			if(returnVal == 1){
+				document.getElementById('toggle_ringerVibrate').scrollLeft = 0;
+				document.getElementById('toggle_ringerVibrate').dataset.state = "on";
+				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
+				document.getElementById('toggle_ringerSilent').dataset.state = "off";
+			}
+			if(returnVal == 2){
+				document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
+				document.getElementById('toggle_ringerVibrate').dataset.state = "off";
+				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
+				document.getElementById('toggle_ringerSilent').dataset.state = "off";
+			}
+		/*End Theme Specific Editible Code*/
+	}
 	
-	/*Begin Theme Specific Editible Code*/
-		if(returnVal == false){
-			document.getElementById('toggle_fullScreen').scrollLeft = 100;
-			document.getElementById('toggle_fullScreen').dataset.state = "off";
-		}
-		
-		if(returnVal == true){
-			document.getElementById('toggle_fullScreen').scrollLeft = 0;
-			document.getElementById('toggle_fullScreen').dataset.state = "on";
-		}
-	/*End Theme Specific Editible Code*/
 }
 
 
@@ -558,7 +574,7 @@ function onResume() {
 	screenBrightness({check:"value"});
 	toggleWifi({check:"true"});
 	toggleAirplane({check:"true"});
-	volumeControls({check:"true", type:"media", percentage:"true"});
-	volumeControls({check:"true", type:"ringer", percentage:"true"});
-	volumeControls({check:"true", type:"mode"});	
+	domLibrary.ringerCheck();
+	domLibrary.mediaCheck();
+	domLibrary.ringermodeCheck();
 }
