@@ -26,7 +26,7 @@ function themeLoaded(){
 	missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
 	screenBrightness({check:"value"});
 	screenBrightness({check:"mode"});
-	bluetoothControls({check:"true"});
+	domLibrary.bluetoothCheck();
 
 }
 /*End Document Ready*/
@@ -196,10 +196,10 @@ function switchCallback(args){
 		
 		//Toggle Bluetooth
 		if(switchID === "switch_bluetooth" && state === "off"){
-			bluetoothControls({state:"off"});
+			domLibrary.bluetoothDisable();
 		}
 		if(switchID === "switch_bluetooth" && state === "on"){
-			bluetoothControls({state:"on"});
+			domLibrary.bluetoothEnable();
 		}	
 	/*End Theme Specific Editible Code*/
 }	
@@ -436,11 +436,52 @@ window.domCallbacks = {
 			document.getElementById('toggle_Airplane').dataset.state = "off";
 			setTimeout(function(){toggleWifi({check:"true"});}, 10000);	
 		/*End Theme Specific Editible Code*/
+	},
+	bluetoothToggle: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+	
+		/*End Theme Specific Editible Code*/
+	},
+	bluetoothCheck: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			if(returnVal == true){
+				document.getElementById('switch_bluetooth').scrollLeft = 0;
+				document.getElementById('switch_bluetooth').dataset.state = "on";	
+			}
+			
+			if(returnVal == false){
+				document.getElementById('switch_bluetooth').scrollLeft = 100;
+				document.getElementById('switch_bluetooth').dataset.state = "off";	
+			}
+		/*End Theme Specific Editible Code*/
+	},
+	bluetoothEnable: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+		
+		/*End Theme Specific Editible Code*/
+	},
+	bluetoothDisable: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+
+		/*End Theme Specific Editible Code*/
 	}
 	
 }
 
-
+function bluetoothcontrolsCallback(args){
+	var state = args.state;
+	var check = args.check;
+	var returnVal = args.returnVal;
+	if(check == "true" && returnVal == "on"){
+		document.getElementById('switch_bluetooth').scrollLeft = 0;
+		document.getElementById('switch_bluetooth').dataset.state = "on";	
+	}
+	
+	if(check == "true" && returnVal == "off"){
+		document.getElementById('switch_bluetooth').scrollLeft = 100;
+		document.getElementById('switch_bluetooth').dataset.state = "off";	
+	}
+}
 
 
 /*Wifi Toggle Callback*/
@@ -585,20 +626,7 @@ function missedcommunicationsCallback(args){
 	/*End Theme Specific Editible Code*/
 }
 
-function bluetoothcontrolsCallback(args){
-	var state = args.state;
-	var check = args.check;
-	var returnVal = args.returnVal;
-	if(check == "true" && returnVal == "on"){
-		document.getElementById('switch_bluetooth').scrollLeft = 0;
-		document.getElementById('switch_bluetooth').dataset.state = "on";	
-	}
-	
-	if(check == "true" && returnVal == "off"){
-		document.getElementById('switch_bluetooth').scrollLeft = 100;
-		document.getElementById('switch_bluetooth').dataset.state = "off";	
-	}
-}
+
 
 
 /*Handle the pause event*/
@@ -618,7 +646,7 @@ function onResume() {
 	var missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
 	
 	domLibrary.airplaneCheck();
-	bluetoothControls({check:"true"});
+	domLibrary.bluetoothCheck();
 	screenBrightness({check:"mode"});
 	screenBrightness({check:"value"});
 	toggleWifi({check:"true"});

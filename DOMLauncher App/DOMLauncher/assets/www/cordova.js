@@ -6505,22 +6505,7 @@ if (!window.plugins.applist) {
 
 
 
-var Bluetoothcontrols = function() {};
-            
-Bluetoothcontrols.prototype.show = function(content, success, fail) {
-    return cordova.exec( function(args) {
-        success(args);
-    }, function(args) {
-        fail(args);
-    }, 'Bluetoothcontrols', '', [content]);
-};
 
-if(!window.plugins) {
-    window.plugins = {};
-}
-if (!window.plugins.bluetoothcontrols) {
-    window.plugins.bluetoothcontrols = new Bluetoothcontrols();
-}
 
 
 
@@ -6850,10 +6835,64 @@ if (!window.plugins.simplesave) {
         window.airplane = new Airplane();
     });
 
+
+
+	//Bluetooth Controls
+	var Bluetoothcontrols = function() {};
+				
+	Bluetoothcontrols.prototype.check = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Bluetoothcontrols', 'check', [params]);
+	};
+	
+	Bluetoothcontrols.prototype.toggle = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Bluetoothcontrols', 'toggle', [params]);
+	};
+	
+	Bluetoothcontrols.prototype.enable = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Bluetoothcontrols', 'enable', [params]);
+	};		
+	
+	Bluetoothcontrols.prototype.disable = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Bluetoothcontrols', 'disable', [params]);
+	};	
+	
+    cordova.addConstructor(function() {
+        window.bluetoothcontrols = new Bluetoothcontrols();
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 })(window.PhoneGap || window.Cordova || window.cordova);
-
-
-
 
 
 
@@ -6984,7 +7023,27 @@ window.domLibrary = {
 		window.airplane.disable({}, 
 			function(returnVal) {domCallbacks.airplaneDisable(returnVal.returnVal);}, // Success function
 			function(error) {alert('Airplane Disable Failed ' + error)}); // Failure function
-	}   
+	}, 
+	bluetoothCheck: function(){
+		window.bluetoothcontrols.check({}, 
+			function(returnVal) {domCallbacks.bluetoothCheck(returnVal.returnVal);}, // Success function
+			function(error) {alert('bluetooth Check Failed ' + error)}); // Failure function
+	}, 
+	bluetoothToggle: function(){
+		window.bluetoothcontrols.toggle({}, 
+			function(returnVal) {domCallbacks.bluetoothToggle(returnVal.returnVal);}, // Success function
+			function(error) {alert('bluetooth Check Failed ' + error)}); // Failure function
+	}, 
+	bluetoothEnable: function(){
+		window.bluetoothcontrols.enable({}, 
+			function(returnVal) {domCallbacks.bluetoothEnable(returnVal.returnVal);}, // Success function
+			function(error) {alert('bluetooth Enable Failed ' + error)}); // Failure function
+	}, 
+	bluetoothDisable: function(){
+		window.bluetoothcontrols.disable({}, 
+			function(returnVal) {domCallbacks.bluetoothDisable(returnVal.returnVal);}, // Success function
+			function(error) {alert('bluetooth Disable Failed ' + error)}); // Failure function
+	}    
 
 
 
@@ -7007,6 +7066,19 @@ window.domLibrary = {
 
 
 }
+
+function bluetoothControls(args){
+	 var state = args.state || false;
+	 var check = args.check || false;
+	window.plugins.bluetoothcontrols.show({state:state, check:check}, 
+		function(returnVal) {//appList is a JSON Object needing to be parsed.
+			bluetoothcontrolsCallback({returnVal:returnVal, state:state, check:check});	
+	}, // Success function
+	function(error) {alert('Bluetooth' + error);}); // Failure function
+
+}
+
+
 
 /*App/Activity Launcher*/
 function launchApps(object){ //Object var represents a DOM Elements that holds the meta information for app or activity.
@@ -7135,16 +7207,6 @@ function appList(args){
 }
 
 
-function bluetoothControls(args){
-	 var state = args.state || false;
-	 var check = args.check || false;
-	window.plugins.bluetoothcontrols.show({state:state, check:check}, 
-		function(returnVal) {//appList is a JSON Object needing to be parsed.
-			bluetoothcontrolsCallback({returnVal:returnVal, state:state, check:check});	
-	}, // Success function
-	function(error) {alert('Bluetooth' + error);}); // Failure function
-
-}
 
 
 
