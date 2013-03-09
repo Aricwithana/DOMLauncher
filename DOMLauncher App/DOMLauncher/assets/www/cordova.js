@@ -6559,24 +6559,6 @@ if (!window.plugins.cellularsignalgetter) {
 }
 
 
-var Fullscreentoggle = function() {};
-            
-Fullscreentoggle.prototype.show = function(content, success, fail) {
-    return cordova.exec( function(args) {
-        success(args);
-    }, function(args) {
-        fail(args);
-    }, 'Fullscreentoggle', '', [content]);
-};
-
-if(!window.plugins) {
-    window.plugins = {};
-}
-if (!window.plugins.fullscreentoggle) {
-    window.plugins.fullscreentoggle = new Fullscreentoggle();
-}
-
-
 
 var Launch = function() {};
             
@@ -6680,43 +6662,50 @@ if (!window.plugins.simplesave) {
 
 
 
+(function(cordova){
+
+	var Fullscreencontrols = function() {};
+				
+	Fullscreencontrols.prototype.check = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Fullscreencontrols', 'check', [params]);
+	};
+	
+		Fullscreencontrols.prototype.toggle = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Fullscreencontrols', 'toggle', [params]);
+	};
+	
+    cordova.addConstructor(function() {
+        window.fullscreencontrols = new Fullscreencontrols();
+    });
+	
+	
+	var Volumecontrols = function() {};
+				
+	Volumecontrols.prototype.startActivity = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Volumecontrols', '', [params]);
+	};
+	
+    cordova.addConstructor(function() {
+        window.volumecontrols = new Volumecontrols();
+    });
+
+})(window.PhoneGap || window.Cordova || window.cordova);
 
 
-var Fullscreentoggle = function() {};
-            
-Fullscreentoggle.prototype.show = function(content, success, fail) {
-    return cordova.exec( function(args) {
-        success(args);
-    }, function(args) {
-        fail(args);
-    }, 'Fullscreentoggle', '', [content]);
-};
-
-if(!window.plugins) {
-    window.plugins = {};
-}
-if (!window.plugins.fullscreentoggle) {
-    window.plugins.fullscreentoggle = new Fullscreentoggle();
-}
 
 
-
-var Volumecontrols = function() {};
-            
-Volumecontrols.prototype.show = function(content, success, fail) {
-    return cordova.exec( function(args) {
-        success(args);
-    }, function(args) {
-        fail(args);
-    }, 'Volumecontrols', '', [content]);
-};
-
-if(!window.plugins) {
-    window.plugins = {};
-}
-if (!window.plugins.volumecontrols) {
-    window.plugins.volumecontrols = new Volumecontrols();
-}
 
 
 
@@ -6748,6 +6737,44 @@ if (!window.plugins.volumecontrols) {
 **/
 
 
+window.domLibrary = {
+		
+	fullscreenCheck: function(){
+		window.fullscreencontrols.check({}, 
+			function(returnVal) {fullscreencontrolsCallback(returnVal.returnVal);}, // Success function
+			function(error) {alert('Toggle Bar Failed Check ' + error)}); // Failure function
+	}, 
+	fullscreenToggle: function(arg){
+		window.fullscreencontrols.toggle({}, 
+			function(returnVal) {fullscreencontrolsCallback(returnVal.returnVal);}, // Success function
+			function(error) {alert('Toggle Bar Failed Toggle ' + error)}); // Failure function
+	}, 
+	ringerUp: function(arg){
+		window.volumecontrols.ringerUp({}, 
+			function(returnVal) {fullscreencontrolsCallback(returnVal.returnVal);}, // Success function
+			function(error) {alert('Ringer Up Failed ' + error)}); // Failure function
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 
 
 /*App/Activity Launcher*/
@@ -6776,21 +6803,11 @@ function volumeControls(args){
 	 var percentage = args.percentage || -1;
 	 var toast = args.toast || true
 	//Initisates the Volumn Control Cordova Plugin
-	window.plugins.volumecontrols.show({vol:vol, type:type, check:check, percentage:percentage, toast:toast}, //Passes the retrived information to the Cordova Plugin.
+	window.volumecontrols.startActivity({vol:vol, type:type, check:check, percentage:percentage, toast:toast}, //Passes the retrived information to the Cordova Plugin.
 		function(returnVal) {volumecontrolsCallback({vol:vol, type:type, check:check, returnVal:returnVal, percentage:percentage});},// Cordova Plugin Success Function.  Triggers callback, passes back all sent variables and returned var.
 		function(error) {alert('Vol Change Error' + error);}); // Cordova Plugin Failure function
 }
 
-
-
-
-//Toggle Status Bar.
-function toggleStatusbar(args){
-		var check = args.check || false;
-		window.plugins.fullscreentoggle.show({check:check}, 
-			function(returnVal) {fullscreentoggleCallback({returnVal:returnVal});}, // Success function
-			function() {alert('Toggle Bar Failed')}); // Failure function
-}
 
 
 

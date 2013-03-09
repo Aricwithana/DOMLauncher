@@ -1,30 +1,25 @@
 package com.phonegap;
 
+import org.apache.cordova.api.CallbackContext;
+import org.apache.cordova.api.CordovaPlugin;
+
 import org.json.JSONArray;
-import org.apache.cordova.api.Plugin;
-import org.apache.cordova.api.PluginResult;
-import android.annotation.SuppressLint;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.CallLog;
+import org.json.JSONException;
 
-import android.util.Log;
 
-public class Test extends Plugin { 
+/**
+ * This class echoes a string called from JavaScript.
+ */
+public class Test extends CordovaPlugin {
+    @Override
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+       
+        	 callbackContext.success("bleh");
+        
+        return true;
+    }
 
-	
-	@Override
-    public PluginResult execute(String action, JSONArray args, String callbackId) {
-	           
- 
-		    
-		
-		
-		return new PluginResult(PluginResult.Status.OK);	
-	}  
 }
-     
-	
 
 
 

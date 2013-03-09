@@ -17,3 +17,50 @@ function refresh_appPanel(){
 	refresh_iconCSS({refreshIcons:true});
 	appList({refreshIcons:false});		
 }
+
+
+
+
+
+
+
+
+function testing(){
+window.test.startActivity({}, 
+
+function(returnVal) { //Success Function
+	alert('Test ok' + returnVal);
+	},
+function(error) {// Failure function
+	alert('Test no' + error);
+}); 
+}
+	
+	
+	
+	
+(function(cordova){
+    var Test = function() {};
+
+    Test.prototype.startActivity = function(params, success, fail) {
+        return cordova.exec(function(args) {
+            success(args);
+        }, function(args) {
+            fail(args);
+        }, 'Test', '', [params]);
+    };
+
+
+    cordova.addConstructor(function() {
+        window.test = new Test();
+    });
+	        
+        // backwards compatibility
+       // window.plugins = window.plugins || {};
+        //window.plugins.test = window.test;	
+})(window.PhoneGap || window.Cordova || window.cordova);
+
+
+
+
+		

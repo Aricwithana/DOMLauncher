@@ -13,7 +13,7 @@ function themeLoaded(){
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("resume", onResume, false);
 	clockTimer = setInterval(clock, 1000 );
-	toggleStatusbar({check:"true"});
+	domLibrary.fullscreenCheck();
 	toggleWifi({check:"true"});
 	toggleData({check:"true"});
 	cellSiganl({action:"start"});
@@ -143,7 +143,7 @@ function switchCallback(args){
 		
 		//Toggle FullScreen 
 		if(switchID === "toggle_fullScreen"){ 
-			toggleStatusbar({}); 
+			domLibrary.fullscreenToggle();
 		}
 		
 		//Toggle Wifi
@@ -360,15 +360,16 @@ function toggleairplaneCallback(args){
 
 
 
-/*Fullscreen Toggle Callback*/
-function fullscreentoggleCallback(args){
-	var returnVal = args.returnVal
+/*Fullscreen Controls Callback*/
+function fullscreencontrolsCallback(returnVal){  //Returns true/false
 	
 	/*Begin Theme Specific Editible Code*/
-		if(returnVal != true){
+		if(returnVal == false){
 			document.getElementById('toggle_fullScreen').scrollLeft = 100;
 			document.getElementById('toggle_fullScreen').dataset.state = "off";
-		}else{
+		}
+		
+		if(returnVal == true){
 			document.getElementById('toggle_fullScreen').scrollLeft = 0;
 			document.getElementById('toggle_fullScreen').dataset.state = "on";
 		}

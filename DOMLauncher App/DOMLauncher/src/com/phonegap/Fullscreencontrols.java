@@ -7,35 +7,36 @@ import java.io.OutputStreamWriter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+import org.apache.cordova.api.CallbackContext;
+import org.apache.cordova.api.CordovaPlugin;
 import org.apache.cordova.api.Plugin;
 import org.apache.cordova.api.PluginResult;
 import android.content.Intent;
 import android.os.Environment;
 
-public class Fullscreentoggle extends Plugin {
+public class Fullscreencontrols extends CordovaPlugin {
 
 	@Override
-	public PluginResult execute(String action, JSONArray args, String callbackId) {
+	   public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		
 		
-		try {
-			String check = args.getJSONObject(0).getString("check");
+	
+			//String check = args.getJSONObject(0).getString("check");
 			
 			File sdcard = Environment.getExternalStorageDirectory();
 			//Get the text file
 			File fstxtfile = new File(sdcard,"/DOMLauncher/settings/fullscreenEnabled"); 	
 			
-			if(check.equals("true")){
-					       			
+			if(action.equals("check")){		       							
 				if(fstxtfile.exists()){
-					
-					return new PluginResult(PluginResult.Status.OK, true);
+					callbackContext.success(new JSONObject().put("returnVal", true));	
 				}else{
-					return new PluginResult(PluginResult.Status.OK, false);
-				}
-					
-			}else{
+					callbackContext.success(new JSONObject().put("returnVal", false));
+				}				
+			}
 
+			if(action.equals("toggle")){
 				if(fstxtfile.exists()){
 	  				fstxtfile.delete();
 	  				restartApp(); 
@@ -48,21 +49,12 @@ public class Fullscreentoggle extends Plugin {
 						e.printStackTrace();
 					}	  				
 	  			}
-			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	return new PluginResult(PluginResult.Status.OK);
-	
+			}		
+			return true;	
 	}
 	
-private void restartApp() {
-				
-	this.cordova.getActivity().finish(); 
-	this.cordova.getActivity().startActivity(new Intent(this.cordova.getActivity(), this.cordova.getActivity().getClass()));
-		
+	private void restartApp() {			
+		this.cordova.getActivity().finish(); 
+		this.cordova.getActivity().startActivity(new Intent(this.cordova.getActivity(), this.cordova.getActivity().getClass()));	
 	}
-
 }
