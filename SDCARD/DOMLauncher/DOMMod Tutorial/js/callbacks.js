@@ -9,7 +9,7 @@ missedsmsTimer = null;
 /*Document Ready Success Function*/
 function themeLoaded(){
 	scrollSwitch();
-	appList({refreshIcons:false});
+	
 	
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("resume", onResume, false);
@@ -21,6 +21,7 @@ function themeLoaded(){
 	domLibrary.ringermodeCheck();
 	domLibrary.bluetoothCheck();
 	
+	appList({refreshIcons:false});
 	screenBrightness({check:"value"});
 	screenBrightness({check:"mode"});
 	toggleWifi({check:"true"});
@@ -263,15 +264,15 @@ window.domCallbacks = {
 		/*End Theme Specific Editible Code*/
 	},
 	//Volume Controls
-	ringerUp: function(returnVal, toast){
+	ringerUp: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 		/*End Theme Specific Editible Code*/
 	},
-	ringerDown: function(returnVal, toast){
+	ringerDown: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 		/*End Theme Specific Editible Code*/
 	},
-	ringerPercentage: function(returnVal, toast){
+	ringerPercentage: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 			document.getElementById('slider_ringerVol').parentNode.childNodes[1].innerHTML = 'Ringer Volume: ' + returnVal + "%";
 			if(returnVal <= 14 && returnVal != 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "off" || returnVal >= 15 && returnVal != 0 && document.getElementById('toggle_ringerSilent').dataset.state === "on"){
@@ -317,36 +318,36 @@ window.domCallbacks = {
 			document.getElementById('toggle_ringerVibrate').dataset.state = "off";
 		/*End Theme Specific Editible Code*/
 	},
-	mediaUp: function(returnVal, toast){
+	mediaUp: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 		/*End Theme Specific Editible Code*/
 	},
-	mediaDown: function(returnVal, toast){
+	mediaDown: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 		/*End Theme Specific Editible Code*/
 	},
-	mediaPercentage: function(returnVal, toast){
+	mediaPercentage: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 			document.getElementById('slider_mediaVol').parentNode.childNodes[1].innerHTML = 'Media Volume: ' + returnVal + "%";
 		/*End Theme Specific Editible Code*/
 	},
-	mediaMute: function(returnVal, toast){
+	mediaMute: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 		/*End Theme Specific Editible Code*/
 	},
-	mediaCheck: function(returnVal, type){
+	mediaCheck: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 				document.getElementById('slider_mediaVol').value = returnVal;	
 				document.getElementById('slider_mediaVol').parentNode.childNodes[1].innerHTML = 'Media Volume: ' + returnVal + "%";			
 		/*End Theme Specific Editible Code*/
 	},
-	ringerCheck: function(returnVal, type){
+	ringerCheck: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 				document.getElementById('slider_ringerVol').value = returnVal;	
 				document.getElementById('slider_ringerVol').parentNode.childNodes[1].innerHTML = 'Ringer Volume: ' + returnVal + "%";
 		/*End Theme Specific Editible Code*/
 	},
-	ringermodeCheck: function(returnVal, type){
+	ringermodeCheck: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 			if(returnVal == 0){
 				document.getElementById('toggle_ringerSilent').scrollLeft = 0;
@@ -475,7 +476,16 @@ window.domCallbacks = {
 			document.getElementById('toggle_data').scrollLeft = 100;
 			document.getElementById('toggle_data').dataset.state = "off";
 		/*End Theme Specific Editible Code*/
+	},
+	cellularsignalEnable: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+		/*End Theme Specific Editible Code*/
+	},
+	cellularsignalDisable: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+		/*End Theme Specific Editible Code*/
 	}
+
 	
 }
 

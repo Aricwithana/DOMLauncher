@@ -6509,24 +6509,6 @@ if (!window.plugins.applist) {
 
 
 
-var Cellularsignalgetter = function() {};
-            
-Cellularsignalgetter.prototype.show = function(content, success, fail) {
-    return cordova.exec( function(args) {
-        success(args);
-    }, function(args) {
-        fail(args);
-    }, 'Cellularsignalgetter', '', [content]);
-};
-
-if(!window.plugins) {
-    window.plugins = {};
-}
-if (!window.plugins.cellularsignalgetter) {
-    window.plugins.cellularsignalgetter = new Cellularsignalgetter();
-}
-
-
 
 var Launch = function() {};
             
@@ -6596,22 +6578,7 @@ if (!window.plugins.screenbrightness) {
 
 
 
-var Simplesave = function() {};
-            
-Simplesave.prototype.show = function(content, success, fail) {
-    return cordova.exec( function(args) {
-        success(args);
-    }, function(args) {
-        fail(args);
-    }, 'Simplesave', '', [content]);
-};
 
-if(!window.plugins) {
-    window.plugins = {};
-}
-if (!window.plugins.simplesave) {
-    window.plugins.simplesave = new Simplesave();
-}
 
 
 
@@ -6905,10 +6872,44 @@ if (!window.plugins.simplesave) {
     });
 
 
+	//Data Connection Controls
+	var Simplesave = function() {};
+				
+	Simplesave.prototype.saveFile = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Simplesave', 'saveFile', [params]);
+	};
+		
+    cordova.addConstructor(function() {
+        window.simplesave = new Simplesave();
+    });
 
 
-
-
+	//Data Connection Controls
+	var Cellularsignalgetter = function() {};
+				
+	Cellularsignalgetter.prototype.enable = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Cellularsignalgetter', 'enable', [params]);
+	};
+	
+	Cellularsignalgetter.prototype.disable = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Cellularsignalgetter', 'disable', [params]);
+	};	
+	
+    cordova.addConstructor(function() {
+        window.cellularsignalgetter = new Cellularsignalgetter();
+    });
 
 
 
@@ -6916,10 +6917,6 @@ if (!window.plugins.simplesave) {
 
 
 })(window.PhoneGap || window.Cordova || window.cordova);
-
-
-
-
 
 
 
@@ -6950,7 +6947,7 @@ window.domLibrary = {
 			function(returnVal) {domCallbacks.fullscreenCheck(returnVal.returnVal);}, // Success function
 			function(error) {alert('Toggle Bar Failed Check ' + error)}); // Failure function
 	}, 
-	fullscreenToggle: function(arg){
+	fullscreenToggle: function(){
 		window.fullscreencontrols.toggle({}, 
 			function(returnVal) {domCallbacks.fullscreenToggle(returnVal.returnVal);}, // Success function
 			function(error) {alert('Toggle Bar Failed Toggle ' + error)}); // Failure function
@@ -6959,27 +6956,27 @@ window.domLibrary = {
 	//Volume Calls
 	ringerUp: function(arg){
 		window.volumecontrols.ringerUp({toast:arg || false}, 
-			function(returnVal) {domCallbacks.ringerUp(returnVal.returnVal, arg);}, // Success function
+			function(returnVal) {domCallbacks.ringerUp(returnVal.returnVal);}, // Success function
 			function(error) {alert('Ringer Up Failed' + error)}); // Failure function
 	}, 
 	ringerDown: function(arg){
 		window.volumecontrols.ringerDown({toast:arg || false}, 
-			function(returnVal) {domCallbacks.ringerDown(returnVal.returnVal, arg);}, // Success function
+			function(returnVal) {domCallbacks.ringerDown(returnVal.returnVal);}, // Success function
 			function(error) {alert('Ringer Down Failed ' + error)}); // Failure function
 	}, 
 	ringerPercentage: function(val, arg){
 		window.volumecontrols.ringerPercentage({percentage:val, toast:arg || false}, 
-			function(returnVal) {domCallbacks.ringerPercentage(returnVal.returnVal, arg);}, // Success function
+			function(returnVal) {domCallbacks.ringerPercentage(returnVal.returnVal);}, // Success function
 			function(error) {alert('Ringer Percentage Failed ' + error)}); // Failure function
 	}, 
 	ringerSilent: function(){
 		window.volumecontrols.ringerSilent({}, 
-			function(returnVal) {domCallbacks.ringerSilent();}, // Success function
+			function(returnVal) {domCallbacks.ringerSilent(returnVal.returnVal);}, // Success function
 			function(error) {alert('Ringer Silent Failed ' + error)}); // Failure function
 	}, 
 	ringerVibrate: function(){
 		window.volumecontrols.ringerVibrate({}, 
-			function(returnVal) {domCallbacks.ringerVibrate();}, // Success function
+			function(returnVal) {domCallbacks.ringerVibrate(returnVal.returnVal);}, // Success function
 			function(error) {alert('Ringer Vibrate Failed ' + error)}); // Failure function
 	}, 
 	ringerNormal: function(){
@@ -6989,32 +6986,32 @@ window.domLibrary = {
 	}, 
 	mediaUp: function(arg){
 		window.volumecontrols.mediaUp({toast:arg || false}, 
-			function(returnVal) {domCallbacks.mediaUp(returnVal.returnVal, arg);}, // Success function
+			function(returnVal) {domCallbacks.mediaUp(returnVal.returnVal);}, // Success function
 			function(error) {alert('Media Up Failed ' + error)}); // Failure function
 	}, 
 	mediaDown: function(arg){
 		window.volumecontrols.mediaDown({toast:arg || false}, 
-			function(returnVal) {domCallbacks.mediaDown(returnVal.returnVal, arg);}, // Success function
+			function(returnVal) {domCallbacks.mediaDown(returnVal.returnVal);}, // Success function
 			function(error) {alert('Media Down Failed ' + error)}); // Failure function
 	}, 
 	mediaPercentage: function(val, arg){
 		window.volumecontrols.mediaPercentage({percentage:val, toast:arg || false}, 
-			function(returnVal) {domCallbacks.mediaPercentage(returnVal.returnVal, arg);}, // Success function
+			function(returnVal) {domCallbacks.mediaPercentage(returnVal.returnVal);}, // Success function
 			function(error) {alert('Media Percentage Failed ' + error)}); // Failure function
 	}, 
 	mediaMute: function(arg){
 		window.volumecontrols.mediaMute({toast:arg || false}, 
-			function(returnVal) {domCallbacks.mediaMute(returnVal.returnVal, arg);}, // Success function
+			function(returnVal) {domCallbacks.mediaMute(returnVal.returnVal);}, // Success function
 			function(error) {alert('Toggle Bar Failed ' + error)}); // Failure function
 	}, 
 	mediaCheck: function(arg){
 		window.volumecontrols.mediaCheck({check:arg || false}, 
-			function(returnVal) {domCallbacks.mediaCheck(returnVal.returnVal, arg);}, // Success function
+			function(returnVal) {domCallbacks.mediaCheck(returnVal.returnVal);}, // Success function
 			function(error) {alert('Media Check Failed ' + error)}); // Failure function
 	}, 
 	ringerCheck: function(arg){
 		window.volumecontrols.ringerCheck({check:arg || false}, 
-			function(returnVal) {domCallbacks.ringerCheck(returnVal.returnVal, arg);}, // Success function
+			function(returnVal) {domCallbacks.ringerCheck(returnVal.returnVal);}, // Success function
 			function(error) {alert('Ringer Check Failed ' + error)}); // Failure function
 	}, 
 	ringermodeCheck: function(){
@@ -7087,7 +7084,22 @@ window.domLibrary = {
 		window.dataconnection.toggle({}, 
 			function(returnVal) {domCallbacks.dataconnectionToggle(returnVal.returnVal);}, // Success function
 			function(error) {alert('Data Connection Toggle Failed ' + error)}); // Failure function
-	}     
+	}, 
+	simpleSave: function(object, path){
+		window.simplesave.saveFile({content:object, file:path}, 			
+			function(returnVal){},
+			function(error) {alert('Simple Save Failed ' + error);}); 	
+	}, 
+	cellularsignalEnable: function(){
+		window.cellularsignalgetter.enable({}, 
+			function(returnVal) {domCallbacks.cellularsignalEnable(returnVal.returnVal);}, // Success function
+			function(error) {alert('Cellular Signal Enable Failed ' + error)}); // Failure function
+	} , 
+	cellularsignalDisable: function(){
+		window.cellularsignalgetter.disable({}, 
+			function(returnVal) {domCallbacks.cellularsignalDisable(returnVal.returnVal);}, // Success function
+			function(error) {alert('Cellular Signal Disable Failed ' + error)}); // Failure function
+	}      
 
 
 
@@ -7115,6 +7127,23 @@ window.domLibrary = {
 
 
 }
+
+
+
+
+
+
+
+
+	
+				
+				
+				
+				
+				
+				
+				
+				
 //Toggle Mobile Data Plugin.  
 function toggleData(args){
 	//Pulls the variables from the sent {}
@@ -7270,16 +7299,7 @@ function refresh_iconCSS(args){
 				document.getElementsByTagName('head')[0].appendChild(newStyle);
 				var styleText = newStyle.innerHTML;
 				
-				window.plugins.simplesave.show({fileObject:styleText, filePlace:"/mnt/sdcard/DOMLauncher/settings/icons/icons.css"}, 
-				
-				function() { //Success Function
-					
-					//alert('yes save css');
-					},
-				function() {// Failure function
-					alert('no save css');
-				}); 							
-			
+				domLibrary.simpleSave(styleText, "/mnt/sdcard/DOMLauncher/settings/icons/icons.css");
 			}, // Success function
 		function() {alert('Refresh Icons Failed')}); // Failure function						
 } 
