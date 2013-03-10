@@ -5,6 +5,7 @@ import org.apache.cordova.api.CordovaPlugin;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -14,8 +15,8 @@ public class Test extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
        
-        	 callbackContext.success("bleh");
-        
+        	
+        	 callbackContext.success(new JSONObject().put("returnVal", false));
         return true;
     }
 

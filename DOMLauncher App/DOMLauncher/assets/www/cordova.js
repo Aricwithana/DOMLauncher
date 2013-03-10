@@ -6464,22 +6464,6 @@ window.cordova = require('cordova');
 *------------------------------------------
 **/
 
-var Wificontrols = function() {};
-            
-Wificontrols.prototype.show = function(content, success, fail) {
-    return cordova.exec( function(args) {
-        success(args);
-    }, function(args) {
-        fail(args);
-    }, 'Wificontrols', '', [content]);
-};
-
-if(!window.plugins) {
-    window.plugins = {};
-}
-if (!window.plugins.wificontrols) {
-    window.plugins.wificontrols = new Wificontrols();
-}
 
 
 
@@ -6529,24 +6513,6 @@ if (!window.plugins.launch) {
 
 
 
-
-
-var Missedcommunications = function() {};
-            
-Missedcommunications.prototype.show = function(content, success, fail) {
-    return cordova.exec( function(args) {
-        success(args);
-    }, function(args) {
-        fail(args);
-    }, 'Missedcommunications', '', [content]);
-};
-
-if(!window.plugins) {
-    window.plugins = {};
-}
-if (!window.plugins.missedcommunications) {
-    window.plugins.missedcommunications = new Missedcommunications();
-}
 
 
 
@@ -6606,10 +6572,6 @@ if (!window.plugins.screenbrightness) {
     cordova.addConstructor(function() {
         window.fullscreencontrols = new Fullscreencontrols();
     });
-	
-	
-	
-	
 	
 	//Volume COntrols
 	var Volumecontrols = function() {};
@@ -6872,7 +6834,7 @@ if (!window.plugins.screenbrightness) {
     });
 
 
-	//Data Connection Controls
+	//Simple Save
 	var Simplesave = function() {};
 				
 	Simplesave.prototype.saveFile = function(params, success, fail) {
@@ -6888,35 +6850,104 @@ if (!window.plugins.screenbrightness) {
     });
 
 
-	//Data Connection Controls
-	var Cellularsignalgetter = function() {};
+	//Cellular Signal
+	var Cellularsignal = function() {};
 				
-	Cellularsignalgetter.prototype.enable = function(params, success, fail) {
+	Cellularsignal.prototype.enable = function(params, success, fail) {
 		return cordova.exec( function(args) {
 			success(args);
 		}, function(args) {
 			fail(args);
-		}, 'Cellularsignalgetter', 'enable', [params]);
+		}, 'Cellularsignal', 'enable', [params]);
 	};
 	
-	Cellularsignalgetter.prototype.disable = function(params, success, fail) {
+	Cellularsignal.prototype.disable = function(params, success, fail) {
 		return cordova.exec( function(args) {
 			success(args);
 		}, function(args) {
 			fail(args);
-		}, 'Cellularsignalgetter', 'disable', [params]);
+		}, 'Cellularsignal', 'disable', [params]);
 	};	
 	
     cordova.addConstructor(function() {
-        window.cellularsignalgetter = new Cellularsignalgetter();
+        window.cellularsignal = new Cellularsignal();
+    });
+
+
+
+
+	//Wifi Controls
+	var Wificontrols = function() {};
+				
+	Wificontrols.prototype.check = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Wificontrols', 'check', [params]);
+	};
+	
+	Wificontrols.prototype.toggle = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Wificontrols', 'toggle', [params]);
+	};
+	
+	Wificontrols.prototype.enable = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Wificontrols', 'enable', [params]);
+	};		
+	
+	Wificontrols.prototype.disable = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Wificontrols', 'disable', [params]);
+	};	
+	
+    cordova.addConstructor(function() {
+        window.wificontrols = new Wificontrols();
+    });
+
+
+	//Missed Communications
+	var Missedcommunications = function() {};
+				
+	Missedcommunications.prototype.sms = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Missedcommunications', 'sms', [params]);
+	};
+	
+	Missedcommunications.prototype.calls = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Missedcommunications', 'calls', [params]);
+	};	
+	
+    cordova.addConstructor(function() {
+        window.missedcommunications = new Missedcommunications();
     });
 
 
 
 
 
-
 })(window.PhoneGap || window.Cordova || window.cordova);
+
+
+
+
 
 
 
@@ -7085,20 +7116,58 @@ window.domLibrary = {
 			function(returnVal) {domCallbacks.dataconnectionToggle(returnVal.returnVal);}, // Success function
 			function(error) {alert('Data Connection Toggle Failed ' + error)}); // Failure function
 	}, 
+	
+	//Simple Save
 	simpleSave: function(object, path){
 		window.simplesave.saveFile({content:object, file:path}, 			
 			function(returnVal){},
 			function(error) {alert('Simple Save Failed ' + error);}); 	
 	}, 
+	
+	//Celluar Signals
 	cellularsignalEnable: function(){
-		window.cellularsignalgetter.enable({}, 
+		window.cellularsignal.enable({}, 
 			function(returnVal) {domCallbacks.cellularsignalEnable(returnVal.returnVal);}, // Success function
 			function(error) {alert('Cellular Signal Enable Failed ' + error)}); // Failure function
 	} , 
 	cellularsignalDisable: function(){
-		window.cellularsignalgetter.disable({}, 
+		window.cellularsignal.disable({}, 
 			function(returnVal) {domCallbacks.cellularsignalDisable(returnVal.returnVal);}, // Success function
 			function(error) {alert('Cellular Signal Disable Failed ' + error)}); // Failure function
+	},
+	
+	//Wifi Controls
+	wificontrolsCheck: function(){
+		window.wificontrols.check({}, 
+			function(returnVal) {domCallbacks.wificontrolsCheck(returnVal.returnVal);}, // Success function
+			function(error) {alert('Wifi Controls Check Failed ' + error)}); // Failure function
+	}, 
+	wificontrolsEnable: function(){
+		window.wificontrols.enable({}, 
+			function(returnVal) {domCallbacks.wificontrolsEnable(returnVal.returnVal);}, // Success function
+			function(error) {alert('Wifi Controls Enable Failed ' + error)}); // Failure function
+	} , 
+	wificontrolsDisable: function(){
+		window.wificontrols.disable({}, 
+			function(returnVal) {domCallbacks.wificontrolsDisable(returnVal.returnVal);}, // Success function
+			function(error) {alert('Wifi Controls Disable Failed ' + error)}); // Failure function
+	}, 
+	wificontrolsToggle: function(){
+		window.wificontrols.toggle({}, 
+			function(returnVal) {domCallbacks.wificontrolsToggle(returnVal.returnVal);}, // Success function
+			function(error) {alert('Wifi Controls Toggle Failed ' + error)}); // Failure function
+	}, 
+	
+	//Missed Communications
+	missedSMS: function(){
+		window.missedcommunications.sms({}, 
+			function(returnVal) {domCallbacks.missedSMS(returnVal.returnVal);}, // Success function
+			function(error) {alert('Missed SMS Failed ' + error)}); // Failure function
+	} , 
+	missedCalls: function(){
+		window.missedcommunications.calls({}, 
+			function(returnVal) {domCallbacks.missedCalls(returnVal.returnVal);}, // Success function
+			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
 	}      
 
 
@@ -7140,21 +7209,6 @@ window.domLibrary = {
 				
 				
 				
-				
-				
-				
-				
-//Toggle Mobile Data Plugin.  
-function toggleData(args){
-	//Pulls the variables from the sent {}
-	 var check = args.check || false;
-	 var state = args.state || false;
-	//Triggers the Data Toggler Cordova Plugin
-	window.plugins.mobiledatatoggler.show({check:check, state:state}, 
-		function(returnVal) {toggledataCallback({check:check, returnVal:returnVal, state:state});}, //Cordova Plugin Success Function.  Returns the sent variables and returned value.
-		function() {alert('Toggle Data Error');}); // Failure function
-}
-
 
 
 
@@ -7188,19 +7242,6 @@ function toggleWifi(args){
 		function() {alert('Wifi Toggle Error');}); // Cordova Plugin Failure function.
 }
 
-
-
-//Celluar Signal Plugin
-function cellSiganl(args){
-	 var action = args.action
-	//Triggers the Broadcast Receiving Cell Signal Cordova Plugin.
-	//Accepts more than 'start', have to add the other options.
-	//This plugins 'callback' is a specific function found in callback.js
-	//	that is called from the native Java.  Not as a part of the code below.
-	window.plugins.cellularsignalgetter.show({action:action}, 
-		function() {console.log("Cell Signal Works"); },//Cordova Plugin Success Function
-		function() {alert('Cellular Signal Error');	}); // Failure function
-}
 
 
 

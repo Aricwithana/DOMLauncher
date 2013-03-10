@@ -2,22 +2,20 @@ package com.phonegap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
-import org.apache.cordova.api.PluginResult;
 
 import android.content.Context;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 
-public class Cellularsignalgetter extends CordovaPlugin {
+public class Cellularsignal extends CordovaPlugin {
     
 	PhoneStateListener phoneStateListener;
    
-    public Cellularsignalgetter() {
+    public Cellularsignal() {
             this.phoneStateListener = new PhoneStateListener() {
                     @Override
                     public void onSignalStrengthsChanged(SignalStrength signalStrength)
@@ -39,7 +37,7 @@ public class Cellularsignalgetter extends CordovaPlugin {
     }
    
     private void updateSignalStrength(int strengthDbm) {
-            sendJavascript("cellsignalCallback(" + strengthDbm + ")");
+            this.webView.sendJavascript("cellsignalCallback(" + strengthDbm + ")");          
     }
    
     @Override
@@ -72,10 +70,10 @@ public class Cellularsignalgetter extends CordovaPlugin {
     @Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
-        if (action.equals("start")) {
+        if (action.equals("enable")) {
            startListen();
         } 
-        if(action.equals("stop")) {
+        if(action.equals("disable")) {
            stopListen();
         }
 

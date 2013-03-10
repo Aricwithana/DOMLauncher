@@ -2,9 +2,10 @@ package com.phonegap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import org.apache.cordova.api.Plugin;
-import org.apache.cordova.api.PluginResult;
+import org.apache.cordova.api.CallbackContext;
+import org.apache.cordova.api.CordovaPlugin;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,10 +14,8 @@ import android.content.IntentFilter;
 
 import android.net.wifi.WifiManager;
 
-
-public class Wificontrols extends Plugin { 
-
-    
+public class Wificontrols extends CordovaPlugin { 
+ 
 BroadcastReceiver wifireceiver;
 	
 	public Wificontrols() {
@@ -33,7 +32,7 @@ BroadcastReceiver wifireceiver;
 	}
 	 
     private void updateSignalStrength(int strengthDbm) {
-            sendJavascript("wifisignalCallback(" + strengthDbm + ")");
+            this.webView.sendJavascript("wifisignalCallback(" + strengthDbm + ")");
     }
 	
     @Override
@@ -68,62 +67,45 @@ BroadcastReceiver wifireceiver;
 		
     }	
 	
-	
-	
-	
 	@Override
-    public PluginResult execute(String action, JSONArray args, String callbackId) {
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		
 		WifiManager wifiManager = (WifiManager)this.cordova.getActivity().getSystemService(Context.WIFI_SERVICE);	
 		
-		try {
-			String check = args.getJSONObject(0).getString("check");					
-			String state = args.getJSONObject(0).getString("state");	
-			//Log.d(id, "Just Check:" +check);			
-			if(check.equals("true")){				
+			if(action.equals("check")){				
 				if (wifiManager.isWifiEnabled()) {	
 					startListen();
-					boolean wifiS = true;
-					return new PluginResult(PluginResult.Status.OK, wifiS);				
+					callbackContext.success(new JSONObject().put("returnVal", true));
 				}else{
-					boolean wifiS = false;
-					return new PluginResult(PluginResult.Status.OK, wifiS);
+					callbackContext.success(new JSONObject().put("returnVal", false));
 				}												
 			}
 			
-			if(check.equals("false")){				
+			if(action.equals("enable")){
+				startListen();
+				wifiManager.setWifiEnabled(true);	
+				callbackContext.success(new JSONObject().put("returnVal", true));
 				
-				if(state.equals("on")){
-					startListen();
-					wifiManager.setWifiEnabled(true);
-					return new PluginResult(PluginResult.Status.OK, true);	
+			}
+				
+			if(action.equals("disable")){
+				stopListen();
+				wifiManager.setWifiEnabled(false);									
+				callbackContext.success(new JSONObject().put("returnVal", false));
+			}
 					
-				}
-					
-				if(state.equals("off")){
+			if(action.equals("toggle")){
+				if (wifiManager.isWifiEnabled()) {				   
 					stopListen();
 					wifiManager.setWifiEnabled(false);									
-					return new PluginResult(PluginResult.Status.OK, false);						
-				}
-						
-				if(state.equals("toggle")){
-					if (wifiManager.isWifiEnabled()) {				   
-						//Log.d(id, "is connected:");
-						stopListen();
-						wifiManager.setWifiEnabled(false);									
-						return new PluginResult(PluginResult.Status.OK, false);				
-					}else{						
-						startListen();
-						wifiManager.setWifiEnabled(true);
-						return new PluginResult(PluginResult.Status.OK, true);
-					}							
-				}				
-			}
-			
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();		
-		}		
-		return new PluginResult(PluginResult.Status.OK);			
+					callbackContext.success(new JSONObject().put("returnVal", false));				
+				}else{						
+					startListen();
+					wifiManager.setWifiEnabled(true);
+					callbackContext.success(new JSONObject().put("returnVal", true));
+				}							
+			}				
+				
+		return true;			
 	}	
 } 

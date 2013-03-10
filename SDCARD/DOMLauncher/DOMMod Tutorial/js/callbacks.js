@@ -13,24 +13,26 @@ function themeLoaded(){
 	
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("resume", onResume, false);
-
+	
+	domLibrary.wificontrolsCheck();
 	domLibrary.fullscreenCheck();
 	domLibrary.airplaneCheck();
 	domLibrary.ringerCheck();
 	domLibrary.mediaCheck();
 	domLibrary.ringermodeCheck();
 	domLibrary.bluetoothCheck();
+	domLibrary.cellularsignalEnable();
+
 	
 	appList({refreshIcons:false});
 	screenBrightness({check:"value"});
 	screenBrightness({check:"mode"});
-	toggleWifi({check:"true"});
-	cellSiganl({action:"start"});
+	
 	batteryLevel();
 	
-	clockTimer = setInterval(clock, 1000 );	
-	missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
-	missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
+	var clockTimer = setInterval(clock, 1000 );	
+	var missedcallsTimer = setInterval(domLibrary.wificontrolsCheck, 5000);
+	var missedsmsTimer = setInterval(domLibrary.missedSMS, 5000);
 }
 /*End Document Ready*/
 
@@ -151,10 +153,10 @@ function switchCallback(args){
 		
 		//Toggle Wifi
 		if(switchID === "toggle_wifi" && state === "on"){
-			toggleWifi({state:"on"});
+			domLibrary.wificontrolsEnable();
 		}
 		if(switchID === "toggle_wifi" && state === "off"){
-			toggleWifi({state:"off"});
+			domLibrary.wificontrolsDisable();
 		}
 		
 		//Toggle Data 
@@ -484,39 +486,88 @@ window.domCallbacks = {
 	cellularsignalDisable: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 		/*End Theme Specific Editible Code*/
+	},
+	
+	//Wifi Controls
+	wificontrolsToggle: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+		/*End Theme Specific Editible Code*/
+	},
+	wificontrolsCheck: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			if(returnVal === true && document.getElementById('toggle_wifi').dataset.state === "off"){
+				document.getElementById('toggle_wifi').scrollLeft = 0;
+				document.getElementById('toggle_wifi').dataset.state = "on";
+				document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: 100%';
+				document.getElementById('meter_Wifi').firstChild.style.width = '100%';
+			}
+			if(returnVal === false && document.getElementById('toggle_wifi').dataset.state === "on"){
+				document.getElementById('toggle_wifi').scrollLeft = 100;
+				document.getElementById('toggle_wifi').dataset.state = "off";
+			}
+			if(returnVal === false && document.getElementById('meter_Wifi').firstChild.style.width != '0%'){
+				document.getElementById('meter_Wifi').firstChild.style.width = '0%';
+				document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: -';
+			}
+			setTimeout(function(){domLibrary.dataconnectionCheck();}, 10000);		
+		/*End Theme Specific Editible Code*/
+	},
+	wificontrolsEnable: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			if(returnVal === true && document.getElementById('toggle_wifi').dataset.state === "off"){
+				document.getElementById('toggle_wifi').scrollLeft = 0;
+				document.getElementById('toggle_wifi').dataset.state = "on";
+				document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: 100%';
+				document.getElementById('meter_Wifi').firstChild.style.width = '100%';
+			}
+			setTimeout(function(){domLibrary.dataconnectionCheck();}, 10000);
+		/*End Theme Specific Editible Code*/
+	},
+	wificontrolsDisable: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			if(returnVal === false && document.getElementById('toggle_wifi').dataset.state === "on"){
+				document.getElementById('toggle_wifi').scrollLeft = 100;
+				document.getElementById('toggle_wifi').dataset.state = "off";
+			}
+			if(returnVal === false && document.getElementById('meter_Wifi').firstChild.style.width != '0%'){
+				document.getElementById('meter_Wifi').firstChild.style.width = '0%';
+				document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: -';
+			}
+			setTimeout(function(){domLibrary.dataconnectionCheck();}, 10000);
+		/*End Theme Specific Editible Code*/
+	},
+	missedSMS: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			var smsUnread = document.getElementById('txtmsg_mainScreen').dataset.missed;
+			if(smsUnread >= 0 && returnVal >0 || smsUnread > 0 && returnVal === 0  ){
+				document.getElementById('txtmsg_mainScreen').dataset.missed =  returnVal;
+			}		/*End Theme Specific Editible Code*/
+	},
+	missedCalls: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			var dialerMissed = document.getElementById('dialer_mainScreen').dataset.missed;
+			if(dialerMissed >= 0 && returnVal >0 || dialerMissed > 0 && returnVal === 0  ){	
+				document.getElementById('dialer_mainScreen').dataset.missed =  returnVal;
+			}		
+		/*End Theme Specific Editible Code*/
 	}
 
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
-
-/*Wifi Toggle Callback*/
-function togglewifiCallback(args){
-	var check = args.check
-	var returnVal = args.returnVal
-	var state = args.state
-	
-	/*Begin Theme Specific Editible Code*/
-		if(returnVal === true && document.getElementById('toggle_wifi').dataset.state === "off"){
-			document.getElementById('toggle_wifi').scrollLeft = 0;
-			document.getElementById('toggle_wifi').dataset.state = "on";
-			document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: 100%';
-			document.getElementById('meter_Wifi').firstChild.style.width = '100%';
-		}
-		
-		if(returnVal === false && document.getElementById('toggle_wifi').dataset.state === "on"){
-			document.getElementById('toggle_wifi').scrollLeft = 100;
-			document.getElementById('toggle_wifi').dataset.state = "off";
-		}
-		if(returnVal === false && document.getElementById('meter_Wifi').firstChild.style.width != '0%'){
-			document.getElementById('meter_Wifi').firstChild.style.width = '0%';
-			document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: -';
-		}
-		//Until there is a 'state listener' for when connections turn on and off, this timeout is needed to correctly respond to if the data connecton is active or not.
-		setTimeout(function(){domLibrary.dataconnectionCheck();}, 10000);
-	/*End Theme Specific Editible Code*/
-}
-
-
 
 
 
@@ -587,28 +638,6 @@ function launchappsCallback(args){
 
 
 
-/*Missed Communications Callback*/
-function missedcommunicationsCallback(args){
-	var type = args.type;
-	var returnVal = args.returnVal
-	
-	/*Begin Theme Specific Editible Code*/
-		if(type == "calls"){
-			var dialerMissed = document.getElementById('dialer_mainScreen').dataset.missed;
-
-			if(dialerMissed >= 0 && returnVal >0 || dialerMissed > 0 && returnVal === 0  ){	
-				document.getElementById('dialer_mainScreen').dataset.missed =  returnVal;
-			}
-		}
-		
-		if(type == "sms"){
-			var smsUnread = document.getElementById('txtmsg_mainScreen').dataset.missed;
-			if(smsUnread >= 0 && returnVal >0 || smsUnread > 0 && returnVal === 0  ){
-				document.getElementById('txtmsg_mainScreen').dataset.missed =  returnVal;
-			}
-		}
-	/*End Theme Specific Editible Code*/
-}
 
 
 
@@ -626,14 +655,15 @@ function onPause() {
 /*Handle the resume event*/
 function onResume() {
 	var clockTimer = setInterval(clock, 1000);
-	var missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
-	var missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
+	var missedcallsTimer = setInterval(domLibrary.wificontrolsCheck, 5000);
+	var missedsmsTimer = setInterval(domLibrary.missedSMS, 5000);
+	
+	screenBrightness({check:"mode"});
+	screenBrightness({check:"value"});
 	
 	domLibrary.airplaneCheck();
 	domLibrary.bluetoothCheck();
-	screenBrightness({check:"mode"});
-	screenBrightness({check:"value"});
-	toggleWifi({check:"true"});
+	domLibrary.wificontrolsCheck();
 	domLibrary.ringerCheck();
 	domLibrary.mediaCheck();
 	domLibrary.ringermodeCheck();

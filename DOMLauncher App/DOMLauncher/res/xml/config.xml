@@ -59,7 +59,7 @@
 <plugin name="Applist" value="com.phonegap.Applist"/>
 <plugin name="Fullscreencontrols" value="com.phonegap.Fullscreencontrols"/>
 <plugin name="Volumecontrols" value="com.phonegap.Volumecontrols"/>
-<plugin name="Cellularsignalgetter" value="com.phonegap.Cellularsignalgetter"/>
+<plugin name="Cellularsignal" value="com.phonegap.Cellularsignal"/>
 <plugin name="Dataconnection" value="com.phonegap.Dataconnection"/>
 <plugin name="Simplesave" value="com.phonegap.Simplesave"/>
 <plugin name="Screenbrightness" value="com.phonegap.Screenbrightness"/>
