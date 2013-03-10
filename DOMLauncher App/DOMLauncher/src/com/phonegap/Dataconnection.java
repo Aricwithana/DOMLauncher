@@ -6,29 +6,19 @@ import java.lang.reflect.Method;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import org.apache.cordova.api.Plugin;
-import org.apache.cordova.api.PluginResult;
-
+import org.apache.cordova.api.CallbackContext;
+import org.apache.cordova.api.CordovaPlugin;
 import android.content.Context;
-
 import android.net.ConnectivityManager;
-
-
 import android.telephony.TelephonyManager;
 
+public class Dataconnection extends CordovaPlugin { 
 
-
-
-public class Mobiledatatoggler extends Plugin { 
-
-	
-	
 	@Override
-    public PluginResult execute(String action, JSONArray args, String callbackId) {
+	   public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
  
-
-		
 		try {
 			
 			Context ctx = this.cordova.getActivity();
@@ -45,60 +35,44 @@ public class Mobiledatatoggler extends Plugin {
 						
 			TelephonyManager telephonyManager = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
 
-			
-			
-			String check = args.getJSONObject(0).getString("check");	 
-			String state = args.getJSONObject(0).getString("state");
-            if (check.equals("true")) {
+            if (action.equals("check")) {
                     
                 if(telephonyManager.getDataState() == TelephonyManager.DATA_CONNECTED){
-        			
-                	return new PluginResult(PluginResult.Status.OK, true);
-    				
+                	callbackContext.success(new JSONObject().put("returnVal", true));
     			}
 
                 if(telephonyManager.getDataState() == TelephonyManager.DATA_DISCONNECTED){
-    			
-    				return new PluginResult(PluginResult.Status.OK, false);
+                	callbackContext.success(new JSONObject().put("returnVal", false));
     			}
                 
                 if(telephonyManager.getDataState() == TelephonyManager.DATA_SUSPENDED){
-        			
-    				return new PluginResult(PluginResult.Status.OK, true);
+                	callbackContext.success(new JSONObject().put("returnVal", true));
     			}
-
             } 
             
-            if(state.equals("toggle")){
-            
-            	if(telephonyManager.getDataState() == TelephonyManager.DATA_CONNECTED){
-			
-				setMobileDataEnabledMethod.invoke(iConnectivityManager, false);
-				return new PluginResult(PluginResult.Status.OK, false);
-				}           
+            if(action.equals("toggle")){         
+            	if(telephonyManager.getDataState() == TelephonyManager.DATA_CONNECTED){			
+            		setMobileDataEnabledMethod.invoke(iConnectivityManager, false);
+            		callbackContext.success(new JSONObject().put("returnVal", false));
+            	}           
 	
 	            if(telephonyManager.getDataState() == TelephonyManager.DATA_DISCONNECTED){
 					setMobileDataEnabledMethod.invoke(iConnectivityManager, true);
-					return new PluginResult(PluginResult.Status.OK, true);
-				}
-			
+					callbackContext.success(new JSONObject().put("returnVal", true));
+				}			
             }
-			
-			  
-            if(state.equals("on")){
-					setMobileDataEnabledMethod.invoke(iConnectivityManager, true);
-					return new PluginResult(PluginResult.Status.OK, true);
-
+            
+            if(action.equals("enable")){
+				setMobileDataEnabledMethod.invoke(iConnectivityManager, true);
+				callbackContext.success(new JSONObject().put("returnVal", true));
             }		
 			
 			
-            if(state.equals("off")){
- 					setMobileDataEnabledMethod.invoke(iConnectivityManager, false);
- 					return new PluginResult(PluginResult.Status.OK, false);
-
+            if(action.equals("disable")){
+ 				setMobileDataEnabledMethod.invoke(iConnectivityManager, false);
+ 				callbackContext.success(new JSONObject().put("returnVal", false));
              }		
- 					
-			
+ 						
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -114,35 +88,15 @@ public class Mobiledatatoggler extends Plugin {
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (JSONException e) {
+		} catch (NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
-		return new PluginResult(PluginResult.Status.OK);			
-	
-
-		  
-		   
-		
-		
-	
-		    
-		 //int mode = Settings.System.getInt(this.cordova.getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
-
-		    //Settings.System.putInt(this.cordova.getActivity().getContentResolver(),Settings.System.SCREEN_BRIGHTNESS_MODE, 0);
-		    
-		    //Log.d(id, "is connected:" + bleh);
-			
-
+		return true;			
 	}  
-	
-
 }
      
 

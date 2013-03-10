@@ -6574,22 +6574,7 @@ if (!window.plugins.missedcommunications) {
 
 
 
-var Mobiledatatoggler = function() {};
-            
-Mobiledatatoggler.prototype.show = function(content, success, fail) {
-    return cordova.exec( function(args) {
-        success(args);
-    }, function(args) {
-        fail(args);
-    }, 'Mobiledatatoggler', '', [content]);
-};
 
-if(!window.plugins) {
-    window.plugins = {};
-}
-if (!window.plugins.mobiledatatoggler) {
-    window.plugins.mobiledatatoggler = new Mobiledatatoggler();
-}
 
 
 var Screenbrightness = function() {};
@@ -6880,6 +6865,44 @@ if (!window.plugins.simplesave) {
 
 
 
+	//Data Connection Controls
+	var Dataconnection = function() {};
+				
+	Dataconnection.prototype.check = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Dataconnection', 'check', [params]);
+	};
+	
+	Dataconnection.prototype.toggle = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Dataconnection', 'toggle', [params]);
+	};
+	
+	Dataconnection.prototype.enable = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Dataconnection', 'enable', [params]);
+	};		
+	
+	Dataconnection.prototype.disable = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Dataconnection', 'disable', [params]);
+	};	
+	
+    cordova.addConstructor(function() {
+        window.dataconnection = new Dataconnection();
+    });
 
 
 
@@ -6893,11 +6916,6 @@ if (!window.plugins.simplesave) {
 
 
 })(window.PhoneGap || window.Cordova || window.cordova);
-
-
-
-
-
 
 
 
@@ -7004,6 +7022,8 @@ window.domLibrary = {
 			function(returnVal) {domCallbacks.ringermodeCheck(returnVal.returnVal);}, // Success function
 			function(error) {alert('Mode Check Failed ' + error)}); // Failure function
 	}, 
+	
+	//Airplane Mode COntrols
 	airplaneCheck: function(){
 		window.airplane.check({}, 
 			function(returnVal) {domCallbacks.airplaneCheck(returnVal.returnVal);}, // Success function
@@ -7023,7 +7043,9 @@ window.domLibrary = {
 		window.airplane.disable({}, 
 			function(returnVal) {domCallbacks.airplaneDisable(returnVal.returnVal);}, // Success function
 			function(error) {alert('Airplane Disable Failed ' + error)}); // Failure function
-	}, 
+	},
+	
+	//Bluetooth Controls 
 	bluetoothCheck: function(){
 		window.bluetoothcontrols.check({}, 
 			function(returnVal) {domCallbacks.bluetoothCheck(returnVal.returnVal);}, // Success function
@@ -7043,7 +7065,34 @@ window.domLibrary = {
 		window.bluetoothcontrols.disable({}, 
 			function(returnVal) {domCallbacks.bluetoothDisable(returnVal.returnVal);}, // Success function
 			function(error) {alert('bluetooth Disable Failed ' + error)}); // Failure function
-	}    
+	}, 
+	
+	//Data Connection Controls
+	dataconnectionCheck: function(){
+		window.dataconnection.check({}, 
+			function(returnVal) {domCallbacks.dataconnectionCheck(returnVal.returnVal);}, // Success function
+			function(error) {alert('Data Connection Check Failed ' + error)}); // Failure function
+	}, 
+	dataconnectionEnable: function(){
+		window.dataconnection.enable({}, 
+			function(returnVal) {domCallbacks.dataconnectionEnable(returnVal.returnVal);}, // Success function
+			function(error) {alert('Data Connection Enable Failed ' + error)}); // Failure function
+	} , 
+	dataconnectionDisable: function(){
+		window.dataconnection.disable({}, 
+			function(returnVal) {domCallbacks.dataconnectionDisable(returnVal.returnVal);}, // Success function
+			function(error) {alert('Data Connection Disable Failed ' + error)}); // Failure function
+	}, 
+	dataconnectionToggle: function(){
+		window.dataconnection.toggle({}, 
+			function(returnVal) {domCallbacks.dataconnectionToggle(returnVal.returnVal);}, // Success function
+			function(error) {alert('Data Connection Toggle Failed ' + error)}); // Failure function
+	}     
+
+
+
+
+    
 
 
 
@@ -7066,17 +7115,17 @@ window.domLibrary = {
 
 
 }
-
-function bluetoothControls(args){
-	 var state = args.state || false;
+//Toggle Mobile Data Plugin.  
+function toggleData(args){
+	//Pulls the variables from the sent {}
 	 var check = args.check || false;
-	window.plugins.bluetoothcontrols.show({state:state, check:check}, 
-		function(returnVal) {//appList is a JSON Object needing to be parsed.
-			bluetoothcontrolsCallback({returnVal:returnVal, state:state, check:check});	
-	}, // Success function
-	function(error) {alert('Bluetooth' + error);}); // Failure function
-
+	 var state = args.state || false;
+	//Triggers the Data Toggler Cordova Plugin
+	window.plugins.mobiledatatoggler.show({check:check, state:state}, 
+		function(returnVal) {toggledataCallback({check:check, returnVal:returnVal, state:state});}, //Cordova Plugin Success Function.  Returns the sent variables and returned value.
+		function() {alert('Toggle Data Error');}); // Failure function
 }
+
 
 
 
@@ -7110,15 +7159,6 @@ function toggleWifi(args){
 		function() {alert('Wifi Toggle Error');}); // Cordova Plugin Failure function.
 }
 
-//Wifi Signal Plugin.  This can be called any time.  Is specifically used with the Wifi Toggle JS Wrapper.
-function wifiSignal(args){
-	var state = args.state || null
-	//Triggers the Wifi Signal Getter Cordova Plugin
-	window.plugins.wifisignalgetter.show({state:state}, 
-		function() {},//wifisignalCallback({returnVal:returnVal}); Cordova Plugin Success Function.  Returns the signal value to the callback function.
-		function(error) {alert( error);}); // Failure function
-}
-
 
 
 //Celluar Signal Plugin
@@ -7133,16 +7173,6 @@ function cellSiganl(args){
 		function() {alert('Cellular Signal Error');	}); // Failure function
 }
 
-//Toggle Mobile Data Plugin.  
-function toggleData(args){
-	//Pulls the variables from the sent {}
-	 var check = args.check || false;
-	 var state = args.state || false;
-	//Triggers the Data Toggler Cordova Plugin
-	window.plugins.mobiledatatoggler.show({check:check, state:state}, 
-		function(returnVal) {toggledataCallback({check:check, returnVal:returnVal, state:state});}, //Cordova Plugin Success Function.  Returns the sent variables and returned value.
-		function() {alert('Toggle Data Error');}); // Failure function
-}
 
 
 

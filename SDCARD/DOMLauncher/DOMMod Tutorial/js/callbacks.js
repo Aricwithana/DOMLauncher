@@ -10,24 +10,26 @@ missedsmsTimer = null;
 function themeLoaded(){
 	scrollSwitch();
 	appList({refreshIcons:false});
+	
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("resume", onResume, false);
-	clockTimer = setInterval(clock, 1000 );
+
 	domLibrary.fullscreenCheck();
-	toggleWifi({check:"true"});
-	toggleData({check:"true"});
-	cellSiganl({action:"start"});
-	batteryLevel();
 	domLibrary.airplaneCheck();
 	domLibrary.ringerCheck();
 	domLibrary.mediaCheck();
 	domLibrary.ringermodeCheck();
-	missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
-	missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
+	domLibrary.bluetoothCheck();
+	
 	screenBrightness({check:"value"});
 	screenBrightness({check:"mode"});
-	domLibrary.bluetoothCheck();
-
+	toggleWifi({check:"true"});
+	cellSiganl({action:"start"});
+	batteryLevel();
+	
+	clockTimer = setInterval(clock, 1000 );	
+	missedcallsTimer = setInterval(function(){missedCommunications({type:"calls"});}, 5000);
+	missedsmsTimer = setInterval(function(){missedCommunications({type:"sms"});}, 5000);
 }
 /*End Document Ready*/
 
@@ -156,10 +158,10 @@ function switchCallback(args){
 		
 		//Toggle Data 
 		if(switchID === "toggle_data" && state === "off"){
-			toggleData({state:"off"});
+			domLibrary.dataconnectionDisable();
 		}
 		if(switchID === "toggle_data" && state === "on"){
-			toggleData({state:"on"});
+			domLibrary.dataconnectionEnable();
 		}
 		
 		//Toggle Airplane
@@ -239,29 +241,6 @@ function screenbrightnessCallback(args){
 
 
 
-
-
-/*Air Plane Mode Toggle*/
-function toggleairplaneCallback(args){
-	var returnVal = args.returnVal 
-	var state = args.state 
-	var check = args.check 
-		
-	/*Begin Theme Specific Editible Code*/
-		if(returnVal === false && document.getElementById('toggle_Airplane').dataset.state === "on"){
-			document.getElementById('toggle_Airplane').scrollLeft = 100;
-			document.getElementById('toggle_Airplane').dataset.state = "off";
-			document.getElementById('meter_Cellular').previousSibling.innerHTML = 'Cellular Signal:';
-			document.getElementById('meter_Cellular').firstChild.style.width = "0%";
-		}
-		
-		if(returnVal === true && document.getElementById('toggle_Airplane').dataset.state === "off"){
-			document.getElementById('toggle_Airplane').scrollLeft = 0;
-			document.getElementById('toggle_Airplane').dataset.state = "on";
-		}
-		setTimeout(function(){toggleWifi({check:"true"});}, 10000);
-	/*End Theme Specific Editible Code*/
-}
 
 
 
@@ -464,25 +443,41 @@ window.domCallbacks = {
 		/*Begin Theme Specific Editible Code*/
 
 		/*End Theme Specific Editible Code*/
+	},
+	
+	//Data Connection
+	dataconnectionToggle: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+	
+		/*End Theme Specific Editible Code*/
+	},
+	dataconnectionCheck: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			if(returnVal === true){
+				document.getElementById('toggle_data').scrollLeft = 0;
+				document.getElementById('toggle_data').dataset.state = "on";
+			}
+			
+			if(returnVal === false){
+				document.getElementById('toggle_data').scrollLeft = 100;
+				document.getElementById('toggle_data').dataset.state = "off";
+			}
+		/*End Theme Specific Editible Code*/
+	},
+	dataconnectionEnable: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			document.getElementById('toggle_data').scrollLeft = 0;
+			document.getElementById('toggle_data').dataset.state = "on";
+		/*End Theme Specific Editible Code*/
+	},
+	dataconnectionDisable: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			document.getElementById('toggle_data').scrollLeft = 100;
+			document.getElementById('toggle_data').dataset.state = "off";
+		/*End Theme Specific Editible Code*/
 	}
 	
 }
-
-function bluetoothcontrolsCallback(args){
-	var state = args.state;
-	var check = args.check;
-	var returnVal = args.returnVal;
-	if(check == "true" && returnVal == "on"){
-		document.getElementById('switch_bluetooth').scrollLeft = 0;
-		document.getElementById('switch_bluetooth').dataset.state = "on";	
-	}
-	
-	if(check == "true" && returnVal == "off"){
-		document.getElementById('switch_bluetooth').scrollLeft = 100;
-		document.getElementById('switch_bluetooth').dataset.state = "off";	
-	}
-}
-
 
 /*Wifi Toggle Callback*/
 function togglewifiCallback(args){
@@ -507,31 +502,10 @@ function togglewifiCallback(args){
 			document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: -';
 		}
 		//Until there is a 'state listener' for when connections turn on and off, this timeout is needed to correctly respond to if the data connecton is active or not.
-		setTimeout(function(){toggleData({check:"true"});}, 10000);
+		setTimeout(function(){domLibrary.dataconnectionCheck();}, 10000);
 	/*End Theme Specific Editible Code*/
 }
 
-
-
-
-/*Data Toggle Callback*/
-function toggledataCallback(args){
-	 var returnVal = args.returnVal
-	 var check = args.check
-	 var state = args.state 
-	 
-	/*Begin Theme Specific Editible Code*/
-		if(returnVal === true && document.getElementById('toggle_data').dataset.state === "off"){
-			document.getElementById('toggle_data').scrollLeft = 0;
-			document.getElementById('toggle_data').dataset.state = "on";
-		}
-		
-		if(returnVal === false && document.getElementById('toggle_data').dataset.state === "on"){
-			document.getElementById('toggle_data').scrollLeft = 100;
-			document.getElementById('toggle_data').dataset.state = "off";
-		}
-	/*End Theme Specific Editible Code*/
-}
 
 
 
@@ -650,7 +624,6 @@ function onResume() {
 	screenBrightness({check:"mode"});
 	screenBrightness({check:"value"});
 	toggleWifi({check:"true"});
-	toggleAirplane({check:"true"});
 	domLibrary.ringerCheck();
 	domLibrary.mediaCheck();
 	domLibrary.ringermodeCheck();
