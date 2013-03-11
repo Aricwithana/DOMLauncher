@@ -32,19 +32,19 @@ BroadcastReceiver wifireceiver;
 	}
 	 
     private void updateSignalStrength(int strengthDbm) {
-            this.webView.sendJavascript("wifisignalCallback(" + strengthDbm + ")");
+    	this.webView.sendJavascript("domCallbacks.wifiSignal(" + strengthDbm + ")");           
     }
 	
     @Override
     public void onPause(boolean multitasking)
     {
-            stopListen();
+        stopListen();
     }
    
     @Override
     public void onResume(boolean multitasking)
     {
-            startListen();
+        startListen();
     }
    
     @Override

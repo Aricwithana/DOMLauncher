@@ -6525,24 +6525,6 @@ if (!window.plugins.launch) {
 
 
 
-var Screenbrightness = function() {};
-            
-Screenbrightness.prototype.show = function(content, success, fail) {
-    return cordova.exec( function(args) {
-        success(args);
-    }, function(args) {
-        fail(args);
-    }, 'Screenbrightness', '', [content]);
-};
-
-if(!window.plugins) {
-    window.plugins = {};
-}
-if (!window.plugins.screenbrightness) {
-    window.plugins.screenbrightness = new Screenbrightness();
-}
-
-
 
 
 
@@ -6940,13 +6922,63 @@ if (!window.plugins.screenbrightness) {
     });
 
 
+	//Screen Brightness
+	var Screenbrightness = function() {};
+				
+	Screenbrightness.prototype.checkValue = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Screenbrightness', 'checkValue', [params]);
+	};
+				
+	Screenbrightness.prototype.checkMode = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Screenbrightness', 'checkMode', [params]);
+	};	
+				
+	Screenbrightness.prototype.autoEnable = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Screenbrightness', 'autoEnable', [params]);
+	};	
+				
+	Screenbrightness.prototype.autoDisable = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Screenbrightness', 'autoDisable', [params]);
+	};	
+				
+	Screenbrightness.prototype.autoToggle = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Screenbrightness', 'autoToggle', [params]);
+	};	
+				
+	Screenbrightness.prototype.value = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Screenbrightness', 'value', [params]);
+	};
 
+    cordova.addConstructor(function() {
+        window.screenbrightness = new Screenbrightness();
+    });
 
 
 })(window.PhoneGap || window.Cordova || window.cordova);
-
-
-
 
 
 
@@ -7163,10 +7195,42 @@ window.domLibrary = {
 		window.missedcommunications.sms({}, 
 			function(returnVal) {domCallbacks.missedSMS(returnVal.returnVal);}, // Success function
 			function(error) {alert('Missed SMS Failed ' + error)}); // Failure function
-	} , 
+	}, 
 	missedCalls: function(){
 		window.missedcommunications.calls({}, 
 			function(returnVal) {domCallbacks.missedCalls(returnVal.returnVal);}, // Success function
+			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
+	},
+	
+	//Screen Brightness Controls 
+	brightnessvalueCheck: function(){
+		window.screenbrightness.checkValue({}, 
+			function(returnVal) {domCallbacks.brightnessvalueCheck(returnVal.returnVal);}, // Success function
+			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
+	}, 
+	brightnessmodeCheck: function(){
+		window.screenbrightness.checkMode({}, 
+			function(returnVal) {domCallbacks.brightnessmodeCheck(returnVal.returnVal);}, // Success function
+			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
+	}, 
+	brightnessautoEnable: function(){
+		window.screenbrightness.autoEnable({}, 
+			function(returnVal) {domCallbacks.brightnessautoEnable(returnVal.returnVal);}, // Success function
+			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
+	}, 
+	brightnessautoDisable: function(){
+		window.screenbrightness.autoDisable({}, 
+			function(returnVal) {domCallbacks.brightnessautoDisable(returnVal.returnVal);}, // Success function
+			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
+	}, 
+	brightnessautoToggle: function(){
+		window.screenbrightness.autoToggle({}, 
+			function(returnVal) {domCallbacks.brightnessautoToggle(returnVal.returnVal);}, // Success function
+			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
+	}, 
+	brightnessValue: function(arg){
+		window.screenbrightness.value({value:arg}, 
+			function(returnVal) {domCallbacks.brightnessValue(returnVal.returnVal);}, // Success function
 			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
 	}      
 
@@ -7227,64 +7291,9 @@ function launchApps(object){ //Object var represents a DOM Elements that holds t
 }
 
 
-//Toggle Wifi Plugin
-function toggleWifi(args){
-	//Pulls the variables from the sent {}
-	var check = args.check || false;
-	var state = args.state || false;
-	
-	//Trigger Wifi Toggler Cordova Plugin
-	window.plugins.wificontrols.show({check:check, state:state}, 
-		
-		function(returnVal) { 
-			togglewifiCallback({check:check, returnVal:returnVal, state:state});
-		},// Cordova Plugin Success Function. Returns the passed variables and the return information. 
-		function() {alert('Wifi Toggle Error');}); // Cordova Plugin Failure function.
-}
 
 
 
-
-
-
-//Battery Level.  A simple wrapper for native Cordova API
-function batteryLevel(){
-	//Trigger the listener and sets the callback function when the battery information changes.
-	window.addEventListener("batterystatus", batterylevelCallback, false);
-}
-
- 
-
-
-
-
-
-
-
-
-
-function screenBrightness(args){
-	 var value = args.value || -1
-	 var check = args.check || false
-	 var float = value || false
-	 var auto = args.auto || false
-	 var toggle = args.auto || null
-	window.plugins.screenbrightness.show({check:check, value:value, auto:auto, float:float, toggle:toggle}, 
-		function(returnVal) { 
-		screenbrightnessCallback({value:value, check:check, float:float, auto:auto, returnVal:returnVal, toggle:toggle})},//Success Function
-		function(error) {alert('missed calls error' + error);}); // Failure function
-}
-
-
-
-//Missed SMS/Calls Value.
-function missedCommunications(args){
-	 var type = args.type || false;
-	
-	window.plugins.missedcommunications.show({type:type}, 
-		function(returnVal) {missedcommunicationsCallback({type:type, returnVal:returnVal});},//Success Function
-		function(error) {alert('Missed Plugin Failed'+error);}); // Failure function
-}
 
 
 
@@ -7348,8 +7357,9 @@ function refresh_iconCSS(args){
 
 
 document.addEventListener("deviceready", cordovaBack, false);
+
 function cordovaBack(){
-	document.addEventListener("backbutton", onBackKeyDown, false);
+	document.addEventListener("backbutton", domCallbacks.backButton, false);
 }
 
 

@@ -55,7 +55,7 @@
                         <div>Battery Level:</div><div id="meter_Battery" class="meter"><div></div></div>
                     </li>
                     <li> 
-                        <div>Brightness:</div> <input type="range" min="1" max="255" step="1" id="slider_brightness" ontouchend="screenBrightness({value:this.value})"/> 
+                        <div>Brightness:</div> <input type="range" min="1" max="255" step="1" id="slider_brightness" ontouchend="domLibrary.brightnessValue(this.value)"/> 
                     </li>
                     <li> 
                         <div>Media Volumn:</div><input type="range" min="0" max="100" step="1" id="slider_mediaVol" onchange="domLibrary.mediaPercentage(this.value)"/> 

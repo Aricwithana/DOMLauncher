@@ -37,19 +37,19 @@ public class Cellularsignal extends CordovaPlugin {
     }
    
     private void updateSignalStrength(int strengthDbm) {
-            this.webView.sendJavascript("cellsignalCallback(" + strengthDbm + ")");          
+        this.webView.sendJavascript("domCallbacks.cellularSignal(" + strengthDbm + ")");  
     }
    
     @Override
     public void onPause(boolean multitasking)
     {
-            stopListen();
+        stopListen();
     }
    
     @Override
     public void onResume(boolean multitasking)
     {
-            startListen();
+        startListen();
     }
    
     @Override

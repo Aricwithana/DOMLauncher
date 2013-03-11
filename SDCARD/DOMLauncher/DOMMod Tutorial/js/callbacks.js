@@ -10,7 +10,7 @@ missedsmsTimer = null;
 function themeLoaded(){
 	scrollSwitch();
 	
-	
+	window.addEventListener("batterystatus", batterylevelCallback, false);
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("resume", onResume, false);
 	
@@ -22,14 +22,11 @@ function themeLoaded(){
 	domLibrary.ringermodeCheck();
 	domLibrary.bluetoothCheck();
 	domLibrary.cellularsignalEnable();
-
+	domLibrary.brightnessvalueCheck();
+	domLibrary.brightnessmodeCheck();
 	
 	appList({refreshIcons:false});
-	screenBrightness({check:"value"});
-	screenBrightness({check:"mode"});
-	
-	batteryLevel();
-	
+
 	var clockTimer = setInterval(clock, 1000 );	
 	var missedcallsTimer = setInterval(domLibrary.wificontrolsCheck, 5000);
 	var missedsmsTimer = setInterval(domLibrary.missedSMS, 5000);
@@ -177,10 +174,10 @@ function switchCallback(args){
 		
 		//Toggle AutoBrightness 
 		if(switchID === "toggle_autoBrightness" && state === "off"){
-			screenBrightness({auto:"off"});
+			domLibrary.brightnessautoDisable();
 		}
 		if(switchID === "toggle_autoBrightness" && state === "on"){
-			screenBrightness({auto:"on"});
+			domLibrary.brightnessautoEnable();
 		}		
 		
 		//Toggle Ringer Silent
@@ -210,44 +207,12 @@ function switchCallback(args){
 }	
 	
 
-/*Screenbrightness Controls Callback*/
-function screenbrightnessCallback(args){
-	var value = args.value;
-	var check = args.check;
-	var float = args.float;
-	var toggle = args.toggle;
-	var auto = args.auto;
-	var returnVal = args.returnVal;	
-
-	/*Begin Theme Specific Editible Code*/
-		if(value > -1){
-			document.getElementById('slider_brightness').parentNode.childNodes[1].innerHTML = 'Brightness: ' + returnVal;
-		}
-		
-		if(check == "value"){
-			document.getElementById('slider_brightness').value = returnVal;	
-			document.getElementById('slider_brightness').parentNode.childNodes[1].innerHTML = 'Brightness: ' + returnVal;
-		}
-		
-		if(check == "mode"){
-			if(returnVal == 0){
-				document.getElementById('toggle_autoBrightness').scrollLeft = 100;
-				document.getElementById('toggle_autoBrightness').dataset.state = "off";
-			}else{
-				document.getElementById('toggle_autoBrightness').scrollLeft = 0;
-				document.getElementById('toggle_autoBrightness').dataset.state = "on";
-			}
-		}
-		
-	/*End Theme Specific Editible Code*/
-}
-
-
-
-
-
-
 window.domCallbacks = {
+	backButton: function(){
+		
+	},
+	
+	//Full Screen Controls
 	fullscreenCheck: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 			if(returnVal == false){
@@ -383,8 +348,9 @@ window.domCallbacks = {
 				document.getElementById('toggle_Airplane').dataset.state = "on";
 				document.getElementById('meter_Cellular').previousSibling.innerHTML = 'Cellular Signal: - ';
 				document.getElementById('meter_Cellular').firstChild.style.width = "0%";			
-				}
-			setTimeout(function(){toggleWifi({check:"true"});}, 10000);		
+				
+			}
+			setTimeout(function(){domLibrary.wificontrolsCheck();}, 10000);
 		/*End Theme Specific Editible Code*/
 	},
 	airplaneCheck: function(returnVal){
@@ -399,8 +365,7 @@ window.domCallbacks = {
 				document.getElementById('toggle_Airplane').dataset.state = "on";
 				document.getElementById('meter_Cellular').previousSibling.innerHTML = 'Cellular Signal: - ';
 				document.getElementById('meter_Cellular').firstChild.style.width = "0%";
-			}
-			setTimeout(function(){toggleWifi({check:"true"});}, 10000);		
+			}	
 		/*End Theme Specific Editible Code*/
 	},
 	airplaneEnable: function(returnVal){
@@ -409,14 +374,14 @@ window.domCallbacks = {
 			document.getElementById('toggle_Airplane').dataset.state = "on";
 			document.getElementById('meter_Cellular').previousSibling.innerHTML = 'Cellular Signal: - ';
 			document.getElementById('meter_Cellular').firstChild.style.width = "0%";
-			setTimeout(function(){toggleWifi({check:"true"});}, 10000);	
+			setTimeout(function(){domLibrary.wificontrolsCheck();}, 10000);
 		/*End Theme Specific Editible Code*/
 	},
 	airplaneDisable: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 			document.getElementById('toggle_Airplane').scrollLeft = 100;
 			document.getElementById('toggle_Airplane').dataset.state = "off";
-			setTimeout(function(){toggleWifi({check:"true"});}, 10000);	
+			setTimeout(function(){domLibrary.wificontrolsCheck();}, 10000);
 		/*End Theme Specific Editible Code*/
 	},
 	bluetoothToggle: function(returnVal){
@@ -550,58 +515,91 @@ window.domCallbacks = {
 				document.getElementById('dialer_mainScreen').dataset.missed =  returnVal;
 			}		
 		/*End Theme Specific Editible Code*/
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-
-/*Wifi Signal Callback - A REQUIRED FUNCTION IF WIFI CONTROLS PLUGIN IS USED.*/
-function wifisignalCallback(strengthDbm){
-	
-	/*Begin Theme Specific Editible Code*/
+	},
+	wifiSignal: function(returnVal){
 		maxStrength = -50; 
 		minStrength = -120; 
-		wifiChange(Math.round(100 - Math.max(0, Math.min((strengthDbm - maxStrength) / (minStrength - maxStrength), 1) * 100)))	
-	/*End Theme Specific Editible Code*/
-}
-	//Used with the Wifi Signal Callback Function.
-	function wifiChange(percentage){
-		document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: ' + percentage + '%';
-		document.getElementById('meter_Wifi').firstChild.style.width = percentage + '%';
-	}
-
-
-
-
-/*Cellular Signal Callback*/
-function cellsignalCallback(strengthDbm){
-	/*Begin Theme Specific Editible Code*/
+		percentage = Math.round(100 - Math.max(0, Math.min((returnVal - maxStrength) / (minStrength - maxStrength), 1) * 100));	
+	
+		/*Begin Theme Specific Editible Code*/
+			document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: ' + percentage + '%';
+			document.getElementById('meter_Wifi').firstChild.style.width = percentage + '%';
+		/*End Theme Specific Editible Code*/
+	},
+	cellularSignal: function(returnVal){
 		maxStrength = -70; 
 		minStrength = -100; 
-		cellsignalChange(Math.round(100 - Math.max(0, Math.min((strengthDbm - maxStrength) / (minStrength - maxStrength), 1) * 100)))	
-	/*End Theme Specific Editible Code*/
-}
-	//Used with the Cellular Signal Callback Function.
-	function cellsignalChange(percentage){
-		document.getElementById('meter_Cellular').previousSibling.innerHTML = 'Cellular Signal: ' + percentage + "%";
-		document.getElementById('meter_Cellular').firstChild.style.width = percentage + "%";
+		percentage = Math.round(100 - Math.max(0, Math.min((returnVal - maxStrength) / (minStrength - maxStrength), 1) * 100));
+	
+		/*Begin Theme Specific Editible Code*/
+			document.getElementById('meter_Cellular').previousSibling.innerHTML = 'Cellular Signal: ' + percentage + "%";
+			document.getElementById('meter_Cellular').firstChild.style.width = percentage + "%";
+		/*End Theme Specific Editible Code*/		
+	},
+	
+	//Screen Brightness
+	brightnessvalueCheck: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			document.getElementById('slider_brightness').value = returnVal;	
+			document.getElementById('slider_brightness').parentNode.childNodes[1].innerHTML = 'Brightness: ' + returnVal;
+		/*End Theme Specific Editible Code*/
+	},
+	brightnessmodeCheck: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			if(returnVal === 0){
+				document.getElementById('toggle_autoBrightness').scrollLeft = 100;
+				document.getElementById('toggle_autoBrightness').dataset.state = "off";
+			}else{
+				document.getElementById('toggle_autoBrightness').scrollLeft = 0;
+				document.getElementById('toggle_autoBrightness').dataset.state = "on";
+			}
+		/*End Theme Specific Editible Code*/
+	},
+	brightnessautoEnable: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+		
+		/*End Theme Specific Editible Code*/
+	},
+	brightnessautoDisable: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+		
+		/*End Theme Specific Editible Code*/
+	},
+	brightnessautoToggle: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+		
+		/*End Theme Specific Editible Code*/
+	},
+	brightnessValue: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			if(returnVal > -1){
+				document.getElementById('slider_brightness').parentNode.childNodes[1].innerHTML = 'Brightness: ' + returnVal;
+			}		
+		/*End Theme Specific Editible Code*/
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
 
 
 
@@ -658,9 +656,8 @@ function onResume() {
 	var missedcallsTimer = setInterval(domLibrary.wificontrolsCheck, 5000);
 	var missedsmsTimer = setInterval(domLibrary.missedSMS, 5000);
 	
-	screenBrightness({check:"mode"});
-	screenBrightness({check:"value"});
-	
+	domLibrary.brightnessvalueCheck();
+	domLibrary.brightnessmodeCheck();
 	domLibrary.airplaneCheck();
 	domLibrary.bluetoothCheck();
 	domLibrary.wificontrolsCheck();
