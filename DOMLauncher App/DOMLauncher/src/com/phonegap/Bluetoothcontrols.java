@@ -16,34 +16,50 @@ public class Bluetoothcontrols extends CordovaPlugin {
 		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 	
 		if(action.equals("enable")){				
-		      mBluetoothAdapter.enable();
-		      callbackContext.success(new JSONObject().put("returnVal", true));
+			if (mBluetoothAdapter == null) {
+				   
+			} else {
+				mBluetoothAdapter.enable();
+		    	callbackContext.success(new JSONObject().put("returnVal", true));
+			}
 		}
 		
 		if(action.equals("disable")){
-			mBluetoothAdapter.disable();
-			callbackContext.success(new JSONObject().put("returnVal", false));
+			if (mBluetoothAdapter == null) {
+				   
+			} else {
+				mBluetoothAdapter.disable();
+				callbackContext.success(new JSONObject().put("returnVal", false));
+			}
 		}
 		
 		if(action.equals("toggle")){			
-			if(mBluetoothAdapter.isEnabled())
-		    {
-		      mBluetoothAdapter.disable();
-		      callbackContext.success(new JSONObject().put("returnVal", false));
-		    }else{
-		      mBluetoothAdapter.enable();
-		      callbackContext.success(new JSONObject().put("returnVal", true));
-		    }
+			if (mBluetoothAdapter == null) {
+				   
+			} else {
+				if(mBluetoothAdapter.isEnabled())
+			    {
+			      mBluetoothAdapter.disable();
+			      callbackContext.success(new JSONObject().put("returnVal", false));
+			    }else{
+			      mBluetoothAdapter.enable();
+			      callbackContext.success(new JSONObject().put("returnVal", true));
+			    }
+			}
 		}
 		
-		if(action.equals("check")){			
-			if(mBluetoothAdapter.isEnabled())
-		    {
-				callbackContext.success(new JSONObject().put("returnVal", true));
-		    }else{Log.d(id, "Bluetooth Fire");
-		    	callbackContext.success(new JSONObject().put("returnVal", false));
-		    }
+		if(action.equals("check")){	Log.d(id, "Bluetooth Fire");		
+			if (mBluetoothAdapter == null) {
+			   
+			} else {
+			    if (mBluetoothAdapter.isEnabled()) {Log.d(id, "Bluetooth Check On");
+			    	callbackContext.success(new JSONObject().put("returnVal", true));
+			    }else{Log.d(id, "Bluetooth Check Off");
+			    	callbackContext.success(new JSONObject().put("returnVal", false));	
+			    }
+			}
 		}
+
 		
 		return true;
 	}  
