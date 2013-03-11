@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 import android.bluetooth.BluetoothAdapter;
+import android.util.Log;
 
 public class Bluetoothcontrols extends CordovaPlugin { 
 
@@ -39,11 +40,11 @@ public class Bluetoothcontrols extends CordovaPlugin {
 			if(mBluetoothAdapter.isEnabled())
 		    {
 				callbackContext.success(new JSONObject().put("returnVal", true));
-		    }else{
+		    }else{Log.d(id, "Bluetooth Fire");
 		    	callbackContext.success(new JSONObject().put("returnVal", false));
 		    }
 		}
-
+		
 		return true;
 	}  
 }

@@ -10,7 +10,7 @@ missedsmsTimer = null;
 function themeLoaded(){
 	scrollSwitch();
 	
-	window.addEventListener("batterystatus", batterylevelCallback, false);
+	window.addEventListener("batterystatus", domCallbacks.battery, false);
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("resume", onResume, false);
 	
@@ -24,64 +24,13 @@ function themeLoaded(){
 	domLibrary.cellularsignalEnable();
 	domLibrary.brightnessvalueCheck();
 	domLibrary.brightnessmodeCheck();
-	
-	appList({refreshIcons:false});
+	domLibrary.generateappList();	
 
 	var clockTimer = setInterval(clock, 1000 );	
 	var missedcallsTimer = setInterval(domLibrary.wificontrolsCheck, 5000);
 	var missedsmsTimer = setInterval(domLibrary.missedSMS, 5000);
 }
 /*End Document Ready*/
-
-/*Back Button Override.  This function must exist in each DOMMod.*/
-function onBackKeyDown() {
-  
-}
-
-/*App Panel Generation & App Launcher Event Bindings*/
-function applistCallback(appList){	
-	
-	var previous_appIntent = document.querySelectorAll('*[appPackage]');
-	
-	for (var i = 0; i < previous_appIntent.length; i++)
-	{
-		previous_appIntent[i].removeEventListener("click", function(){launchApps(this);}, false);
-	}
-	
-	var appListArray = JSON.parse(appList);
-	var appPanel = document.getElementById('appPanel_Content'); 
-	appPanel.innerHTML = ''; 
-	
-	var dialer = document.createElement('a');
-	dialer.setAttribute('class', 'app dialer');
-	dialer.setAttribute('href', 'tel:');
-	dialer.setAttribute('appName', 'Dialer');
-	appPanel.appendChild(dialer);
-
-	for(var ii = 0; ii < appListArray.length; ii++) {  
-		var appInfo = appListArray[ii];
-		var appName = appInfo.name; 
-		var appPackage = appInfo.package; 
-		var appActivity = appInfo.activity;
-	
-		var newdiv = document.createElement('div');
-		newdiv.setAttribute('class', 'app');
-		newdiv.setAttribute('appPackage', appPackage);
-		newdiv.setAttribute('appActivity', appActivity);
-		newdiv.setAttribute('appName', appName);
-		appPanel.appendChild(newdiv);
-	}
-	
-	var final_appIntent = document.querySelectorAll('*[appPackage]');
-	
-	for (var iii = 0; iii < final_appIntent.length; iii++)
-	{
-		final_appIntent[iii].addEventListener("click", function(){launchApps(this);}, false);
-	}
-		
-}
-
-
 
 /*Clock CSS*/
 function clock() {
@@ -93,9 +42,6 @@ function clock() {
 
 	var date = null;
 }
-
-
-
 
 /*Slider Switches Widget Plugin*/
 function scrollSwitch(){
@@ -576,6 +522,65 @@ window.domCallbacks = {
 				document.getElementById('slider_brightness').parentNode.childNodes[1].innerHTML = 'Brightness: ' + returnVal;
 			}		
 		/*End Theme Specific Editible Code*/
+	},
+	
+	//Create App Icons and List
+	generateappList: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			var previous_appIntent = document.querySelectorAll('*[appPackage]');
+			
+			for (var i = 0; i < previous_appIntent.length; i++)
+			{
+				previous_appIntent[i].removeEventListener("click", function(){domLibrary.appLaunch(this);}, false);
+			}
+			
+			var appListArray = JSON.parse(returnVal);
+			var appPanel = document.getElementById('appPanel_Content'); 
+			appPanel.innerHTML = ''; 
+			
+			var dialer = document.createElement('a');
+			dialer.setAttribute('class', 'app dialer');
+			dialer.setAttribute('href', 'tel:');
+			dialer.setAttribute('appName', 'Dialer');
+			appPanel.appendChild(dialer);
+		
+			for(var ii = 0; ii < appListArray.length; ii++) {  
+				var appInfo = appListArray[ii];
+				var appName = appInfo.name; 
+				var appPackage = appInfo.package; 
+				var appActivity = appInfo.activity;
+			
+				var newdiv = document.createElement('div');
+				newdiv.setAttribute('class', 'app');
+				newdiv.setAttribute('appPackage', appPackage);
+				newdiv.setAttribute('appActivity', appActivity);
+				newdiv.setAttribute('appName', appName);
+				appPanel.appendChild(newdiv);
+			}
+			
+			var final_appIntent = document.querySelectorAll('*[appPackage]');
+			
+			for (var iii = 0; iii < final_appIntent.length; iii++)
+			{
+				final_appIntent[iii].addEventListener("click", function(){domLibrary.appLaunch(this);}, false);
+			}
+		/*End Theme Specific Editible Code*/
+	},
+	generateappIcons: function(){
+		/*Begin Theme Specific Editible Code*/
+			domLibrary.generateCSS();
+		/*End Theme Specific Editible Code*/
+	},
+	battery: function(info){
+		/*Begin Theme Specific Editible Code*/
+			if(info.isPlugged != false){
+				document.getElementById('meter_Battery').parentNode.childNodes[1].innerHTML = 'Battery Charging:  '+info.level+'%';
+				document.getElementById('meter_Battery').firstChild.style.width = info.level + '%';
+			}else{
+				document.getElementById('meter_Battery').parentNode.childNodes[1].innerHTML = 'Battery Level:  '+info.level+'%';
+				document.getElementById('meter_Battery').firstChild.style.width = info.level + '%';
+			}
+		/*End Theme Specific Editible Code*/
 	}
 
 
@@ -586,37 +591,9 @@ window.domCallbacks = {
 
 
 
-
-
-
-
-
-
 }
 
 
-
-
-
-
-
-
-
-
-
-/*Battery Level Receiver */
-function batterylevelCallback(info){ 
-	
-	/*Begin Theme Specific Editible Code*/
-		if(info.isPlugged != false){
-			document.getElementById('meter_Battery').parentNode.childNodes[1].innerHTML = 'Battery Charging:  '+info.level+'%';
-			document.getElementById('meter_Battery').firstChild.style.width = info.level + '%';
-		}else{
-			document.getElementById('meter_Battery').parentNode.childNodes[1].innerHTML = 'Battery Level:  '+info.level+'%';
-			document.getElementById('meter_Battery').firstChild.style.width = info.level + '%';
-		}
-	/*End Theme Specific Editible Code*/
-}
 
 
 

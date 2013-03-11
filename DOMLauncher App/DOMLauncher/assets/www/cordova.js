@@ -6464,72 +6464,6 @@ window.cordova = require('cordova');
 *------------------------------------------
 **/
 
-
-
-
-
-
-var Applist = function() {};
-            
-Applist.prototype.show = function(content, success, fail) {
-    return cordova.exec( function(args) {
-        success(args);
-    }, function(args) {
-        fail(args);
-    }, 'Applist', '', [content]);
-};
-
-if(!window.plugins) {
-    window.plugins = {};
-}
-if (!window.plugins.applist) {
-    window.plugins.applist = new Applist();
-}
-// JavaScript Document
-
-
-
-
-
-
-
-
-var Launch = function() {};
-            
-Launch.prototype.show = function(content, success, fail) {
-    return cordova.exec( function(args) {
-        success(args);
-    }, function(args) {
-        fail(args);
-    }, 'Launch', '', [content]);
-};
-
-if(!window.plugins) {
-    window.plugins = {};
-}
-if (!window.plugins.launch) {
-    window.plugins.launch = new Launch();
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 (function(cordova){
 
 	//Fullscreen Controls
@@ -6565,9 +6499,7 @@ if (!window.plugins.launch) {
 			fail(args);
 		}, 'Volumecontrols', 'ringerUp', [params]);
 	};
-	
-
-			
+		
 	Volumecontrols.prototype.ringerDown = function(params, success, fail) {
 		return cordova.exec( function(args) {
 			success(args);
@@ -6575,8 +6507,7 @@ if (!window.plugins.launch) {
 			fail(args);
 		}, 'Volumecontrols', 'ringerDown', [params]);
 	};
-
-			
+		
 	Volumecontrols.prototype.ringerPercentage = function(params, success, fail) {
 		return cordova.exec( function(args) {
 			success(args);
@@ -6584,8 +6515,6 @@ if (!window.plugins.launch) {
 			fail(args);
 		}, 'Volumecontrols', 'ringerPercentage', [params]);
 	};
-	
-
 			
 	Volumecontrols.prototype.ringerSilent = function(params, success, fail) {
 		return cordova.exec( function(args) {
@@ -6594,8 +6523,6 @@ if (!window.plugins.launch) {
 			fail(args);
 		}, 'Volumecontrols', 'ringerSilent', [params]);
 	};
-	
-
 			
 	Volumecontrols.prototype.ringerVibrate = function(params, success, fail) {
 		return cordova.exec( function(args) {
@@ -6604,8 +6531,6 @@ if (!window.plugins.launch) {
 			fail(args);
 		}, 'Volumecontrols', 'ringerVibrate', [params]);
 	};
-	
-
 			
 	Volumecontrols.prototype.ringerNormal = function(params, success, fail) {
 		return cordova.exec( function(args) {
@@ -6614,8 +6539,6 @@ if (!window.plugins.launch) {
 			fail(args);
 		}, 'Volumecontrols', 'ringerNormal', [params]);
 	};
-	
-
 			
 	Volumecontrols.prototype.mediaUp = function(params, success, fail) {
 		return cordova.exec( function(args) {
@@ -6624,8 +6547,6 @@ if (!window.plugins.launch) {
 			fail(args);
 		}, 'Volumecontrols', 'mediaUp', [params]);
 	};
-	
-
 			
 	Volumecontrols.prototype.mediaDown = function(params, success, fail) {
 		return cordova.exec( function(args) {
@@ -6634,8 +6555,6 @@ if (!window.plugins.launch) {
 			fail(args);
 		}, 'Volumecontrols', 'mediaDown', [params]);
 	};
-	
-
 			
 	Volumecontrols.prototype.mediaPercentage = function(params, success, fail) {
 		return cordova.exec( function(args) {
@@ -6644,8 +6563,6 @@ if (!window.plugins.launch) {
 			fail(args);
 		}, 'Volumecontrols', 'mediaPercentage', [params]);
 	};
-	
-
 			
 	Volumecontrols.prototype.mediaMute = function(params, success, fail) {
 		return cordova.exec( function(args) {
@@ -6654,8 +6571,6 @@ if (!window.plugins.launch) {
 			fail(args);
 		}, 'Volumecontrols', 'mediaMute', [params]);
 	};
-	
-
 			
 	Volumecontrols.prototype.mediaCheck = function(params, success, fail) {
 		return cordova.exec( function(args) {
@@ -6664,8 +6579,6 @@ if (!window.plugins.launch) {
 			fail(args);
 		}, 'Volumecontrols', 'mediaCheck', [params]);
 	};
-	
-
 			
 	Volumecontrols.prototype.ringerCheck = function(params, success, fail) {
 		return cordova.exec( function(args) {
@@ -6674,9 +6587,7 @@ if (!window.plugins.launch) {
 			fail(args);
 		}, 'Volumecontrols', 'ringerCheck', [params]);
 	};
-	
-
-			
+				
 	Volumecontrols.prototype.ringermodeCheck = function(params, success, fail) {
 		return cordova.exec( function(args) {
 			success(args);
@@ -6685,12 +6596,9 @@ if (!window.plugins.launch) {
 		}, 'Volumecontrols', 'ringermodeCheck', [params]);
 	};
 	
-
-	
     cordova.addConstructor(function() {
         window.volumecontrols = new Volumecontrols();
     });
-
 
 	//Airplane Mode Controls
 	var Airplane = function() {};
@@ -6731,8 +6639,6 @@ if (!window.plugins.launch) {
         window.airplane = new Airplane();
     });
 
-
-
 	//Bluetooth Controls
 	var Bluetoothcontrols = function() {};
 				
@@ -6771,10 +6677,6 @@ if (!window.plugins.launch) {
     cordova.addConstructor(function() {
         window.bluetoothcontrols = new Bluetoothcontrols();
     });
-
-
-
-
 
 	//Data Connection Controls
 	var Dataconnection = function() {};
@@ -6815,7 +6717,6 @@ if (!window.plugins.launch) {
         window.dataconnection = new Dataconnection();
     });
 
-
 	//Simple Save
 	var Simplesave = function() {};
 				
@@ -6830,7 +6731,6 @@ if (!window.plugins.launch) {
     cordova.addConstructor(function() {
         window.simplesave = new Simplesave();
     });
-
 
 	//Cellular Signal
 	var Cellularsignal = function() {};
@@ -6854,10 +6754,7 @@ if (!window.plugins.launch) {
     cordova.addConstructor(function() {
         window.cellularsignal = new Cellularsignal();
     });
-
-
-
-
+	
 	//Wifi Controls
 	var Wificontrols = function() {};
 				
@@ -6897,7 +6794,6 @@ if (!window.plugins.launch) {
         window.wificontrols = new Wificontrols();
     });
 
-
 	//Missed Communications
 	var Missedcommunications = function() {};
 				
@@ -6920,7 +6816,6 @@ if (!window.plugins.launch) {
     cordova.addConstructor(function() {
         window.missedcommunications = new Missedcommunications();
     });
-
 
 	//Screen Brightness
 	var Screenbrightness = function() {};
@@ -6977,11 +6872,69 @@ if (!window.plugins.launch) {
         window.screenbrightness = new Screenbrightness();
     });
 
+	//Generate App List and Icons
+	var Applist = function() {};
+				
+	Applist.prototype.generateIcons = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Applist', 'generateIcons', [params]);
+	};
+	
+	Applist.prototype.appList = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Applist', 'appList', [params]);
+	};	
+	
+    cordova.addConstructor(function() {
+        window.applist = new Applist();
+    });
 
+	//Launch App or Setting
+	var Launch = function() {};
+				
+	Launch.prototype.app = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Launch', 'app', [params]);
+	};
+	
+	Launch.prototype.setting = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Launch', 'setting', [params]);
+	};	
+	
+	Launch.prototype.settingManual = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Launch', 'settingManual', [params]);
+	};	
+			
+	Launch.prototype.appManual = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Launch', 'appManual', [params]);
+	};	
+		
+    cordova.addConstructor(function() {
+        window.launch = new Launch();
+    });
+	
 })(window.PhoneGap || window.Cordova || window.cordova);
-
-
-
 
 
 
@@ -7206,154 +7159,91 @@ window.domLibrary = {
 	brightnessvalueCheck: function(){
 		window.screenbrightness.checkValue({}, 
 			function(returnVal) {domCallbacks.brightnessvalueCheck(returnVal.returnVal);}, // Success function
-			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
+			function(error) {alert('Screen Brightness Value CHeckFailed ' + error)}); // Failure function
 	}, 
 	brightnessmodeCheck: function(){
 		window.screenbrightness.checkMode({}, 
 			function(returnVal) {domCallbacks.brightnessmodeCheck(returnVal.returnVal);}, // Success function
-			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
+			function(error) {alert('Screen Brightness Mode Check Failed ' + error)}); // Failure function
 	}, 
 	brightnessautoEnable: function(){
 		window.screenbrightness.autoEnable({}, 
 			function(returnVal) {domCallbacks.brightnessautoEnable(returnVal.returnVal);}, // Success function
-			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
+			function(error) {alert('Auto Brightness Enable Failed ' + error)}); // Failure function
 	}, 
 	brightnessautoDisable: function(){
 		window.screenbrightness.autoDisable({}, 
 			function(returnVal) {domCallbacks.brightnessautoDisable(returnVal.returnVal);}, // Success function
-			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
+			function(error) {alert('Auto Brightness Disabled Failed ' + error)}); // Failure function
 	}, 
 	brightnessautoToggle: function(){
 		window.screenbrightness.autoToggle({}, 
 			function(returnVal) {domCallbacks.brightnessautoToggle(returnVal.returnVal);}, // Success function
-			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
+			function(error) {alert('Auto Brightness Toggle Failed ' + error)}); // Failure function
 	}, 
 	brightnessValue: function(arg){
 		window.screenbrightness.value({value:arg}, 
 			function(returnVal) {domCallbacks.brightnessValue(returnVal.returnVal);}, // Success function
-			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
-	}      
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
+			function(error) {alert('Screen Brightness Value Failed ' + error)}); // Failure function
+	}, 
 	
-				
-				
-				
-				
-
-
-
-/*App/Activity Launcher*/
-function launchApps(object){ //Object var represents a DOM Elements that holds the meta information for app or activity.
-	//These pull all needed information from the passed DOM Object.
-	 var appPackage = object.getAttribute('appPackage') || false;  //com.class.name
-	 var appActivity = object.getAttribute('appActivity') || false;  //.ActivityCall
-	 var activityFull = appPackage+appActivity || false;  //Pieces the the com.class.name and the .ActivityCall into one string.
-	 var settings = object.getAttribute('settings') || false; //Signifies launch specified settings sub category.
+	//App List Icons and CSS
+	generateappList: function(){
+		window.applist.appList({}, 
+			function(returnVal) {domCallbacks.generateappList(returnVal.returnVal);}, // Success function
+			function(error) {alert('Generate App List Failed ' + error)}); // Failure function
+	}, 
+	generateappIcons: function(){
+		window.applist.generateIcons({}, 
+			function(returnVal) {domCallbacks.generateappIcons();}, // Success function
+			function(error) {alert('Generate App Icons Failed ' + error)}); // Failure function
+	},
+	generateCSS: function(arg){
+		window.plugins.applist.show({refreshIcons:refreshIcons}, //App Package Name
+				function(appList) {
+						var element = document.getElementById('iconsCss');
+						element.parentNode.removeChild(element);
+						var appListArray = JSON.parse(appList);
+						var newStyle = document.createElement('style');
+						newStyle.setAttribute('id', 'iconsCss');
+						newStyle.innerHTML += '*[appName="Dialer"]{background-image:url(file:///android_asset/www/img/icon_Dialer.png); color:inherit;	 text-decoration:none;  }';
+						for(var I = 0; I < appListArray.length; I++) {  
+							var appInfo = appListArray[I];
+							var appPackage = appInfo.package; 
+							newStyle.innerHTML += '*[appPackage="'+appPackage+'"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/'+appPackage+'.png);}';
+						}	
+						document.getElementsByTagName('head')[0].appendChild(newStyle);
+						var styleText = newStyle.innerHTML;
+						domLibrary.simpleSave(styleText, "/mnt/sdcard/DOMLauncher/settings/icons/icons.css");
+					}, // Success function
+				function() {alert('Refresh Icons Failed')}); // Failure function	
+	}, 
 	
-	//Initiates the Cordova Plugin
-	window.plugins.launch.show({appPackage: appPackage, appActivity: activityFull, settings:settings  }, //Passes the retrived information above to the Cordova Plugin
-		function() {launchappsCallback({package:appPackage, activity:activityFull, settings:settings, object:object});}, // Cordova Plugin Success function.  Triggers callback and passes back all sent varibles.
-		function() {alert('Application/Activity Launch Failed')}); // Cordova Plugin Failure function
+	//Launch App and Settings
+	appLaunch: function(object){
+		var packageChoice = object.getAttribute('appPackage');  //com.class.name
+		var activityChoice = object.getAttribute('appActivity') || "";  //.ActivityCall
+		window.launch.app({package:packageChoice, activity:packageChoice+activityChoice}, 
+			function() {alert(acitivtyChoice);}, // Success function
+			function(error) {alert('Application/Activity Launch Failed ' + error)}); // Failure function
+	},	       
+	settingLaunch: function(object){
+		var settingsChoice = object.getAttribute('settings') || false;
+		window.launch.setting({setting:settingsChoice}, 
+			function() {}, // Success function
+			function(error) {alert('Setting Launch Failed ' + error)}); // Failure function
+	},	       
+	manualappLaunch: function(package, activity){
+		window.launch.app({package:package, activity:activity}, 
+			function() {}, // Success function
+			function(error) {alert('Manual Application/Activity Launch Failed ' + error)}); // Failure function
+	},	       
+	manualsettingLaunch: function(arg){
+		window.launch.setting({setting:arg}, 
+			function() {}, // Success function
+			function(error) {alert('Manual Setting Launch Failed ' + error)}); // Failure function
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function appList(args){
-	 var refreshIcons = args.refreshIcons || false
-	
-	window.plugins.applist.show({refreshIcons:refreshIcons}, 
-		function(appList) {//appList is a JSON Object needing to be parsed.
-			applistCallback(appList);	
-	}, // Success function
-	function(error) {alert('Loading App List Failed' + error);}); // Failure function
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-function refresh_iconCSS(args){
-	var  refreshIcons = args.refreshIcons || false
-	window.plugins.applist.show({refreshIcons:refreshIcons}, //App Package Name
-		function(appList) {
-			
-				var element = document.getElementById('iconsCss');
-				element.parentNode.removeChild(element);
-			
-				var appListArray = JSON.parse(appList);
-				
-				var newStyle = document.createElement('style');
-				newStyle.setAttribute('id', 'iconsCss');
-				newStyle.innerHTML += '*[appName="Dialer"]{background-image:url(file:///android_asset/www/img/icon_Dialer.png); color:inherit;	 text-decoration:none;  }';
-				for(var I = 0; I < appListArray.length; I++) {  
-					var appInfo = appListArray[I];
-					var appPackage = appInfo.package; 
-					
-					newStyle.innerHTML += '*[appPackage="'+appPackage+'"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/'+appPackage+'.png);}';
-				}	
-					
-				document.getElementsByTagName('head')[0].appendChild(newStyle);
-				var styleText = newStyle.innerHTML;
-				
-				domLibrary.simpleSave(styleText, "/mnt/sdcard/DOMLauncher/settings/icons/icons.css");
-			}, // Success function
-		function() {alert('Refresh Icons Failed')}); // Failure function						
-} 
-
 
 
 document.addEventListener("deviceready", cordovaBack, false);

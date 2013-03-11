@@ -14,8 +14,8 @@ function hs_appPanel(){
 document.getElementById("refresh_appPanel").addEventListener("click", refresh_appPanel, false);
 
 function refresh_appPanel(){
-	refresh_iconCSS({refreshIcons:true});
-	appList({refreshIcons:false});		
+	domLibrary.generateappList();
+	domLibrary.generateappIcons();	
 }
 
 
