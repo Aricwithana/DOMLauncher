@@ -6460,7 +6460,7 @@ window.cordova = require('cordova');
 
 
 /**	
-*Cordova Plugin API 
+*Cordova Plugin API Bridge 
 *------------------------------------------
 **/
 
@@ -6941,17 +6941,8 @@ window.cordova = require('cordova');
 /**	
 *DOMLauncher API Library
 *------------------------------------------
-*	These functions are simply easy to use javascript wrappers to work with
-* 	the Cordova Plugin API Calls.  The Plugin Calls can be called seperately
-*	but beware, these are the offical call functions for DOMLauncher.  Updates
-*	to the API on the market release use these to standardize UI Plugin
-*	development and upgrade compatability.
-*
-*	These are built as singular packages integrated wth the callback.js file.
-*	{} Array/Dictionary/etc was used on purpose for ease of developers and new
-*	developers to web technologies.  Variables all have a default value attached,
-*	THIS IS A MUST FOR THE API PLUGINS TO FUNCTION.  Either the needed information
-*	is passes to the Cordova Plugin or it is passed 'false/other default value'. 
+*	These are the JS wrappers to easily access the Cordova Plugin APIs.  
+*	There is the sister version, domCallbacks, which holds all the callbacks.
 **/
 
 

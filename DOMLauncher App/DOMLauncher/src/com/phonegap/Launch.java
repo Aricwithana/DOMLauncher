@@ -4,7 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import android.content.Intent;
 import android.provider.Settings;
-import android.util.Log;
 
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
@@ -17,15 +16,16 @@ public class Launch extends CordovaPlugin {
 		if(action.equals("app")){
 			try {
 				String appPackage = args.getJSONObject(0).getString("package");
-				String appActivity = args.getJSONObject(0).getString("activity");
-				Intent activityIntent = new Intent(Intent.ACTION_VIEW);
-				activityIntent.setClassName(appPackage, appActivity);
-				this.cordova.getActivity().startActivity(activityIntent);
-				
+				Intent intent = this.cordova.getActivity().getPackageManager().getLaunchIntentForPackage(appPackage);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				this.cordova.getActivity().startActivity(intent);
 			} catch (Exception e) {
 				String appPackage = args.getJSONObject(0).getString("package");
-				Intent intent = this.cordova.getActivity().getPackageManager().getLaunchIntentForPackage(appPackage);		
-				this.cordova.getActivity().startActivity(intent);
+				String appActivity = args.getJSONObject(0).getString("activity");
+				Intent activityIntent = new Intent(Intent.ACTION_VIEW);
+				activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				activityIntent.setClassName(appPackage, appActivity);
+				this.cordova.getActivity().startActivity(activityIntent);
 			}
 		}
 

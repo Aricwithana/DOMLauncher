@@ -27,7 +27,7 @@ public class Bluetoothcontrols extends CordovaPlugin {
 		if(action.equals("disable")){
 			if (mBluetoothAdapter == null) {
 				   
-			} else {
+			} else { 
 				mBluetoothAdapter.disable();
 				callbackContext.success(new JSONObject().put("returnVal", false));
 			}
