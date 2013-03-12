@@ -7215,7 +7215,7 @@ window.domLibrary = {
 		var packageChoice = object.getAttribute('appPackage');  //com.class.name
 		var activityChoice = object.getAttribute('appActivity') || "";  //.ActivityCall
 		window.launch.app({package:packageChoice, activity:packageChoice+activityChoice}, 
-			function() {alert(acitivtyChoice);}, // Success function
+			function() {}, // Success function
 			function(error) {alert('Application/Activity Launch Failed ' + error)}); // Failure function
 	},	       
 	settingLaunch: function(object){

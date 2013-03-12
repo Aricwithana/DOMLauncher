@@ -599,26 +599,6 @@ window.domCallbacks = {
 
 
 
-
-/*Launch App/Acitivity/Setting Callback*/
-function launchappsCallback(args){
-	var package = args.package
-	var activity = args.activityFull
-	var settings = args.settings
-	var object = args.object
-	
-	/*Begin Theme Specific Editible Code*/
-		//There is no response code supplised for this theme.  
-	/*End Theme Specific Editible Code*/
-}
-
-
-
-
-
-
-
-
 /*Handle the pause event*/
 function onPause() {
 	clearInterval(clockTimer);
@@ -640,7 +620,7 @@ function onResume() {
 	domLibrary.airplaneCheck();
 	domLibrary.bluetoothCheck();
 	domLibrary.wificontrolsCheck();
-	domLibrary.ringerCheck();
-	domLibrary.mediaCheck();
+	domLibrary.ringerCheck("percentage");
+	domLibrary.mediaCheck("percentage");
 	domLibrary.ringermodeCheck();
 }
