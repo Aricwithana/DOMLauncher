@@ -99,10 +99,8 @@ public class Volumecontrols extends CordovaPlugin {
 			String toast = args.getJSONObject(0).getString("toast");
 			if(toast.equals("false")){																	
 				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
-				callbackContext.success(new JSONObject().put("returnVal", 0));
 			}else{
 				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_SHOW_UI);
-				callbackContext.success(new JSONObject().put("returnVal", 0));
 			}
 		 }	
 		 
@@ -152,18 +150,27 @@ public class Volumecontrols extends CordovaPlugin {
 		 //Ringer Modes
 		 if(action.equals("ringerVibrate")){									
 			 audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
-			 callbackContext.success(new JSONObject().put("returnVal", true));
 		 }			 
 		 
 		 if(action.equals("ringerSilent")){									
 			 audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-			 callbackContext.success(new JSONObject().put("returnVal", true));
 		 }	
 		 
 		 if(action.equals("ringerNormal")){									
-			 audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-			 int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
-			 callbackContext.success(new JSONObject().put("returnVal", curVolume));
+			 
+			 String value = args.getJSONObject(0).getString("value");
+			 if(value.equals("percentage")){
+				 	audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);			 		
+				 	int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+				 	float curPercent = (curVolume* 100) / audioManager.getStreamMaxVolume(AudioManager.STREAM_RING) ;
+					callbackContext.success(new JSONObject().put("returnVal", curPercent));
+				}else{
+					audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);									
+					int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+					callbackContext.success(new JSONObject().put("returnVal", curVolume));						
+				}			
+			
+		 
 		 }
 		 	 
 		return true;

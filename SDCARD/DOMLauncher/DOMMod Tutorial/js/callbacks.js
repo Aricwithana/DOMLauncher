@@ -17,8 +17,8 @@ function themeLoaded(){
 	domLibrary.wificontrolsCheck();
 	domLibrary.fullscreenCheck();
 	domLibrary.airplaneCheck();
-	domLibrary.ringerCheck();
-	domLibrary.mediaCheck();
+	domLibrary.ringerCheck("percentage");
+	domLibrary.mediaCheck("percentage");
 	domLibrary.ringermodeCheck();
 	domLibrary.bluetoothCheck();
 	domLibrary.cellularsignalEnable();
@@ -128,7 +128,7 @@ function switchCallback(args){
 		
 		//Toggle Ringer Silent
 		if(switchID === "toggle_ringerSilent" && state === "off"){
-			domLibrary.ringerNormal();
+			domLibrary.ringerNormal("percentage");
 		}
 		if(switchID === "toggle_ringerSilent" && state === "on"){
 			domLibrary.ringerSilent();
@@ -136,7 +136,7 @@ function switchCallback(args){
 		
 		//Toggle Ringer Vibrate
 		if(switchID === "toggle_ringerVibrate" && state === "off"){
-			domLibrary.ringerNormal();
+			domLibrary.ringerNormal("percentage");
 		}
 		if(switchID === "toggle_ringerVibrate" && state === "on"){
 			domLibrary.ringerVibrate();
@@ -229,6 +229,8 @@ window.domCallbacks = {
 			document.getElementById('toggle_ringerSilent').dataset.state = "off";
 			document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
 			document.getElementById('toggle_ringerVibrate').dataset.state = "off";
+			document.getElementById('slider_ringerVol').value = returnVal;	
+		
 		/*End Theme Specific Editible Code*/
 	},
 	mediaUp: function(returnVal){
@@ -244,7 +246,7 @@ window.domCallbacks = {
 			document.getElementById('slider_mediaVol').parentNode.childNodes[1].innerHTML = 'Media Volume: ' + returnVal + "%";
 		/*End Theme Specific Editible Code*/
 	},
-	mediaMute: function(returnVal){
+	mediaMute: function(){
 		/*Begin Theme Specific Editible Code*/
 		/*End Theme Specific Editible Code*/
 	},

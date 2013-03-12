@@ -6978,16 +6978,16 @@ window.domLibrary = {
 	}, 
 	ringerSilent: function(){
 		window.volumecontrols.ringerSilent({}, 
-			function(returnVal) {domCallbacks.ringerSilent(returnVal.returnVal);}, // Success function
+			function() {domCallbacks.ringerSilent();}, // Success function
 			function(error) {alert('Ringer Silent Failed ' + error)}); // Failure function
 	}, 
 	ringerVibrate: function(){
 		window.volumecontrols.ringerVibrate({}, 
-			function(returnVal) {domCallbacks.ringerVibrate(returnVal.returnVal);}, // Success function
+			function() {domCallbacks.ringerVibrate();}, // Success function
 			function(error) {alert('Ringer Vibrate Failed ' + error)}); // Failure function
 	}, 
-	ringerNormal: function(){
-		window.volumecontrols.ringerNormal({}, 
+	ringerNormal: function(arg){
+		window.volumecontrols.ringerNormal({value:arg || false}, 
 			function(returnVal) {domCallbacks.ringerNormal(returnVal.returnVal);}, // Success function
 			function(error) {alert('Ringer Normal Failed ' + error)}); // Failure function
 	}, 
@@ -7008,7 +7008,7 @@ window.domLibrary = {
 	}, 
 	mediaMute: function(arg){
 		window.volumecontrols.mediaMute({toast:arg || false}, 
-			function(returnVal) {domCallbacks.mediaMute(returnVal.returnVal);}, // Success function
+			function() {domCallbacks.mediaMute();}, // Success function
 			function(error) {alert('Toggle Bar Failed ' + error)}); // Failure function
 	}, 
 	mediaCheck: function(arg){
