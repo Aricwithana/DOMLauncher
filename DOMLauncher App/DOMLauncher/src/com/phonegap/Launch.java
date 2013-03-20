@@ -29,8 +29,8 @@ public class Launch extends CordovaPlugin {
 			}
 		}
 
-		if(action.equals("settings")){
-			String appSettings = args.getJSONObject(0).getString("settings");
+		if(action.equals("setting")){
+			String appSettings = args.getJSONObject(0).getString("setting");
 			
 			if(appSettings.equals("accessability")){
 				this.cordova.getActivity().startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));		

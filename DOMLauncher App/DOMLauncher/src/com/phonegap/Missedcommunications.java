@@ -36,7 +36,7 @@ public class Missedcommunications extends CordovaPlugin {
 			String[] projection = { CallLog.Calls.CACHED_NAME, CallLog.Calls.CACHED_NUMBER_LABEL, CallLog.Calls.TYPE };
 			
 			String where = CallLog.Calls.TYPE+"="+CallLog.Calls.MISSED_TYPE+" AND "+CallLog.Calls.IS_READ+"=0";          
-			int nummissedCalls = 0;
+
 			Cursor c;
 			
 			try {
@@ -47,7 +47,7 @@ public class Missedcommunications extends CordovaPlugin {
 			}
 			
 			c.moveToFirst();  
-			nummissedCalls = c.getCount();
+			int nummissedCalls = c.getCount();
 			c.close(); 
 			callbackContext.success(new JSONObject().put("returnVal", nummissedCalls));				
 		}

@@ -27,7 +27,7 @@ function themeLoaded(){
 	domLibrary.generateappList();	
 
 	var clockTimer = setInterval(clock, 1000 );	
-	var missedcallsTimer = setInterval(domLibrary.wificontrolsCheck, 5000);
+	var missedcallsTimer = setInterval(domLibrary.missedCalls, 5000);
 	var missedsmsTimer = setInterval(domLibrary.missedSMS, 5000);
 }
 /*End Document Ready*/
@@ -612,7 +612,7 @@ function onPause() {
 /*Handle the resume event*/
 function onResume() {
 	var clockTimer = setInterval(clock, 1000);
-	var missedcallsTimer = setInterval(domLibrary.wificontrolsCheck, 5000);
+	var missedcallsTimer = setInterval(domLibrary.missedCalls, 5000);
 	var missedsmsTimer = setInterval(domLibrary.missedSMS, 5000);
 	
 	domLibrary.brightnessvalueCheck();
