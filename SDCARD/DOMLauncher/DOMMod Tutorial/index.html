@@ -25,6 +25,7 @@
                 <div class="app" appPackage="com.netflix.mediaclient" appName="Netflix"></div>
                 <div class="app" appPackage="com.opera.browser" appName="Opera"></div>
                 <div class="app" appName="Exit App" style="background-color:red;" onClick="navigator.app.exitApp();"></div>
+                <div class="app" appName="Check Info" style="background-color:red;" onClick="checkInfo();"></div>
                 <ul class="controlList" id="systemControls">
                     <li>
                         <div>FULLSCREEN</div><div id="toggle_fullScreen" class="scrollSwitch" data-state="off"></div>
@@ -54,13 +55,13 @@
                         <div>Battery Level:</div><div id="meter_Battery" class="meter"><div></div></div>
                     </li>
                     <li> 
-                        <div>Brightness:</div> <input type="range" min="1" max="255" step="1" id="slider_brightness" ontouchend="domLibrary.brightnessValue(this.value)"/> 
+                        <div>Brightness:</div> <input type="range" min="1" max="255" step="1" id="slider_brightness" ontouchend="window.plugins.brightness.value(this.value);"/> 
                     </li>
                     <li> 
-                        <div>Media Volumn:</div><input type="range" min="0" max="100" step="1" id="slider_mediaVol" onchange="domLibrary.mediaPercentage(this.value)"/> 
+                        <div>Media Volumn:</div><input type="range" min="0" max="100" step="1" id="slider_mediaVol" onchange="window.plugins.media.percentage(this.value)"/> 
                     </li>
                     <li> 
-                        <div>Ringer Volumn:</div><input type="range" min="0" max="100" step="1" id="slider_ringerVol" value="0" onchange="domLibrary.ringerPercentage(this.value)"/>
+                        <div>Ringer Volumn:</div><input type="range" min="0" max="100" step="1" id="slider_ringerVol" value="0" onchange="window.plugins.ringer.percentage(this.value)"/>
                     </li>
                     <li> 
                         <div>Ringer Silent</div><div id="toggle_ringerSilent" class="scrollSwitch" data-state="off"></div>

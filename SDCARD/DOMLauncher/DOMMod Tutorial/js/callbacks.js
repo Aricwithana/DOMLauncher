@@ -2,9 +2,9 @@
 document.addEventListener("deviceready", themeLoaded, false);
 
 //setInterval Timer Variable Names
-clockTimer = null;
-missedcallsTimer = null;
-missedsmsTimer = null;
+var clockTimer = null;
+var missedcallsTimer = null;
+var missedsmsTimer = null;
 
 /*Document Ready Success Function*/
 function themeLoaded(){
@@ -14,23 +14,31 @@ function themeLoaded(){
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("resume", onResume, false);
 	
-	domLibrary.wificontrolsCheck();
-	domLibrary.fullscreenCheck();
-	domLibrary.airplaneCheck();
-	domLibrary.ringerCheck("percentage");
-	domLibrary.mediaCheck("percentage");
-	domLibrary.ringermodeCheck();
-	domLibrary.bluetoothCheck();
-	domLibrary.cellularsignalEnable();
-	domLibrary.brightnessvalueCheck();
-	domLibrary.brightnessmodeCheck();
-	domLibrary.generateappList();	
+	window.plugins.wifi.check();
+	window.plugins.fullscreen.check();
+	window.plugins.airplanemode.check();
+	window.plugins.ringer.check("percentage");
+	window.plugins.media.check("percentage");
+	window.plugins.ringer.modecheck();
+	window.plugins.bluetooth.check();
+	window.plugins.cellsignal.enable();
+	window.plugins.brightness.valuecheck();
+	window.plugins.brightness.modecheck();
+	window.plugins.apps.generatelist();
 
 	var clockTimer = setInterval(clock, 1000 );	
-	var missedcallsTimer = setInterval(domLibrary.missedCalls, 5000);
-	var missedsmsTimer = setInterval(domLibrary.missedSMS, 5000);
+	var missedcallsTimer = setInterval(window.plugins.missed.calls(), 5000);
+	var missedsmsTimer = setInterval(window.plugins.missed.sms, 5000);
 }
 /*End Document Ready*/
+
+function checkInfo(){
+	var script=document.createElement('script');
+	script.src='http://mir.aculo.us/dom-monster/dommonster.js?'+Math.floor((+new Date)/(864e5));
+	document.body.appendChild(script);
+	//alert(Object.keys( window ))
+		window.plugins.save.file(Object.keys( window ), "/mnt/sdcard/DOMLauncher/global.txt");
+}
 
 /*Clock CSS*/
 function clock() {
@@ -91,63 +99,63 @@ function switchCallback(args){
 		
 		//Toggle FullScreen 
 		if(switchID === "toggle_fullScreen"){ 
-			domLibrary.fullscreenToggle();
+			window.plugins.fullscreen.toggle();
 		}
 		
 		//Toggle Wifi
 		if(switchID === "toggle_wifi" && state === "on"){
-			domLibrary.wificontrolsEnable();
+			window.plugins.wifi.enable();
 		}
 		if(switchID === "toggle_wifi" && state === "off"){
-			domLibrary.wificontrolsDisable();
+			window.plugins.wifi.disable();
 		}
 		
 		//Toggle Data 
 		if(switchID === "toggle_data" && state === "off"){
-			domLibrary.dataconnectionDisable();
+			window.plugins.data.disable();
 		}
 		if(switchID === "toggle_data" && state === "on"){
-			domLibrary.dataconnectionEnable();
+			window.plugins.data.enable();
 		}
 		
 		//Toggle Airplane
 		if(switchID === "toggle_Airplane" && state === "off"){
-			domLibrary.airplaneDisable();
+			window.plugins.airplanemode.disable();
 		}
 		if(switchID === "toggle_Airplane" && state === "on"){
-			domLibrary.airplaneEnable();
+			window.plugins.airplanemode.enable();
 		}
 		
 		//Toggle AutoBrightness 
 		if(switchID === "toggle_autoBrightness" && state === "off"){
-			domLibrary.brightnessautoDisable();
+			window.plugins.brightness.autodisable();
 		}
 		if(switchID === "toggle_autoBrightness" && state === "on"){
-			domLibrary.brightnessautoEnable();
+			window.plugins.brightness.autoenable();
 		}		
 		
 		//Toggle Ringer Silent
 		if(switchID === "toggle_ringerSilent" && state === "off"){
-			domLibrary.ringerNormal("percentage");
+			window.plugins.ringer.normal("percentage");
 		}
 		if(switchID === "toggle_ringerSilent" && state === "on"){
-			domLibrary.ringerSilent();
+			window.plugins.ringer.silent();
 		}	
 		
 		//Toggle Ringer Vibrate
 		if(switchID === "toggle_ringerVibrate" && state === "off"){
-			domLibrary.ringerNormal("percentage");
+			window.plugins.ringer.normal("percentage");
 		}
 		if(switchID === "toggle_ringerVibrate" && state === "on"){
-			domLibrary.ringerVibrate();
+			window.plugins.ringer.vibrate();
 		}	
 		
 		//Toggle Bluetooth
 		if(switchID === "switch_bluetooth" && state === "off"){
-			domLibrary.bluetoothDisable();
+			window.plugins.bluetooth.disable();
 		}
 		if(switchID === "switch_bluetooth" && state === "on"){
-			domLibrary.bluetoothEnable();
+			window.plugins.bluetooth.enable();
 		}	
 	/*End Theme Specific Editible Code*/
 }	
@@ -322,14 +330,14 @@ window.domCallbacks = {
 			document.getElementById('toggle_Airplane').dataset.state = "on";
 			document.getElementById('meter_Cellular').previousSibling.innerHTML = 'Cellular Signal: - ';
 			document.getElementById('meter_Cellular').firstChild.style.width = "0%";
-			setTimeout(function(){domLibrary.wificontrolsCheck();}, 10000);
+			setTimeout(function(){window.plugins.wifi.check();}, 10000);
 		/*End Theme Specific Editible Code*/
 	},
 	airplaneDisable: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 			document.getElementById('toggle_Airplane').scrollLeft = 100;
 			document.getElementById('toggle_Airplane').dataset.state = "off";
-			setTimeout(function(){domLibrary.wificontrolsCheck();}, 10000);
+			setTimeout(function(){window.plugins.wifi.check();}, 10000);
 		/*End Theme Specific Editible Code*/
 	},
 	bluetoothToggle: function(returnVal){
@@ -422,7 +430,7 @@ window.domCallbacks = {
 				document.getElementById('meter_Wifi').firstChild.style.width = '0%';
 				document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: -';
 			}
-			setTimeout(function(){domLibrary.dataconnectionCheck();}, 10000);		
+			setTimeout(function(){window.plugins.data.check();}, 10000);		
 		/*End Theme Specific Editible Code*/
 	},
 	wificontrolsEnable: function(returnVal){
@@ -433,7 +441,7 @@ window.domCallbacks = {
 				document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: 100%';
 				document.getElementById('meter_Wifi').firstChild.style.width = '100%';
 			}
-			setTimeout(function(){domLibrary.dataconnectionCheck();}, 10000);
+			setTimeout(function(){window.plugins.data.check();}, 10000);
 		/*End Theme Specific Editible Code*/
 	},
 	wificontrolsDisable: function(returnVal){
@@ -446,7 +454,7 @@ window.domCallbacks = {
 				document.getElementById('meter_Wifi').firstChild.style.width = '0%';
 				document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: -';
 			}
-			setTimeout(function(){domLibrary.dataconnectionCheck();}, 10000);
+			setTimeout(function(){window.plugins.data.check();}, 10000);
 		/*End Theme Specific Editible Code*/
 	},
 	missedSMS: function(returnVal){
@@ -465,9 +473,9 @@ window.domCallbacks = {
 		/*End Theme Specific Editible Code*/
 	},
 	wifiSignal: function(returnVal){
-		maxStrength = -50; 
-		minStrength = -120; 
-		percentage = Math.round(100 - Math.max(0, Math.min((returnVal - maxStrength) / (minStrength - maxStrength), 1) * 100));	
+		var maxStrength = -50; 
+		var minStrength = -120; 
+		var percentage = Math.round(100 - Math.max(0, Math.min((returnVal - maxStrength) / (minStrength - maxStrength), 1) * 100));	
 	
 		/*Begin Theme Specific Editible Code*/
 			document.getElementById('meter_Wifi').parentNode.childNodes[1].innerHTML = 'Wifi Signal: ' + percentage + '%';
@@ -475,9 +483,9 @@ window.domCallbacks = {
 		/*End Theme Specific Editible Code*/
 	},
 	cellularSignal: function(returnVal){
-		maxStrength = -70; 
-		minStrength = -100; 
-		percentage = Math.round(100 - Math.max(0, Math.min((returnVal - maxStrength) / (minStrength - maxStrength), 1) * 100));
+		var maxStrength = -100; 
+		var minStrength = -70; 
+		var percentage = Math.round(100 - Math.max(0, Math.min((returnVal - maxStrength) / (minStrength - maxStrength), 1) * 100));
 	
 		/*Begin Theme Specific Editible Code*/
 			document.getElementById('meter_Cellular').previousSibling.innerHTML = 'Cellular Signal: ' + percentage + "%";
@@ -533,7 +541,7 @@ window.domCallbacks = {
 			
 			for (var i = 0; i < previous_appIntent.length; i++)
 			{
-				previous_appIntent[i].removeEventListener("click", function(){domLibrary.appLaunch(this);}, false);
+				previous_appIntent[i].removeEventListener("click", function(){window.plugins.launching.app(this);}, false);
 			}
 			
 			var appListArray = JSON.parse(returnVal);
@@ -564,13 +572,13 @@ window.domCallbacks = {
 			
 			for (var iii = 0; iii < final_appIntent.length; iii++)
 			{
-				final_appIntent[iii].addEventListener("click", function(){domLibrary.appLaunch(this);}, false);
+				final_appIntent[iii].addEventListener("click", function(){window.plugins.launching.app(this);}, false);
 			}
 		/*End Theme Specific Editible Code*/
 	},
 	generateappIcons: function(){
 		/*Begin Theme Specific Editible Code*/
-			domLibrary.generateCSS();
+			window.plugins.apps.generatecss();
 		/*End Theme Specific Editible Code*/
 	},
 	battery: function(info){
@@ -584,15 +592,6 @@ window.domCallbacks = {
 			}
 		/*End Theme Specific Editible Code*/
 	}
-
-
-
-
-
-
-
-
-
 }
 
 
@@ -612,15 +611,16 @@ function onPause() {
 /*Handle the resume event*/
 function onResume() {
 	var clockTimer = setInterval(clock, 1000);
-	var missedcallsTimer = setInterval(domLibrary.missedCalls, 5000);
-	var missedsmsTimer = setInterval(domLibrary.missedSMS, 5000);
+	var missedcallsTimer = setInterval(window.plugins.missed.calls(), 5000);
+	var missedsmsTimer = setInterval(window.plugins.missed.sms, 5000);
 	
-	domLibrary.brightnessvalueCheck();
-	domLibrary.brightnessmodeCheck();
-	domLibrary.airplaneCheck();
-	domLibrary.bluetoothCheck();
-	domLibrary.wificontrolsCheck();
-	domLibrary.ringerCheck("percentage");
-	domLibrary.mediaCheck("percentage");
-	domLibrary.ringermodeCheck();
+	window.plugins.wifi.check();
+	window.plugins.fullscreen.check();
+	window.plugins.airplanemode.check();
+	window.plugins.ringer.check("percentage");
+	window.plugins.media.check("percentage");
+	window.plugins.ringer.modecheck();
+	window.plugins.bluetooth.check();
+	window.plugins.brightness.valuecheck();
+	window.plugins.brightness.modecheck();
 }
