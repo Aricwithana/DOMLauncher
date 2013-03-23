@@ -33,11 +33,11 @@ function themeLoaded(){
 /*End Document Ready*/
 
 function checkInfo(){
-	var script=document.createElement('script');
-	script.src='http://mir.aculo.us/dom-monster/dommonster.js?'+Math.floor((+new Date)/(864e5));
-	document.body.appendChild(script);
-	//alert(Object.keys( window ))
-		window.plugins.save.file(Object.keys( window ), "/mnt/sdcard/DOMLauncher/global.txt");
+	//var script=document.createElement('script');
+	//script.src='http://mir.aculo.us/dom-monster/dommonster.js?'+Math.floor((+new Date)/(864e5));
+	//document.body.appendChild(script);
+	alert(Object.keys( window ))
+		//window.plugins.save.file(Object.keys( window ), "/mnt/sdcard/DOMLauncher/global.txt");
 }
 
 /*Clock CSS*/
@@ -161,7 +161,7 @@ function switchCallback(args){
 }	
 	
 
-window.domCallbacks = {
+var domCallbacks = {
 	backButton: function(){
 		
 	},
