@@ -6888,6 +6888,18 @@ window.cordova = require('cordova');
 		}, 'Launch', 'appManual', [params]);
 	};	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	//Wrappers Begin
+	
+	
+	
 	var Fullscreen = function() {};
 				
 	Fullscreen.prototype.check = function() {
@@ -6898,7 +6910,7 @@ window.cordova = require('cordova');
 	
 	Fullscreen.prototype.toggle = function() {
 		window.plugins.fullscreencontrols.toggle({}, 
-			function(returnVal) {domCallbacks.fullscreenToggle(returnVal.returnVal);}, // Success function
+			function() {}, // Success function
 			function(error) {alert('Toggle Bar Failed Toggle ' + error)}); // Failure function
 	};
 	
@@ -7177,17 +7189,18 @@ window.cordova = require('cordova');
 			function(error) {alert('Generate App Icons Failed ' + error)}); // Failure function
 	};
 	
-	Apps.prototype.generatecss = function(arg) {
+	Apps.prototype.generatecss = function() {
 		window.plugins.applist.appList({},
-				function(appList) {
+				function(returnVal) {
+					
 						var element = document.getElementById('iconsCss');
 						element.parentNode.removeChild(element);
-						var appListArray = JSON.parse(appList);
+						var appListArray = JSON.parse(returnVal.returnVal);
 						var newStyle = document.createElement('style');
 						newStyle.setAttribute('id', 'iconsCss');
-						newStyle.innerHTML += '*[appName="Dialer"]{background-image:url(file:///android_asset/www/img/icon_Dialer.png); color:inherit;	 text-decoration:none;  }';
-						for(var I = 0; I < appListArray.length; I++) {  
-							var appInfo = appListArray[I];
+						newStyle.innerHTML += '*[data-appName="Dialer"]{background-image:url(file:///android_asset/www/img/icon_Dialer.png); color:inherit;	 text-decoration:none;  }';
+						for(var i = 0; i < appListArray.length; i++) {  
+							var appInfo = appListArray[i];
 							var appPackage = appInfo.package; 
 							newStyle.innerHTML += '*[appPackage="'+appPackage+'"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/'+appPackage+'.png);}';
 						}	

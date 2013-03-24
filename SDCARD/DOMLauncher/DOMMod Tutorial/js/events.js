@@ -16,6 +16,7 @@ document.getElementById("refresh_appPanel").addEventListener("click", refresh_ap
 function refresh_appPanel(){
 	window.plugins.apps.generatelist();
 	window.plugins.apps.generateicons();	
+	window.plugins.apps.generatecss();	
 }
 
 

@@ -136,13 +136,29 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	left:0px;
 	right:0px;
 	display:block;
-	content:attr(appName);
+	content:attr(data-appName);
 	padding:5px;
 	border-radius:8px;
 }
 
 
-
+#weatherWrapper:after
+{
+	content:attr(data-Temp);
+	display:block;
+	position:absolute;
+	top:0px;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	line-height:96px;
+	font-size:200%;	
+	color:#ffffff;
+	text-align:center;
+	background-color:rgba(0,0,0,.75); 
+	border:4px solid #ffffff; 
+	border-radius:25px;
+}
 
 
 

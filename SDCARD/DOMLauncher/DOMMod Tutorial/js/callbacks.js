@@ -180,10 +180,6 @@ var domCallbacks = {
 			}
 		/*End Theme Specific Editible Code*/
 	},
-	fullscreenToggle: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-		/*End Theme Specific Editible Code*/
-	},
 	//Volume Controls
 	ringerUp: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
@@ -544,14 +540,14 @@ var domCallbacks = {
 				previous_appIntent[i].removeEventListener("click", function(){window.plugins.launching.app(this);}, false);
 			}
 			
-			var appListArray = JSON.parse(returnVal);
+			var appListArray = JSON.parse(returnVal); 
 			var appPanel = document.getElementById('appPanel_Content'); 
 			appPanel.innerHTML = ''; 
 			
 			var dialer = document.createElement('a');
 			dialer.setAttribute('class', 'app dialer');
 			dialer.setAttribute('href', 'tel:');
-			dialer.setAttribute('appName', 'Dialer');
+			dialer.setAttribute('data-appName', 'Dialer');
 			appPanel.appendChild(dialer);
 		
 			for(var ii = 0; ii < appListArray.length; ii++) {  
@@ -564,7 +560,7 @@ var domCallbacks = {
 				newdiv.setAttribute('class', 'app');
 				newdiv.setAttribute('appPackage', appPackage);
 				newdiv.setAttribute('appActivity', appActivity);
-				newdiv.setAttribute('appName', appName);
+				newdiv.setAttribute('data-appName', appName);
 				appPanel.appendChild(newdiv);
 			}
 			
