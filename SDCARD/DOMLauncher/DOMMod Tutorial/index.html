@@ -105,45 +105,6 @@
         <div id="appPanel"><div id="appPanel_Content"></div><div id="refresh_appPanel">Refresh</div><div id="close_appPanel">Close</div></div>
         <script type="text/javascript" src="js/callbacks.js"></script>  
         <script type="text/javascript" src="js/events.js"></script>  
-    <script type="text/javascript">
-(function() {
-  var httpRequest;
-  document.getElementById("weatherWrapper").onclick = function() { makeRequest('http://api.openweathermap.org/data/2.1/find/name?q=Fargo&units=imperial&APPID=7687bs878b9nqcn87cs78098q222788y'); };
- 
-  function makeRequest(url) {
-    httpRequest = new XMLHttpRequest();
-    if (!httpRequest) {
-      alert('Giving up :( Cannot create an XMLHTTP instance');
-      return false;
-    }
-    httpRequest.onreadystatechange = alertContents;
-    httpRequest.open('GET', url);
-    httpRequest.send();
-  }
- 
-  function alertContents() {
-    if (httpRequest.readyState === 4) {
-      if (httpRequest.status === 200) {
-        //alert(httpRequest.responseText);
-      var weatherArray = JSON.parse(httpRequest.responseText);
-	  var weatherWrapper = document.getElementById('weatherWrapper');
-	 
-			var city = weatherArray.list[0].name ;
-			var temp = weatherArray.list[0].main.temp ;
-			//var currentTemp = weatherArray.currentTemp; 
-		
-			document.getElementById('weatherWrapper').dataset.appname = city;
-			document.getElementById('weatherWrapper').dataset.temp = Math.round(temp, 1)+"°F";
-			//weatherWrapper.dataset.currentTemp = currentTemp;
-       
-	 
-	  } else {
-        alert('There was a problem with the request.');
-      }
-    }
-  }
-})();
-</script>
     </body>
 </html>
 

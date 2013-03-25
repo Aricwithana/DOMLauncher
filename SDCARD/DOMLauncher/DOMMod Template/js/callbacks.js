@@ -23,10 +23,7 @@ window.domCallbacks = {
 		/*Begin Theme Specific Editible Code*/
 		/*End Theme Specific Editible Code*/
 	},
-	fullscreenToggle: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-		/*End Theme Specific Editible Code*/
-	},
+
 	//Volume Controls
 	ringerUp: function(returnVal){
 		/*Begin Theme Specific Editible Code*/

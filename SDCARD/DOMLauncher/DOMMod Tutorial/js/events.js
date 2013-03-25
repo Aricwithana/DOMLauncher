@@ -21,47 +21,36 @@ function refresh_appPanel(){
 
 
 
+(function() {
+  var httpRequest;
+  document.getElementById("weatherWrapper").onclick = function() { makeRequest('http://api.openweathermap.org/data/2.1/find/name?q=Fargo&units=imperial&APPID=7687bs878b9nqcn87cs78098q222788y'); };
+ 
+	function makeRequest(url) {
+		httpRequest = new XMLHttpRequest();
+		if (!httpRequest) {
+		  alert('Giving up :( Probably no internet access');
+		  return false;
+		}
+		httpRequest.onreadystatechange = alertContents;
+		httpRequest.open('GET', url);
+		httpRequest.send();
+	}
+ 
+	function alertContents() {
+		if (httpRequest.readyState === 4) {
+			if (httpRequest.status === 200) {
+				var weatherArray = JSON.parse(httpRequest.responseText);
+				var weatherWrapper = document.getElementById('weatherWrapper');
+				var city = weatherArray.list[0].name ;
+				var temp = weatherArray.list[0].main.temp ;
+				weatherWrapper.dataset.appname = city;
+				weatherWrapper.dataset.temp = Math.round(temp, 1)+"°F";
+			} else {
+				alert('Weather Request Error-Probably No Internet Access');
+			}
+		}
+	}
+})();
 
 
 
-
-
-function testing(){
-window.test.startActivity({}, 
-
-function(returnVal) { //Success Function
-	alert('Test ok' + returnVal);
-	},
-function(error) {// Failure function
-	alert('Test no' + error);
-}); 
-}
-	
-	
-	
-	
-(function(cordova){
-    var Test = function() {};
-
-    Test.prototype.startActivity = function(params, success, fail) {
-        return cordova.exec(function(args) {
-            success(args);
-        }, function(args) {
-            fail(args);
-        }, 'Test', '', [params]);
-    };
-
-
-    cordova.addConstructor(function() {
-        window.test = new Test();
-    });
-	        
-        // backwards compatibility
-       // window.plugins = window.plugins || {};
-        //window.plugins.test = window.test;	
-})(window.PhoneGap || window.Cordova || window.cordova);
-
-
-
-
-		
