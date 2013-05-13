@@ -213,19 +213,11 @@ window.domCallbacks = {
 		/*Begin Theme Specific Editible Code*/
 		/*End Theme Specific Editible Code*/
 	},
+	
 	battery: function(info){
 		/*Begin Theme Specific Editible Code*/
 		/*End Theme Specific Editible Code*/
 	}
-
-
-
-
-
-
-
-
-
 }
 
 

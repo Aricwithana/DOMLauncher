@@ -36,13 +36,13 @@ function checkInfo(){
 	//var script=document.createElement('script');
 	//script.src='http://mir.aculo.us/dom-monster/dommonster.js?'+Math.floor((+new Date)/(864e5));
 	//document.body.appendChild(script);
-	alert(Object.keys( window ))
+	alert(Object.keys( window ));
 		//window.plugins.save.file(Object.keys( window ), "/mnt/sdcard/DOMLauncher/global.txt");
 }
 
 /*Clock CSS*/
 function clock() {
-	var date = new Date()
+	var date = new Date();
  
 	document.getElementById("sec").style.WebkitTransform = "rotate(" + (date.getSeconds() * 6) + "deg)";
 	document.getElementById("hour").style.WebkitTransform = "rotate(" + (date.getHours() * 30 + (date.getMinutes() / 2)) + "deg)";
@@ -80,8 +80,8 @@ function scrollSwitch(){
 				setTimeout(function()
 				{
 					var switchState = element.dataset.state;
-					if(switchState == "on"){element.style.overflow = "hidden"; element.scrollLeft = "0"; if(switchState != switchStart){switchCallback({state:"on", id:switchID});}}
-					if(switchState == "off"){ element.style.overflow = "hidden";element.scrollLeft = "100"; if(switchState != switchStart){switchCallback({state:"off", id:switchID});} }	  	
+					if(switchState === "on"){element.style.overflow = "hidden"; element.scrollLeft = "0"; if(switchState !== switchStart){switchCallback("on", switchID);}}
+					if(switchState === "off"){ element.style.overflow = "hidden";element.scrollLeft = "100"; if(switchState !== switchStart){switchCallback("off", switchID);} }	  	
 				}, 300);
 			}
 		}
@@ -91,10 +91,8 @@ function scrollSwitch(){
 
 
 /*Switch Widget Callback*/
-function switchCallback(args){
-	var switchID = args.id || null;
-	var state = args.state || null;
-	
+function switchCallback(state, switchID){
+
 	/*Begin Theme Specific Editible Code*/
 		
 		//Toggle FullScreen 
@@ -159,6 +157,7 @@ function switchCallback(args){
 		}	
 	/*End Theme Specific Editible Code*/
 }	
+
 	
 
 var domCallbacks = {
@@ -169,12 +168,12 @@ var domCallbacks = {
 	//Full Screen Controls
 	fullscreenCheck: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
-			if(returnVal == false){
+			if(returnVal === false){
 				document.getElementById('toggle_fullScreen').scrollLeft = 100;
 				document.getElementById('toggle_fullScreen').dataset.state = "off";
 			}
 			
-			if(returnVal == true){
+			if(returnVal === true){
 				document.getElementById('toggle_fullScreen').scrollLeft = 0;
 				document.getElementById('toggle_fullScreen').dataset.state = "on";
 			}
@@ -192,21 +191,21 @@ var domCallbacks = {
 	ringerPercentage: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 			document.getElementById('slider_ringerVol').parentNode.childNodes[1].innerHTML = 'Ringer Volume: ' + returnVal + "%";
-			if(returnVal <= 14 && returnVal != 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "off" || returnVal >= 15 && returnVal != 0 && document.getElementById('toggle_ringerSilent').dataset.state === "on"){
+			if(returnVal <= 14 && returnVal !== 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "off" || returnVal >= 15 && returnVal !== 0 && document.getElementById('toggle_ringerSilent').dataset.state === "on"){
 				document.getElementById('toggle_ringerVibrate').scrollLeft = 0;
 				document.getElementById('toggle_ringerVibrate').dataset.state = "on";
 				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
 				document.getElementById('toggle_ringerSilent').dataset.state = "off";
 			}
 			
-			if(returnVal >= 15 && returnVal != 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "on" || returnVal >= 15 && returnVal != 0 && document.getElementById('toggle_ringerSilent').dataset.state === "on"){
+			if(returnVal >= 15 && returnVal !== 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "on" || returnVal >= 15 && returnVal !== 0 && document.getElementById('toggle_ringerSilent').dataset.state === "on"){
 				document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
 				document.getElementById('toggle_ringerVibrate').dataset.state = "off";
 				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
 				document.getElementById('toggle_ringerSilent').dataset.state = "off";
 			}
 			
-			if(returnVal == 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "off"){
+			if(returnVal === 0 && document.getElementById('toggle_ringerVibrate').dataset.state === "off"){
 				document.getElementById('toggle_ringerVibrate').scrollLeft = 0;
 				document.getElementById('toggle_ringerVibrate').dataset.state = "on";
 				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
@@ -268,19 +267,19 @@ var domCallbacks = {
 	},
 	ringermodeCheck: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
-			if(returnVal == 0){
+			if(returnVal === 0){
 				document.getElementById('toggle_ringerSilent').scrollLeft = 0;
 				document.getElementById('toggle_ringerSilent').dataset.state = "on";
 				document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
 				document.getElementById('toggle_ringerVibrate').dataset.state = "off";
 			}
-			if(returnVal == 1){
+			if(returnVal === 1){
 				document.getElementById('toggle_ringerVibrate').scrollLeft = 0;
 				document.getElementById('toggle_ringerVibrate').dataset.state = "on";
 				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
 				document.getElementById('toggle_ringerSilent').dataset.state = "off";
 			}
-			if(returnVal == 2){
+			if(returnVal === 2){
 				document.getElementById('toggle_ringerVibrate').scrollLeft = 100;
 				document.getElementById('toggle_ringerVibrate').dataset.state = "off";
 				document.getElementById('toggle_ringerSilent').scrollLeft = 100;
@@ -343,12 +342,12 @@ var domCallbacks = {
 	},
 	bluetoothCheck: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
-			if(returnVal == true){
+			if(returnVal === true){
 				document.getElementById('switch_bluetooth').scrollLeft = 0;
 				document.getElementById('switch_bluetooth').dataset.state = "on";	
 			}
 			
-			if(returnVal == false){
+			if(returnVal === false){
 				document.getElementById('switch_bluetooth').scrollLeft = 100;
 				document.getElementById('switch_bluetooth').dataset.state = "off";	
 			}
@@ -529,6 +528,11 @@ var domCallbacks = {
 			}		
 		/*End Theme Specific Editible Code*/
 	},
+	simplefileOpen: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			alert(returnVal);
+		/*End Theme Specific Editible Code*/
+	},
 	
 	//Create App Icons and List
 	generateappList: function(returnVal){
@@ -579,7 +583,7 @@ var domCallbacks = {
 	},
 	battery: function(info){
 		/*Begin Theme Specific Editible Code*/
-			if(info.isPlugged != false){
+			if(info.isPlugged !== false){
 				document.getElementById('meter_Battery').parentNode.childNodes[1].innerHTML = 'Battery Charging:  '+info.level+'%';
 				document.getElementById('meter_Battery').firstChild.style.width = info.level + '%';
 			}else{

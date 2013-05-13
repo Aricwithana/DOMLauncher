@@ -6700,14 +6700,22 @@ window.cordova = require('cordova');
 	};	
 
 	//Simple Save
-	var Simplesave = function() {};
+	var Simplefile = function() {};
 				
-	Simplesave.prototype.saveFile = function(params, success, fail) {
+	Simplefile.prototype.saveFile = function(params, success, fail) {
 		return cordova.exec( function(args) {
 			success(args);
 		}, function(args) {
 			fail(args);
-		}, 'Simplesave', 'saveFile', [params]);
+		}, 'Simplefile', 'saveFile', [params]);
+	};	
+	
+	Simplefile.prototype.openFile = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Simplefile', 'openFile', [params]);
 	};
    
 	//Cellular Signal
@@ -6997,7 +7005,7 @@ window.cordova = require('cordova');
 			function(error) {alert('Media Check Failed ' + error)}); // Failure function
 	};
 	
-	var Airplanemode = function() {};
+	var Airplanemode = function() {}; 
 	
 	Airplanemode.prototype.check = function() {
 		window.plugins.airplane.check({}, 
@@ -7049,7 +7057,7 @@ window.cordova = require('cordova');
 			function(error) {alert('bluetooth Disable Failed ' + error)}); // Failure function
 	};
 	
-	var Data = function() {};
+	var Data = function() {}; 
 	
 	Data.prototype.check = function() {
 		window.plugins.dataconnection.check({}, 
@@ -7075,13 +7083,20 @@ window.cordova = require('cordova');
 			function(error) {alert('Data Connection Toggle Failed ' + error)}); // Failure function
 	};
 	
-	var Save = function() {};
+	var Fileaccess = function() {};
 	
-	Save.prototype.file = function(object, path) {
-		window.plugins.simplesave.saveFile({content:object, file:path}, 			
-			function(returnVal){},
+	Fileaccess.prototype.save = function(object, path) {
+		window.plugins.simplefile.saveFile({content:object, file:path}, 			
+			function(){},
 			function(error) {alert('Simple Save Failed ' + error);}); 	
 	};
+	
+	Fileaccess.prototype.access = function(path) {
+		window.plugins.simplefile.openFile({file:path}, 			
+			function(returnVal){domCallbacks.simplefileOpen(returnVal.returnVal);},
+			function(error) {alert('Simple Save Failed ' + error);}); 	
+	};
+	
 	
 	var Cellsignal = function() {};
 	
@@ -7206,7 +7221,7 @@ window.cordova = require('cordova');
 						}	
 						document.getElementsByTagName('head')[0].appendChild(newStyle);
 						var styleText = newStyle.innerHTML;
-						window.plugins.save.file(styleText, "/mnt/sdcard/DOMLauncher/settings/icons/icons.css");
+						window.plugins.fileaccess.save(styleText, "/mnt/sdcard/DOMLauncher/settings/icons/icons.css");
 					}, // Success function
 				function() {alert('Refresh Icons Failed')}); // Failure function	
 	};
@@ -7277,7 +7292,7 @@ window.cordova = require('cordova');
 		window.plugins.airplane = new Airplane();
 		window.plugins.bluetoothcontrols = new Bluetoothcontrols();
 		window.plugins.dataconnection = new Dataconnection();
-		window.plugins.simplesave = new Simplesave();
+		window.plugins.simplefile = new Simplefile();
 		window.plugins.cellularsignal = new Cellularsignal();
 		window.plugins.wificontrols = new Wificontrols();
 		window.plugins.missedcommunications = new Missedcommunications();
@@ -7291,7 +7306,7 @@ window.cordova = require('cordova');
 		window.plugins.airplanemode = new Airplanemode();
 		window.plugins.bluetooth = new Bluetooth();
 		window.plugins.data = new Data();
-		window.plugins.save = new Save();
+		window.plugins.fileaccess = new Fileaccess();
 		window.plugins.cellsignal = new Cellsignal();
 		window.plugins.wifi = new Wifi();
 		window.plugins.missed = new Missed();

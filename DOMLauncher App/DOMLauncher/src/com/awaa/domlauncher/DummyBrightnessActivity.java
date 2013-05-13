@@ -1,6 +1,9 @@
 package com.awaa.domlauncher;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -10,6 +13,8 @@ import android.provider.Settings;
 import android.view.WindowManager;
 
 import org.apache.cordova.*;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class DummyBrightnessActivity extends DroidGap{
 
@@ -37,14 +42,32 @@ public class DummyBrightnessActivity extends DroidGap{
         handler = new MyHandler(this);
         
         File sdcard = Environment.getExternalStorageDirectory();
-   
-        File fstxtfile = new File(sdcard,"/DOMLauncher/settings/fullscreenEnabled");
+		File configFile = new File(sdcard,"/DOMLauncher/settings/config.txt");     
+	  
+		try {	     
+			FileInputStream is = new FileInputStream(configFile);
+			int size = is.available();
+			byte[] buffer = new byte[size];
+			is.read(buffer);
+			is.close();
+			String text = new String(buffer);
+			JSONObject jsnobject = new JSONObject(text);
+
+			String fullscreen = jsnobject.getString("fullscreen");  
+	  		if(fullscreen.equals("true")){ 
+	  			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+	  			WindowManager.LayoutParams.FLAG_FULLSCREEN | 
+	  			WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+	        }
+		} catch (IOException e) {
+			// TODO Auto-generated catch block	
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}				
      
-  		if(fstxtfile.exists()){ 
-  			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
-  			WindowManager.LayoutParams.FLAG_FULLSCREEN | 
-  			WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-        }
+
   		
         Intent brightnessIntent = this.getIntent();
         float brightness = brightnessIntent.getFloatExtra("brightness value", 0.1f);
