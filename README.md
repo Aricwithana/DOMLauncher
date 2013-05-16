@@ -31,7 +31,7 @@ The DOMLauncher folder within the SD CARD folder, just copy to your sdcard.
 
 DEVELOPERS:
 
-The app itself is not extensive.  The 'bulk' of the app comes from the custom DOMMods that I, you or others will create.  I have written a collection of additional Cordova API Plugins to make this app function, the rest is just HTML/CSS/JS.
+The app itself is not extensive.  The 'bulk' of the app comes from the custom DOMods that I, you or others will create.  I have written a collection of additional Cordova API Plugins to make this app function, the rest is just HTML/CSS/JS.
 
 Check out the additional plugins in the Wiki!
 
