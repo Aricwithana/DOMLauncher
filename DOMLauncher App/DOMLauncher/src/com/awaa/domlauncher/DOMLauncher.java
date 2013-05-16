@@ -37,10 +37,10 @@ public class DOMLauncher extends DroidGap {
 				String activeTheme = jsnobject.getString("active");
 				String fullscreen = jsnobject.getString("fullscreen");  
 				
-				File themeLocation = new File(sdcard,"/DOMLauncher/"+activeTheme+"/index.html");
+				File themeLocation = new File(sdcard,"/DOMLauncher/DOMods/"+activeTheme+"/index.html");
 				
 				if(themeLocation.exists()){  
-					super.loadUrl("file:///sdcard/DOMLauncher/"+activeTheme+"/index.html");
+					super.loadUrl("file:///sdcard/DOMLauncher/DOMods/"+activeTheme+"/index.html");
 					if(fullscreen.equals("true")){ 
 						getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 						WindowManager.LayoutParams.FLAG_FULLSCREEN | 

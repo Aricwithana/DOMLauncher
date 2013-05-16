@@ -12,6 +12,8 @@ import org.json.JSONObject;
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 
+import android.os.Environment;
+
 public class Simplefile extends CordovaPlugin {
 
 	@Override
@@ -58,7 +60,24 @@ public class Simplefile extends CordovaPlugin {
 				e.printStackTrace();
 			}
 			
-		}
+		} 
+		
+		if(action.equals("domodList")){
+			File sdcard = Environment.getExternalStorageDirectory();
+			File f = new File(sdcard,"/DOMLauncher/DOMods");
+			File[] files = f.listFiles();
+			JSONArray jArray = new JSONArray();
+		
+			for (File inFile : files) {
+			    if (inFile.isDirectory()) {		    	
+			    	String[] folderName = inFile.toString().split("/");			
+			    	String lastItem = folderName[folderName.length - 1];					    							
+					jArray.put(lastItem);
+			    }
+			}
+			callbackContext.success(new JSONObject().put("returnVal", jArray));
+			
+		}		
 		return true;
 	}
 }

@@ -6463,7 +6463,10 @@ window.cordova = require('cordova');
 *Cordova Plugin API Bridge 
 *------------------------------------------
 **/
-
+	
+	var wholeTheme = null;
+	
+	
 (function(cordova){
 
 	//Fullscreen Controls 
@@ -6477,12 +6480,20 @@ window.cordova = require('cordova');
 		}, 'Fullscreencontrols', 'check', [params]);
 	};
 	
-		Fullscreencontrols.prototype.toggle = function(params, success, fail) {
+	Fullscreencontrols.prototype.toggle = function(params, success, fail) {
 		return cordova.exec( function(args) {
 			success(args);
 		}, function(args) {
 			fail(args);
 		}, 'Fullscreencontrols', 'toggle', [params]);
+	};
+	
+	Fullscreencontrols.prototype.restart = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Fullscreencontrols', 'restart', [params]);
 	};
 	
 	
@@ -6717,6 +6728,14 @@ window.cordova = require('cordova');
 			fail(args);
 		}, 'Simplefile', 'openFile', [params]);
 	};
+	
+	Simplefile.prototype.domodList = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Simplefile', 'domodList', [params]);
+	};
    
 	//Cellular Signal
 	var Cellularsignal = function() {};
@@ -6918,6 +6937,12 @@ window.cordova = require('cordova');
 	
 	Fullscreen.prototype.toggle = function() {
 		window.plugins.fullscreencontrols.toggle({}, 
+			function() {}, // Success function
+			function(error) {alert('Toggle Bar Failed Toggle ' + error)}); // Failure function
+	};
+	
+	Fullscreen.prototype.restart = function() {
+		window.plugins.fullscreencontrols.restart({}, 
 			function() {}, // Success function
 			function(error) {alert('Toggle Bar Failed Toggle ' + error)}); // Failure function
 	};
@@ -7255,6 +7280,52 @@ window.cordova = require('cordova');
 			function(error) {alert('Manual Setting Launch Failed ' + error)}); // Failure function
 	};
 	
+	var DOMLSettings = function() {};
+	
+	DOMLSettings.prototype.domodlist = function(args) {
+		window.plugins.simplefile.domodList({}, 
+			function(returnVal) {
+				if(args === "data"){
+					domCallbacks.domodList(returnVal.returnVal);
+				}else{
+					var listWindow = document.createElement('ul');
+					listWindow.setAttribute('id', 'themelistWindow');
+					
+					if(args  === "noStyle"){
+						for (var i = 0; i < returnVal.returnVal.length; i++) {
+							listWindow.innerHTML += '<li themeList id="'+returnVal.returnVal[i]+'">'+returnVal.returnVal[i]+'</li>';
+						}
+					}else{
+						listWindow.setAttribute('style', 'position:absolute; right:0px; top:0px; left:0px; bottom:0px; z-index:99999999999999999999; background-color:#000000;');
+						for (var i = 0; i < returnVal.returnVal.length; i++) {
+							listWindow.innerHTML += '<li themeList id="'+returnVal.returnVal[i]+'" style="color:#ffffff; font-size:300%;">'+returnVal.returnVal[i]+'</li>';
+						}
+					}
+											
+					document.body.appendChild(listWindow);
+					
+					var final_appIntent = document.querySelectorAll('*[themeList]');
+					
+					for (var ii = 0; ii < final_appIntent.length; ii++)
+					{
+						final_appIntent[ii].addEventListener("click", function(){	
+							themeID = this.getAttribute("id");
+							window.plugins.simplefile.openFile({file:'/mnt/sdcard/DOMLauncher/settings/config.txt'}, 			
+								function(returnVal){
+									activeDomod = JSON.parse(returnVal.returnVal);
+									activeDomod.active = themeID; 
+									window.plugins.fileaccess.save(activeDomod, "/mnt/sdcard/DOMLauncher/settings/config.txt"); 
+									window.plugins.fullscreen.restart();
+								},
+								function(error) {alert('DOMLSettings Change Acive DOMod Error ' + error);}); 	
+						}, false);
+					}
+				}
+				
+				
+			}, // Success function
+			function(error) {alert('DOMLSettings DOMod List Error ' + error)}); // Failure function
+	};
 	
 	
 	
@@ -7313,6 +7384,7 @@ window.cordova = require('cordova');
 		window.plugins.brightness = new Brightness();
 		window.plugins.apps = new Apps();
 		window.plugins.launching = new Launching();
+		window.plugins.domlsettings = new DOMLSettings();
 	
 	}); 
 	

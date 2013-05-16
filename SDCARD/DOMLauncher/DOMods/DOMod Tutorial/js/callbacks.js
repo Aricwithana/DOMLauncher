@@ -591,6 +591,11 @@ var domCallbacks = {
 				document.getElementById('meter_Battery').firstChild.style.width = info.level + '%';
 			}
 		/*End Theme Specific Editible Code*/
+	},
+	domodList: function(returnVal){
+		/*Begin Theme Specific Editible Code*/
+			alert(returnVal);
+		/*End Theme Specific Editible Code*/
 	}
 }
 

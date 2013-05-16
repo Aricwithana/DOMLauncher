@@ -90,6 +90,9 @@ public class Fullscreencontrols extends CordovaPlugin {
 		  			}
 				}		
 				
+				if(action.equals("restart")){					
+					restartApp();
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block	
 				e.printStackTrace();

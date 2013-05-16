@@ -1,1 +1,1 @@
-{"active":"DOMMod Tutorial","fullscreen":"true","themeList":"DOMMod Tutorial,LCARS Mobile"}
+{"active":"DOMod Tutorial","fullscreen":"true", "city":"Fargo,ND"}
