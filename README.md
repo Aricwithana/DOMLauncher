@@ -3,7 +3,7 @@ DOMLauncher
 
 Cordova Powered Android App Launcher Replacement. 
 
-This is a Beta 0.9.9. - Full Wiki Information!  
+This is a Beta 0.9.9.5. - Full Wiki Information!  
 
 Before going any further understand a couple key points:
 
