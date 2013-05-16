@@ -1,4 +1,4 @@
-DOMLauncher 0.5 Beta
+DOMLauncher Data Folder/Files
 
 This folder is DOMLauncher's loading bay and data folder.  It should reside on the internal sdcard of your device but can be used on the physical sdcard if the internal does not exist.
 
