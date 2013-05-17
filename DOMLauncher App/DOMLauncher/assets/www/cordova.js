@@ -7279,7 +7279,7 @@ window.cordova = require('cordova');
 			function() {}, // Success function
 			function(error) {alert('Manual Setting Launch Failed ' + error)}); // Failure function
 	};
-	
+	//img_domLogo.png
 	var DOMLSettings = function() {};
 	
 	DOMLSettings.prototype.domodlist = function(args) {
@@ -7288,21 +7288,42 @@ window.cordova = require('cordova');
 				if(args === "data"){
 					domCallbacks.domodList(returnVal.returnVal);
 				}else{
-					var listWindow = document.createElement('ul');
+					var listWindow = document.createElement('div');
+					var listList = document.createElement('ul');
 					listWindow.setAttribute('id', 'themelistWindow');
 					
 					if(args  === "noStyle"){
+						listWindow.innerHTML += '<div><div><img style="width:auto; height:100%;" src="file:///android_asset/www/img/img_domLogo.png" />DOMods</div></div>';
+
 						for (var i = 0; i < returnVal.returnVal.length; i++) {
-							listWindow.innerHTML += '<li themeList id="'+returnVal.returnVal[i]+'">'+returnVal.returnVal[i]+'</li>';
+							listList.innerHTML += '<li themeList id="'+returnVal.returnVal[i]+'">'+returnVal.returnVal[i]+'</li>';
 						}
 					}else{
-						listWindow.setAttribute('style', 'position:absolute; right:0px; top:0px; left:0px; bottom:0px; z-index:99999999999999999999; background-color:#000000;');
+						listWindow.innerHTML += '<div style="background: -webkit-linear-gradient(top, #4e6e7d 0%,#344755 100%);border-bottom:1px solid rgba(255,255,255,.25);height:7%; min-height:100px; width:100%;display:table;"><img id="domodlistLogo" style="width:auto; height:100%;" src="file:///android_asset/www/img/img_domLogo.png" /><div style="height:100%;width:100%;font-size:300%;display:table-cell;vertical-align:middle; padding-left:17%;">DOMods</div></div>';
+						
+						listWindow.setAttribute('style', 'position:absolute;left:0px;right:0px;bottom:0px;top:0px;overflow:hidden;  background-color:black;color:white;z-index:99999999999999999999;');
+						listList.setAttribute('style', 'list-style:none;padding:0px;margin:0px;position:absolute;left:0px;right:0px;bottom:0px;top:7%;overflow:auto;');
 						for (var i = 0; i < returnVal.returnVal.length; i++) {
-							listWindow.innerHTML += '<li themeList id="'+returnVal.returnVal[i]+'" style="color:#ffffff; font-size:300%;">'+returnVal.returnVal[i]+'</li>';
+							listList.innerHTML += '<li themeList id="'+returnVal.returnVal[i]+'" style="list-style:none;  text-align:center;width:inherit;text-align:center;border-bottom:1px solid rgba(255,255,255,.25);padding:20px;padding-top:20px;padding-bottom:20px;font-size:350%;">'+returnVal.returnVal[i]+'</li>';
 						}
 					}
-											
+					listWindow.appendChild(listList);					
 					document.body.appendChild(listWindow);
+					
+					document.getElementById('domodlistLogo').addEventListener("touchstart", function(){
+						this.style.backgroundColor = "#356064";
+						document.getElementById('domodlistLogo').removeEventListener("click");
+						document.getElementById('themelistWindow')
+						});
+						
+					document.getElementById('domodlistLogo').addEventListener("click", function(){
+						this.style.backgroundColor = "transparent";
+						document.getElementById('domodlistLogo').removeEventListener("touchstart");
+						document.getElementById('domodlistLogo').removeEventListener("click");
+						
+						document.body.removeChild(document.getElementById('themelistWindow'));
+						
+						});	
 					
 					var final_appIntent = document.querySelectorAll('*[themeList]');
 					
