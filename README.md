@@ -3,7 +3,7 @@ DOMLauncher
 
 Cordova Powered Android App Launcher Replacement. 
 
-1.0 Release! 
+1.0 Release! - If the CSS seems to be missing, edit the html file and remove the pixel ratio media query from the reference link needed.  I have to fix that.  This is just a flaw within the Tutorial DOMod, nothing more.
 
 Before going any further understand a couple key points:
 
