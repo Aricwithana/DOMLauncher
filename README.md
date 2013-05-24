@@ -3,7 +3,7 @@ DOMLauncher
 
 Cordova Powered Android App Launcher Replacement. 
 
-1.0 Release! - If the CSS seems to be missing, edit the html file and remove the pixel ratio media query from the reference link needed.  I have to fix that.  This is just a flaw within the Tutorial DOMod, nothing more.
+1.0 Release! 
 
 Before going any further understand a couple key points:
 
@@ -29,7 +29,7 @@ Compile with Eclipse and intall on the device.
 
 The DOMLauncher folder within the SD CARD folder, just copy to your sdcard. 
 
-
+*DOMod Tutorial that is included in the SDCARD folder above is just to show off the API usage and lacks fancier touch features.  The CSS queries are being finished so anything below xhdpi might not be sized correctly.
 
 DEVELOPERS:
 
