@@ -3,7 +3,7 @@ DOMLauncher
 
 Cordova Powered Android App Launcher Replacement. 
 
-This is a Beta 0.9.9.5. - Full Wiki Information!  
+1.0 Release! 
 
 Before going any further understand a couple key points:
 
@@ -18,6 +18,8 @@ Before going any further understand a couple key points:
 If one can handle these things, you have in your hands the ability to create ANY USER INTERFACE you want for your Launcher.  It is all HTML/CSS and some simple javascript if one want to dive into that.  Anything that you can imagine, you can create with the only real limitation is the hardware of the device and the webkit view.
 
 Personally, I love LCARS.
+
+
 
 
 
@@ -49,3 +51,11 @@ Add Shortcut to desktop from application - Have plugin code provided by an aweso
 If anyone wants to contribute!  Go right ahead!
 
 -Aricwithana
+
+
+Credits & Thanks:
+
+Cordova/Phonegap IRC Peoples:  Devgeeks, EionRobb & MitchW.  Without these main three this would not exist.
+DOMLauncher Font:  http://www.levien.com/type/myfonts/inconsolata.html  
+Cordova Developers
+Electricity
