@@ -24,7 +24,7 @@
 	left:0px;
 	right:0px;
 	display:block;
-	content:attr(appName);
+	content:attr(data-appName);
 	padding:5px;
 	border-radius:8px;
 }

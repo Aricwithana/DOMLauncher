@@ -1,0 +1,1 @@
+DOMLauncher has the ability to generate out all the installed application icons.  They will be saved to this folder.  There is the optional CSS file that can be generated for a premade icon framework ready for use.  It would be saved here also.

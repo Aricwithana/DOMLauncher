@@ -20,84 +20,42 @@
 			function onLoad() {document.addEventListener("deviceready", deviceReady, false);}
 			
 			function deviceReady() { 
-				appList({refreshIcons:false});
-			
-			
+				window.plugins.apps.generatelist();
 			}
-
-
-	
-       /*App Panel Generation & App Launcher Event Bindings*/
-function applistCallback(appList){	
-	
-	var previous_appIntent = document.querySelectorAll('*[appPackage]');
-	
-	for (var i = 0; i < previous_appIntent.length; i++)
-	{
-		previous_appIntent[i].removeEventListener("click", function(){launchApps(this);}, false);
-	}
-	
-	var appListArray = JSON.parse(appList);
-	var appPanel = document.getElementById('appPanel'); 
-	appPanel.innerHTML = ''; 
-	
-	var dialer = document.createElement('a');
-	dialer.setAttribute('class', 'app dialer');
-	dialer.setAttribute('href', 'tel:');
-	dialer.setAttribute('appName', 'Dialer');
-	appPanel.appendChild(dialer);
-
-	for(var ii = 0; ii < appListArray.length; ii++) {  
-		var appInfo = appListArray[ii];
-		var appName = appInfo.name; 
-		var appPackage = appInfo.package; 
-		var appActivity = appInfo.activity;
-	
-		var newdiv = document.createElement('div');
-		newdiv.setAttribute('class', 'app');
-		newdiv.setAttribute('appPackage', appPackage);
-		newdiv.setAttribute('appActivity', appActivity);
-		newdiv.setAttribute('appName', appName);
-		appPanel.appendChild(newdiv);
-	}
-	
-	var final_appIntent = document.querySelectorAll('*[appPackage]');
-	
-	for (var iii = 0; iii < final_appIntent.length; iii++)
-	{
-		final_appIntent[iii].addEventListener("click", function(){launchApps(this);}, false);
-	}
-		
-}
-
 
 
         </script>
 
 <style>
-.app{background-color:grey; border-radius:50%;}
+@font-face {
+    font-family: 'InconsolataMedium';
+    src: url('Inconsolata-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+*{	-webkit-tap-highlight-color:rgba(0,0,0,0);}
+body{font-family:"InconsolataMedium"; font-size:100%;}
+.app{background-color:rgba(0,0,0,.5); border-radius:50%;}
+a{text-decoration:none;}
+p{font-size:110%;}
 </style>
     </head>
     
     <body onLoad="onLoad()">
 
-        <span style="font-size:24px;"> DOMLauncher  </span>
-    
+        <span style="font-size:300%;"> DOMLauncher  </span>
+    		<img src="img/img_bigLogo.png" style="float:right; width:25%; height:auto;" />
         	<h1>Well hello there!</h1>
-            <p>You are seeing me because of a few possibilities.  First possility is that your external sdcard is not accessable.  DOMLauncher asset files are are on the internal sdcard but not all phones have this feature.  If DOMLauncher can not default to the internal the external will be used.  If the external sdcard is mounted or otherwise unreadable when DOMLauncher loads, this 'dummy' view will appear.  Second posibility is that the wrong folder name is typed within the 'activeTheme.txt' file within the 'settings' folder.  The last posibility is that the chosen theme does not have an index.html file. </p>
-          
-       
-        	<h1>Icon Cache</h1>
-            <p>The Icon Cache is the folder 'icons' in the DOMLauncher folder.  This will only work if your SD CARD (either internal or external) is accessible.  Here all installed applications have their icon exported in the png format.  There is also an auto-generated css file holding the standard DOMLauncher references for easy icon placement within the UI Plugins.</p>
-            <input type="button" value="Rebuild Cache" onClick="refresh_iconCSS({refreshIcons:true});"/>
+            
+            <p>You are seeing me because of a few possibilities.  This could be the first time you launched the app and did not copy the 'DOMLauncher' folder to your internal or external sdcard.  Second is that there is an error in the choosen DOMod to load.  Check your 'config.txt' within the DOMLauncher folder.  Lastly, it could be that the external sdcard is mounted and inaccessable by the device and your files are stored on the external sdcard.  Make sure your sdcard is readable.  It is preferable to store the DOMlauncher folder on the internal sdcard to avoid this issue. </p>
           
         
-        
-        	<h1>Exit App</h1>
-            <p>So the app does not get stuck in a loop, and incase a device does not have a 'back' button, tap this button to exit.  Hit your home button to relauch DOMLauncher afterwards. </p>
-             <input type="button" value="Exit App" onClick="navigator.app.exitApp();"/>
-             
-             
+<hr>
+             <input type="button" value="Exit App" onClick="navigator.app.exitApp();" style="zoom:2;"/>
+             <input type="button" value="DOMods" onClick="window.plugins.domlsettings.domodlist();" style="zoom:2;"/>
+            
+     <hr>        
              <div id="appPanel" style="text-align:center;"></div>
    
 </body>

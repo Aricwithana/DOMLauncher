@@ -181,13 +181,13 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 {
 	background-color:white; 
 	-webkit-box-sizing:border-box; 
-	border:10px solid black;	
+	border:5px solid black;	
 }
 
 #appPanel_Show:before
 {
 	position:absolute;
-	width:10px;
+	width:5px;
 	left:44%;
 	top:0px;
 	bottom:0px;
@@ -202,7 +202,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 #appPanel_Show:after
 {
 	position:absolute;
-	height:10px;
+	height:5px;
 	top:44%;
 	right:0px;
 	left:0px;
@@ -628,7 +628,8 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	background-color:#000000;
 	border-radius:10px;
 	padding:10px;
-	border:4px solid #999; 
+	border:4px solid #999;
+	zoom:.5; 
 	
 }
 .controlList li

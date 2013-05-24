@@ -13,7 +13,6 @@
         
         <script type="text/javascript" src="file:///android_asset/www/cordova.js"></script>  
 		<link rel="stylesheet" id="iconsCss" href="../../settings/icons/icons.css" type="text/css" media="screen" charset="utf-8" />
-        <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 0.75)" href="css/ldpi.css" />
         <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.0)" href="css/mdpi.css" />
         <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.5)" href="css/hdpi.css" />
         <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 2.0)" href="css/xhdpi.css" />		
@@ -22,11 +21,8 @@
     <body>
         <div id='slider'>
             <div style="height:100%; width:300%; position:relative;" id="sliderInternal">
-                <div class="app" appPackage="com.netflix.mediaclient" data-appName="Netflix"></div>
-                <div class="app" appPackage="com.opera.browser" data-appName="Opera"></div>
-                <div class="app" data-appName="Exit App" style="background-color:red;" onClick="navigator.app.exitApp();"></div>
 				<div class="app" id="weatherWrapper" data-appName="Weather"  data-Temp="TAP"></div>
-                <div class="app" data-appName="Theme List" style="background-color:red;" onClick="window.plugins.domlsettings.domodlist();"></div>
+                <div class="app" data-appName="Theme List" style="background-image:url(file:///android_asset/www/img/img_bigLogo.png);" onClick="window.plugins.domlsettings.domodlist();"></div>
                 <ul class="controlList" id="systemControls">
                     <li>
                         <div>FULLSCREEN</div><div id="toggle_fullScreen" class="scrollSwitch" data-state="off"></div>
