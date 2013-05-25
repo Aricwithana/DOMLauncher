@@ -78,7 +78,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	top:0px; 
 	left:0px; 
 	right:0px; 
-	bottom:120px;	
+	bottom:96px;	
 }
 
 
@@ -117,8 +117,8 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	background-size:100% 100%;
 	position:relative;
 	display: inline-block;
-	width:96px; 
-	height:96px;
+	width:72px; 
+	height:72px;
 	margin:25px; 
 	display:inline-block;
 }  
@@ -142,6 +142,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 }
 
 
+
 #weatherWrapper:after
 {
 	content:attr(data-Temp);
@@ -151,12 +152,12 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	bottom:0px;
 	left:0px;
 	right:0px;
-	line-height:96px;
-	font-size:200%;	
+	line-height:72px;
+	font-size:150%;	
 	color:#ffffff;
 	text-align:center;
 	background-color:rgba(0,0,0,.75); 
-	border:4px solid #ffffff; 
+	border:2px solid #ffffff; 
 	border-radius:25px;
 }
 
@@ -169,7 +170,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 {
 	text-align:center;
 	bottom:0px;
-	height:120px;
+	height:96px;
 	vertical-align:center;
 	position:absolute;
 	left:0px;
@@ -203,7 +204,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 #appPanel_Show:before
 {
 	position:absolute;
-	width:10px;
+	width:5px;
 	left:44%;
 	top:0px;
 	bottom:0px;
@@ -218,7 +219,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 #appPanel_Show:after
 {
 	position:absolute;
-	height:10px;
+	height:5px;
 	top:44%;
 	right:0px;
 	left:0px;
@@ -263,7 +264,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 {
 	position:absolute;
 	top:0px;
-	bottom:120px;
+	bottom:96px;
 	left:0px;
 	right:0px;
 	overflow:scroll;
@@ -276,9 +277,9 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	bottom:0px;
 	left:0px;
 	right:50%;
-	height:120px;	
-	line-height:200%;
-	font-size:350%;
+	height:96px;	
+	line-height:250%;
+	font-size:250%;
 	-webkit-box-shadow: -2px -2px 2px 2px rgba(0, 0, 0, .5); 
 	background-color:rgba(34,102,153,.75);
 	color:white;
@@ -291,9 +292,9 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	bottom:0px;
 	right:0px;
 	left:50%;
-	height:120px;	
-	line-height:200%;
-	font-size:350%;
+	height:96px;	
+	line-height:250%;
+	font-size:250%;
 	-webkit-box-shadow: 2px -2px 2px 2px rgba(0, 0, 0, .5);
 	background-color:rgba(34,102,153,.75);
 	color:white;
@@ -315,6 +316,8 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	top:20px;
 	background-image:none;
 	-webkit-box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, .75);
+	zoom:.75;
+
 }
 
 .clock:before /*Line:*/
@@ -730,6 +733,8 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	border-radius:10px;
 	padding:10px;
 	border:4px solid #999; 
+	zoom:.75;
+
 	
 }
 .controlList li

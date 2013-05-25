@@ -7299,14 +7299,18 @@ window.cordova = require('cordova');
 							listList.innerHTML += '<li themeList id="'+returnVal.returnVal[i]+'">'+returnVal.returnVal[i]+'</li>';
 						}
 					}else{
-						listWindow.innerHTML += '<div style="background: -webkit-linear-gradient(top, #4e6e7d 0%,#344755 100%);border-bottom:1px solid rgba(255,255,255,.25);height:7%; min-height:100px; width:100%;display:table;"><img id="domodlistLogo" style="width:auto; height:100%;" src="file:///android_asset/www/img/img_domLogo.png" /><div style="height:100%;width:100%;font-size:300%;display:table-cell;vertical-align:middle; padding-left:17%;">DOMods</div></div>';
+						listWindow.innerHTML += '<div><img id="domodlistLogo" style="width:auto; height:100%;" src="file:///android_asset/www/img/img_domLogo.png" /><div>DOMods</div></div>';
 						
 						listWindow.setAttribute('style', 'position:absolute;left:0px;right:0px;bottom:0px;top:0px;overflow:hidden;  background-color:black;color:white;z-index:99999999999999999999;');
-						listList.setAttribute('style', 'list-style:none;padding:0px;margin:0px;position:absolute;left:0px;right:0px;bottom:0px;top:7%;overflow:auto;');
 						for (var i = 0; i < returnVal.returnVal.length; i++) {
-							listList.innerHTML += '<li themeList id="'+returnVal.returnVal[i]+'" style="list-style:none;  text-align:center;width:inherit;text-align:center;border-bottom:1px solid rgba(255,255,255,.25);padding:20px;padding-top:20px;padding-bottom:20px;font-size:350%;">'+returnVal.returnVal[i]+'</li>';
+							listList.innerHTML += '<li themeList id="'+returnVal.returnVal[i]+'">'+returnVal.returnVal[i]+'</li>';
 						}
 					}
+					
+					var newStyle = document.createElement('style');
+					newStyle.innerHTML = '#themelistWindow > div{background: -webkit-linear-gradient(top, #4e6e7d 0%,#344755 100%);border-bottom:1px solid rgba(255,255,255,.25);width:100%;display:table;} #themelistWindow ul{list-style:none;padding:0px;margin:0px;position:absolute;left:0px;right:0px;bottom:0px;overflow:auto;} #themelistWindow ul li{list-style:none;  text-align:center;width:inherit;text-align:center;border-bottom:1px solid rgba(255,255,255,.25);padding:20px;padding-top:20px;padding-bottom:20px;} #themelistWindow > div> div{height:100%;width:100%;font-size:300%;display:table-cell;vertical-align:middle; padding-left:17%;} @media (-webkit-min-device-pixel-ratio: 2) { #themelistWindow div{height:7%; min-height:100px;}#themelistWindow ul{top:7%;}#themelistWindow ul li{font-size:350%;}#themelistWindow > div> div{font-size:300%;padding-left:17%;}} @media (-webkit-min-device-pixel-ratio: 1.5) and (-webkit-max-device-pixel-ratio: 1.9) { #themelistWindow div{height:7%; min-height:100px;}#themelistWindow ul{top:7%;}#themelistWindow ul li{font-size:250%;}#themelistWindow > div> div{font-size:200%;padding-left:17%;}} @media (-webkit-min-device-pixel-ratio: 1)  and (-webkit-max-device-pixel-ratio: 1.4){ #themelistWindow div{height:10%;}#themelistWindow ul{top:10%;}#themelistWindow ul li{font-size:200%;}#themelistWindow > div> div{font-size:150%;padding-left:20%;}}';
+					 
+					document.getElementsByTagName('head')[0].appendChild(newStyle);
 					listWindow.appendChild(listList);					
 					document.body.appendChild(listWindow);
 					
