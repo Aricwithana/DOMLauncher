@@ -25,19 +25,22 @@ function themeLoaded(){
 	window.plugins.brightness.valuecheck();
 	window.plugins.brightness.modecheck();
 	window.plugins.apps.generatelist();
-
+	iconCheck();
 	var clockTimer = setInterval(clock, 1000 );	
 	var missedcallsTimer = setInterval(window.plugins.missed.calls(), 5000);
 	var missedsmsTimer = setInterval(window.plugins.missed.sms, 5000);
 }
 /*End Document Ready*/
 
-function checkInfo(){
-	//var script=document.createElement('script');
-	//script.src='http://mir.aculo.us/dom-monster/dommonster.js?'+Math.floor((+new Date)/(864e5));
-	//document.body.appendChild(script);
-	alert(Object.keys( window ));
-		//window.plugins.save.file(Object.keys( window ), "/mnt/sdcard/DOMLauncher/global.txt");
+
+/**Check if Icons & CSS are Generated**/
+function iconCheck(){	
+	window.plugins.simplefile.openFile({file:'/mnt/sdcard/DOMLauncher/settings/icons/icons.css'}, 			
+	function(returnVal){},
+	function(error) {
+		window.plugins.apps.generateicons();
+		window.plugins.apps.generatecss();
+	});	
 }
 
 /*Clock CSS*/
@@ -530,14 +533,14 @@ var domCallbacks = {
 	},
 	simplefileOpen: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
-			alert(returnVal);
+			
 		/*End Theme Specific Editible Code*/
 	},
 	
 	//Create App Icons and List
 	generateappList: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
-			var previous_appIntent = document.querySelectorAll('*[appPackage]');
+			var previous_appIntent = document.querySelectorAll('*[data-appPackage]');
 			
 			for (var i = 0; i < previous_appIntent.length; i++)
 			{
@@ -562,13 +565,13 @@ var domCallbacks = {
 			
 				var newdiv = document.createElement('div');
 				newdiv.setAttribute('class', 'app');
-				newdiv.setAttribute('appPackage', appPackage);
-				newdiv.setAttribute('appActivity', appActivity);
+				newdiv.setAttribute('data-appPackage', appPackage);
+				newdiv.setAttribute('data-appActivity', appActivity);
 				newdiv.setAttribute('data-appName', appName);
 				appPanel.appendChild(newdiv);
 			}
 			
-			var final_appIntent = document.querySelectorAll('*[appPackage]');
+			var final_appIntent = document.querySelectorAll('*[data-appPackage]');
 			
 			for (var iii = 0; iii < final_appIntent.length; iii++)
 			{
@@ -578,7 +581,7 @@ var domCallbacks = {
 	},
 	generateappIcons: function(){
 		/*Begin Theme Specific Editible Code*/
-			window.plugins.apps.generatecss();
+			
 		/*End Theme Specific Editible Code*/
 	},
 	battery: function(info){
@@ -594,7 +597,7 @@ var domCallbacks = {
 	},
 	domodList: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
-			alert(returnVal);
+			
 		/*End Theme Specific Editible Code*/
 	}
 }

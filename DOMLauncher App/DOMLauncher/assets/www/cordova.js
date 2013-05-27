@@ -7242,7 +7242,7 @@ window.cordova = require('cordova');
 						for(var i = 0; i < appListArray.length; i++) {  
 							var appInfo = appListArray[i];
 							var appPackage = appInfo.package; 
-							newStyle.innerHTML += '*[appPackage="'+appPackage+'"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/'+appPackage+'.png);}';
+							newStyle.innerHTML += '*[data-appPackage="'+appPackage+'"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/'+appPackage+'.png);}';
 						}	
 						document.getElementsByTagName('head')[0].appendChild(newStyle);
 						var styleText = newStyle.innerHTML;
@@ -7254,15 +7254,15 @@ window.cordova = require('cordova');
 	var Launching = function() {};
 	
 	Launching.prototype.app = function(object) {
-		var packageChoice = object.getAttribute('appPackage');  //com.class.name
-		var activityChoice = object.getAttribute('appActivity') || "";  //.ActivityCall
+		var packageChoice = object.getAttribute('data-appPackage');  //com.class.name
+		var activityChoice = object.getAttribute('data-appActivity') || "";  //.ActivityCall
 		window.plugins.launch.app({package:packageChoice, activity:packageChoice+activityChoice}, 
 			function() {}, // Success function
 			function(error) {alert('Application/Activity Launch Failed ' + error)}); // Failure function
 	};
 	
 	Launching.prototype.setting = function(object) {
-		var settingsChoice = object.getAttribute('settings') || false;
+		var settingsChoice = object.getAttribute('data-settings') || false;
 		window.plugins.launch.setting({setting:settingsChoice}, 
 			function() {}, // Success function
 			function(error) {alert('Setting Launch Failed ' + error)}); // Failure function
