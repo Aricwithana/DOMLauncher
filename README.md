@@ -3,7 +3,7 @@ DOMLauncher
 
 Cordova Powered Android App Launcher Replacement. 
 
-1.0 Release! 
+1.0.1 Release! 
 
 Before going any further understand a couple key points:
 
@@ -29,7 +29,7 @@ Compile with Eclipse and intall on the device.
 
 The DOMLauncher folder within the SD CARD folder, just copy to your sdcard. 
 
-*DOMod Tutorial that is included in the SDCARD folder above is just to show off the API usage and lacks fancier touch features.  The CSS queries are being finished so anything below xhdpi might not be sized correctly.
+*DOMod Tutorial that is included in the SDCARD folder above is just to show off the API usage and lacks fancier touch features.
 
 DEVELOPERS:
 
@@ -58,4 +58,5 @@ Credits & Thanks:
 Cordova/Phonegap IRC Peoples:  Devgeeks, EionRobb & MitchW.  Without these main three this would not exist.
 DOMLauncher Font:  http://www.levien.com/type/myfonts/inconsolata.html  
 Cordova Developers
+
 Electricity
