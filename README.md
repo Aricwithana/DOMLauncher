@@ -3,7 +3,7 @@ DOMLauncher
 
 Cordova Powered Android App Launcher Replacement. 
 
-1.0.2 Release! 
+1.0.3 Release! 
 
 Before going any further understand a couple key points:
 
