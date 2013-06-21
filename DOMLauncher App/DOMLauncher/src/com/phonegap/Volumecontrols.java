@@ -8,6 +8,7 @@ import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 import android.content.Context;
 import android.media.AudioManager;
+import android.util.Log;
 
 public class Volumecontrols extends CordovaPlugin { 
 	
@@ -76,10 +77,12 @@ public class Volumecontrols extends CordovaPlugin {
 			String toast = args.getJSONObject(0).getString("toast");
 			if(toast.equals("false")){																	
 				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, curVolume + 1, 0);
-				callbackContext.success(new JSONObject().put("returnVal", (curVolume + 1)));
+				int newVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+				callbackContext.success(new JSONObject().put("returnVal", newVolume));
 			}else{
 				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, curVolume + 1, AudioManager.FLAG_SHOW_UI);
-				callbackContext.success(new JSONObject().put("returnVal", (curVolume + 1)));
+				int newVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+				callbackContext.success(new JSONObject().put("returnVal", newVolume));
 			}
 		 }
 		 
@@ -87,11 +90,19 @@ public class Volumecontrols extends CordovaPlugin {
 			int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 			String toast = args.getJSONObject(0).getString("toast");
 			if(toast.equals("false")){																	
-				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, curVolume - 1, 0);
-				callbackContext.success(new JSONObject().put("returnVal", (curVolume - 1)));
+				if(curVolume == 0){	
+				}else{
+					audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, curVolume - 1, 0);
+				}
+				int newVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+				callbackContext.success(new JSONObject().put("returnVal", newVolume));
 			}else{
-				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, curVolume - 1, AudioManager.FLAG_SHOW_UI);
-				callbackContext.success(new JSONObject().put("returnVal", (curVolume - 1)));
+				if(curVolume == 0){	
+				}else{
+					audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, curVolume - 1, AudioManager.FLAG_SHOW_UI);
+				}
+				int newVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+				callbackContext.success(new JSONObject().put("returnVal", newVolume));
 			}
 		 }		 
 		 
@@ -125,11 +136,13 @@ public class Volumecontrols extends CordovaPlugin {
 			if(toast.equals("false")){																	
 				audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
 				audioManager.setStreamVolume(AudioManager.STREAM_RING, curVolume + 1, 0);
-				callbackContext.success(new JSONObject().put("returnVal", (curVolume + 1)));
+				int newVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+				callbackContext.success(new JSONObject().put("returnVal", newVolume));
 			}else{
 				audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
 				audioManager.setStreamVolume(AudioManager.STREAM_RING, curVolume + 1, AudioManager.FLAG_SHOW_UI);
-				callbackContext.success(new JSONObject().put("returnVal", (curVolume + 1)));
+				int newVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+				callbackContext.success(new JSONObject().put("returnVal", newVolume));
 			}
 		 }
 		 
@@ -137,13 +150,23 @@ public class Volumecontrols extends CordovaPlugin {
 			int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
 			String toast = args.getJSONObject(0).getString("toast");
 			if(toast.equals("false")){																	
-				audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-				audioManager.setStreamVolume(AudioManager.STREAM_RING, curVolume - 1, 0);
-				callbackContext.success(new JSONObject().put("returnVal", (curVolume - 1)));
+				if(curVolume == 0){	
+					audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+				}else{	
+					audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+					audioManager.setStreamVolume(AudioManager.STREAM_RING, curVolume - 1, 0);
+				}
+				int newVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+				callbackContext.success(new JSONObject().put("returnVal", newVolume));
 			}else{
-				audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-				audioManager.setStreamVolume(AudioManager.STREAM_RING, curVolume - 1, AudioManager.FLAG_SHOW_UI);
-				callbackContext.success(new JSONObject().put("returnVal", (curVolume - 1)));
+				if(curVolume == 0){	
+					audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+				}else{	
+					audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+					audioManager.setStreamVolume(AudioManager.STREAM_RING, curVolume - 1, AudioManager.FLAG_SHOW_UI);
+				}
+				int newVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+				callbackContext.success(new JSONObject().put("returnVal", newVolume));
 			}
 		 }			 
 		 

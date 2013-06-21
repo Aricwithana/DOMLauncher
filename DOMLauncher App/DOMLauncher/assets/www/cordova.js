@@ -7222,7 +7222,13 @@ window.cordova = require('cordova');
 			function(returnVal) {domCallbacks.generateappList(returnVal.returnVal);}, // Success function
 			function(error) {alert('Generate App List Failed ' + error)}); // Failure function
 	};
-	
+
+	Apps.prototype.savelist = function() {
+		window.plugins.applist.appList({}, 
+			function(returnVal) {window.plugins.fileaccess.save(returnVal.returnVal, "/mnt/sdcard/DOMLauncher/settings/applist.txt");}, // Success function
+			function(error) {alert('Generate App List Failed ' + error)}); // Failure function
+	};
+
 	Apps.prototype.generateicons = function() {
 		window.plugins.applist.generateIcons({}, 
 			function(returnVal) {domCallbacks.generateappIcons();}, // Success function
@@ -7262,7 +7268,7 @@ window.cordova = require('cordova');
 	};
 	
 	Launching.prototype.setting = function(object) {
-		var settingsChoice = object.getAttribute('data-settings') || false;
+		var settingsChoice = object.getAttribute('data-setting') || false;
 		window.plugins.launch.setting({setting:settingsChoice}, 
 			function() {}, // Success function
 			function(error) {alert('Setting Launch Failed ' + error)}); // Failure function

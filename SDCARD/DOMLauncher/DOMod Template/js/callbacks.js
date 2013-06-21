@@ -3,7 +3,9 @@ document.addEventListener("deviceready", themeLoaded, false);
 
 /*Document Ready Success Function*/
 function themeLoaded(){
-
+	//window.addEventListener("batterystatus", domCallbacks.battery, false);
+	document.addEventListener("pause", onPause, false);
+	document.addEventListener("resume", onResume, false);
 }
 /*End Document Ready*/
 
@@ -61,11 +63,6 @@ var domCallbacks = {
 		/*End Theme Specific Editible Code*/
 	},
 	mediaPercentage: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	mediaMute: function(){
 		/*Begin Theme Specific Editible Code*/
 
 		/*End Theme Specific Editible Code*/

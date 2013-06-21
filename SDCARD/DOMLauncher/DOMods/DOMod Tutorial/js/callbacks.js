@@ -252,10 +252,6 @@ var domCallbacks = {
 			document.getElementById('slider_mediaVol').parentNode.childNodes[1].innerHTML = 'Media Volume: ' + returnVal + "%";
 		/*End Theme Specific Editible Code*/
 	},
-	mediaMute: function(){
-		/*Begin Theme Specific Editible Code*/
-		/*End Theme Specific Editible Code*/
-	},
 	mediaCheck: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 				document.getElementById('slider_mediaVol').value = returnVal;	

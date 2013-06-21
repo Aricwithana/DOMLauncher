@@ -29,7 +29,7 @@ function refresh_appPanel(){
 				var returnArray = JSON.parse(returnVal.returnVal);
 				var city = returnArray.city; 
 		
-				makeRequest('http://api.openweathermap.org/data/2.1/find/name?q='+city+'&units=imperial&APPID=7687bs878b9nqcn87cs78098q222788y'); 
+				makeRequest('http://api.openweathermap.org/data/2.5/weather?q='+city+'&units=imperial&APPID=7687bs878b9nqcn87cs78098q222788y'); 
 			 
 				function makeRequest(url) {
 					httpRequest = new XMLHttpRequest();

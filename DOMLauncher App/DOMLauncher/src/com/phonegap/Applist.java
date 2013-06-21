@@ -92,7 +92,7 @@ public class Applist extends CordovaPlugin {
 				//Log.d(id, "Name:" + appName);
 				//Log.d(id, "Package:" + pkgName);
 				//Log.d(id, "Activity:" + appActivity);
-			  
+				Log.d(id, "App Gen");
 				try {
 					
 					if(appActivity != null){
