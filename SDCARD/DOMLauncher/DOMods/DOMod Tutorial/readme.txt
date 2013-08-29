@@ -1,1 +1,2 @@
-This is a basic DOMod that shows off how to use the API in a few different ways while providing the mere basics in functionality (so no drag and drop of icons, etc, etc).  I would rather spend time on other DOMods.  It is meant to learn from or expand upon!
+This is a base template with meta tags, css links, empty DOMCallbacks in the js file.  Enjoy!
+

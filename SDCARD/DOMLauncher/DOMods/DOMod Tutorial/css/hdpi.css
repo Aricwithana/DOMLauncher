@@ -55,32 +55,138 @@ table {
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+	-webkit-box-sizing:border-box;
 }
 
 
-body
-{	
-background-color: #269;
-background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
-background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
-background-image: -webkit-linear-gradient(white 2px, transparent 2px),
-                  -webkit-linear-gradient(0, white 2px, transparent 2px),
-                  -webkit-linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
-                  -webkit-linear-gradient(0, rgba(255,255,255,.3) 1px, transparent 1px);
-
-}
-
-/*Desktop Slider*/
-#slider
+/*'App' launcher icons.*/
+.app
 {
-	overflow:scroll; 
-	position:absolute; 
-	top:0px; 
-	left:0px; 
-	right:0px; 
-	bottom:96px;	
+	background-position:left top;
+	background-repeat:no-repeat;
+	background-size:100% auto;
+	position:relative;
+	width:72px; 
+	height:72px;
+	margin:25px; 
+	display:inline-block;
+}  
+
+.app:before
+{
+	position:absolute;
+	text-align:center;
+	overflow: hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	background-color:rgba(0,0,0,.75);
+	color:white;
+	bottom:-30px;
+	left:0px;
+	right:0px;
+	display:block;
+	content:attr(data-appName);
+	padding:5px;
+	border-radius:8px;
 }
 
+#btn_weather:after
+{
+	content:attr(data-temp);
+	display:block;
+	position:absolute;
+	top:0px;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	line-height:72px;
+	font-size:200%;	
+	color:#ffffff;
+	text-align:center;
+	background-color:rgba(0,0,0,.75); 
+	border:4px solid #ffffff; 
+	border-radius:15px;
+}
+
+.controlBox{
+	display:block;
+	color:#cccccc;
+	text-align:center;
+	background-color:rgba(0,0,0,.75); 
+	border:4px solid #cccccc; 
+	border-radius:25px;
+	width:72px; 
+	height:72px;
+	margin:25px; 
+	display:inline-block;
+	position:relative;
+}
+
+.controlBox[enabled]{
+	border-color:white;
+	color:green;
+}
+
+.controlBox[disabled]{
+	border-color:white;
+	color:red;
+}
+
+.controlBox[meter]{
+	-webkit-transition:background-color .25s linear;
+}
+
+.controlBox:active{
+	border-color:white;
+}
+
+.controlBox:active:after{
+	color:white;
+}
+
+
+.controlBox:before
+{
+	position:absolute;
+	text-align:center;
+	overflow: hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	background-color:rgba(0,0,0,.75);
+	color:#ffffff;
+	bottom:-34px;
+	left:0px;
+	right:0px;
+	display:block;
+	content:attr(data-name);
+	padding:5px;
+	border-radius:8px;
+}
+
+
+
+.controlBox:after
+{
+	content:attr(data-number);
+	display:block;
+	position:absolute;
+	top:0px;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	line-height:72px;
+	font-size:400%;	
+	color:inherit;
+	text-align:center;
+}
+
+.controlBox[enabled]:after{
+	content:"✓";
+}
+
+.controlBox[disabled]:after{
+	content:"✗";
+}
 
 /*Missed Communications CSS Settings for this theme.*/
 *[data-missed]:after
@@ -108,61 +214,179 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 }
 
 
+body
+{	
+background-color: #269;
+background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+background-image: -webkit-linear-gradient(white 2px, transparent 2px),
+                  -webkit-linear-gradient(0, white 2px, transparent 2px),
+                  -webkit-linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+                  -webkit-linear-gradient(0, rgba(255,255,255,.3) 1px, transparent 1px);
 
-/*'App' launcher icons.*/
-.app
-{
-	background-position:left top;
-	background-repeat:no-repeat;
-	background-size:100% 100%;
+}
+
+/*
+ * Swiper - Mobile Touch Slider CSS
+ * http://www.idangero.us/sliders/swiper
+ *
+ * Vladimir Kharlampidi, The iDangero.us
+ * http://www.idangero.us/
+ * 
+ * Copyright 2012-2013, Vladimir Kharlampidi
+ * The iDangero.us
+ * http://www.idangero.us
+ *
+ * Licensed under GPL & MIT
+ *
+*/
+
+/* ===============================================================
+Basic Swiper Styles 
+================================================================*/
+.swiper-container {
+	margin:0 auto;
 	position:relative;
-	display: inline-block;
-	width:72px; 
-	height:72px;
-	margin:25px; 
-	display:inline-block;
-}  
+	overflow:hidden;
+	-webkit-backface-visibility:hidden;
+	-moz-backface-visibility:hidden;
+	-ms-backface-visibility:hidden;
+	-o-backface-visibility:hidden;
+	backface-visibility:hidden;
+	/* Fix of Webkit flickering */
+	z-index:1;
+}
+.swiper-wrapper {
+	position:relative;
+	width:100%;
+	-webkit-transition-property:-webkit-transform, left, top;
+	-webkit-transition-duration:0s;
+	-webkit-transform:translate3d(0px,0,0);
+	-webkit-transition-timing-function:ease;
+	
+	-moz-transition-property:-moz-transform, left, top;
+	-moz-transition-duration:0s;
+	-moz-transform:translate3d(0px,0,0);
+	-moz-transition-timing-function:ease;
+	
+	-o-transition-property:-o-transform, left, top;
+	-o-transition-duration:0s;
+	-o-transform:translate3d(0px,0,0);
+	-o-transition-timing-function:ease;
+	-o-transform:translate(0px,0px);
+	
+	-ms-transition-property:-ms-transform, left, top;
+	-ms-transition-duration:0s;
+	-ms-transform:translate3d(0px,0,0);
+	-ms-transition-timing-function:ease;
+	
+	transition-property:transform, left, top;
+	transition-duration:0s;
+	transform:translate3d(0px,0,0);
+	transition-timing-function:ease;
+}
+.swiper-free-mode > .swiper-wrapper {
+	-webkit-transition-timing-function: ease-out;
+	-moz-transition-timing-function: ease-out;
+	-ms-transition-timing-function: ease-out;
+	-o-transition-timing-function: ease-out;
+	transition-timing-function: ease-out;
+	margin: 0 auto;
+}
+.swiper-slide {
+	float: left;
+}
 
-.app:before
-{
-	position:absolute;
-	text-align:center;
-	overflow: hidden;
-	white-space:nowrap;
-	text-overflow:ellipsis;
-	background-color:rgba(0,0,0,.75);
-	color:white;
-	bottom:-30px;
-	left:0px;
-	right:0px;
-	display:block;
-	content:attr(data-appName);
-	padding:5px;
-	border-radius:8px;
+/* IE10 Windows Phone 8 Fixes */
+.swiper-wp8-horizontal {
+	-ms-touch-action: pan-y;
+}
+.swiper-wp8-vertical {
+	-ms-touch-action: pan-x;
+}
+
+/* ===============================================================
+Your custom styles, here you need to specify container's and slide's
+sizes, pagination, etc.
+================================================================*/
+.swiper-container {
+	/* Specify Swiper's Size: */
+
+	/*width:200px;
+	height: 100px;*/
+}
+.swiper-slide {
+	/* Specify Slides's Size: */
+	position:relative;
+	/*width: 100%;
+	height: 100%;*/
+}
+.swiper-slide-active {
+	/* Specific active slide styling: */
+	
+}
+.swiper-slide-visible {
+	/* Specific visible slide styling: */	
+
+}
+/* ===============================================================
+Pagination Styles
+================================================================*/
+.swiper-pagination-switch {
+	/* Stylize pagination button: */	
+
+}
+.swiper-active-switch {
+	/* Specific active button style: */	
+	
+}
+.swiper-visible-switch {
+	/* Specific visible button style: */	
+	
 }
 
 
 
-#weatherWrapper:after
-{
-	content:attr(data-Temp);
-	display:block;
-	position:absolute;
+/*Body Swiper*/
+.wpr_swiper {
 	top:0px;
-	bottom:0px;
+	bottom:96px; 
 	left:0px;
 	right:0px;
-	line-height:72px;
-	font-size:150%;	
-	color:#ffffff;
-	text-align:center;
-	background-color:rgba(0,0,0,.75); 
-	border:2px solid #ffffff; 
-	border-radius:25px;
+	position: absolute;
+	-webkit-box-sizing:border-box;
 }
-
-
-
+.swiper-container {
+	top:0px;
+	bottom:0px; 
+	left:0px;
+	right:0px;
+	position: absolute;
+}
+.content-slide {
+  color: #fff;
+}
+.pagination {
+  position: absolute;
+  left: 0;
+  text-align: center;
+  bottom:5px;
+  width: 100%;
+  z-index:99;
+}
+.swiper-pagination-switch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background: #999;
+  box-shadow: 0px 1px 2px #555 inset;
+  margin: 0 3px;
+  cursor: pointer;
+}
+.swiper-active-switch {
+  background: #fff;
+}
 
 
 /*Quickbar*/
@@ -193,18 +417,20 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	display:none;	
 }
 
+
+
 /*App Panel Show/Hide Button 'Icon'*/
 #appPanel_Show
 {
 	background-color:white; 
 	-webkit-box-sizing:border-box; 
-	border:10px solid black;	
+	border:8px solid black;	
 }
 
 #appPanel_Show:before
 {
 	position:absolute;
-	width:5px;
+	width:8px;
 	left:44%;
 	top:0px;
 	bottom:0px;
@@ -219,7 +445,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 #appPanel_Show:after
 {
 	position:absolute;
-	height:5px;
+	height:8px;
 	top:44%;
 	right:0px;
 	left:0px;
@@ -278,8 +504,8 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	left:0px;
 	right:50%;
 	height:96px;	
-	line-height:250%;
-	font-size:250%;
+	line-height:200%;
+	font-size:350%;
 	-webkit-box-shadow: -2px -2px 2px 2px rgba(0, 0, 0, .5); 
 	background-color:rgba(34,102,153,.75);
 	color:white;
@@ -293,13 +519,14 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	right:0px;
 	left:50%;
 	height:96px;	
-	line-height:250%;
-	font-size:250%;
+	line-height:200%;
+	font-size:350%;
 	-webkit-box-shadow: 2px -2px 2px 2px rgba(0, 0, 0, .5);
 	background-color:rgba(34,102,153,.75);
 	color:white;
 	text-transform: uppercase;
 }
+
 
 
 
@@ -316,8 +543,8 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 	top:20px;
 	background-image:none;
 	-webkit-box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, .75);
-	zoom:.75;
-
+	-webkit-transform-origin:0px 0px;
+	-webkit-transform:scale(.75);
 }
 
 .clock:before /*Line:*/
@@ -373,6 +600,7 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 }
 
 .innerClock:before /*Line:*/
+
 {
     display:block;
     content:"";
@@ -726,185 +954,3 @@ background-image: -webkit-linear-gradient(white 2px, transparent 2px),
 }
 
 
-/*Pre-styled list*/
-.controlList
-{
-	background-color:#000000;
-	border-radius:10px;
-	padding:10px;
-	border:4px solid #999; 
-	zoom:.75;
-
-	
-}
-.controlList li
-{
-	height:50px;
-	width:100%;
-	text-align:center;
-	border-bottom:1px solid #ccedfe;
-	margin-bottom:10px;
-	padding-bottom:15px;
-	position:relative;
-}
-
-.controlList li:last-child
-{
-	margin-bottom:0px;
-	border-bottom:none;	
-	padding-bottom:0px;
-}
-.controlList li>div:first-child
-{
-	float:left;
-	color:white;
-	line-height:65px;
-	font-size:24px;
-	width:280px;
-}
-
-#systemControls /*Position and max values for a list.*/
-{
-	position:absolute;
-	top:50px;
-	left:40%;
-	width:500px;
-	max-height:75%;
-	overflow:scroll;
-}
-	
-	
-	
-
-/*Value 'Meter'*/	
-.meter
-{
-	width:200px;
-	height:50px;
-	position: absolute;
-	right: 18px;
-	top: 0px;
-	border:2px solid  #393939;
-	background-color:#141414;
-	border-radius:10px;
-}
-
-.meter div /*This is the meter*/
-{
-	background-image: -webkit-linear-gradient(bottom, rgb(82,147,63) 55%, rgb(112,198,86) 100%);	
-	height:50px;
-	width:0%;
-	border-radius:10px;
-	position:relative;
-	-webkit-transition:width .25s linear;
-}
-
-.meter div:before
-{
-	display:block;	
-	content:"";
-	position:absolute;
-	left:0px;
-	right:0px;
-	bottom:0px;
-	top:0px;
-	border-radius:10px;
-	background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
-	background-size: 50px 50px;
-}
-
-.meter:before /*Needless styling*/
-{
-	display:block;	
-	content:"";
-	position:absolute;
-	left:0px;
-	right:0px;
-	bottom:0px;
-	top:0px;
-	box-shadow:inset 0 0 10px #666666;
-	border-radius:10px;
-	z-index:2;
-}
-
-
-
-
-
-
-/*Input Value Range Slider*/
-input[type='range'] {
-    -webkit-appearance: none !important;
-	text-align: left; 	
-	width:200px;
-	height:10px;
-	border:2px solid  #393939;
-	background-color:#141414;
-	border-radius:10px;
-	margin-top:20px;
-}
-
-input[type='range']::-webkit-slider-thumb {
-    -webkit-appearance: none !important;
-	display:block; 
-	width:40px; 
-	height:50px; 
-	border:2px solid  #393939;
-	background-image: -webkit-linear-gradient(bottom, rgb(82,147,63) 55%, rgb(112,198,86) 100%);
-	border-radius:10px;
-	z-index:2;
-	position:relative;
-	border-radius:10px;
-}
-
-
-
-
-
-
-/*Scroll Switch Settings*/
-.scrollSwitch
-{
-	width:200px;
-	height:50px; 
-	position:relative; 
-	overflow:auto;	
-	border:2px solid #393939;
-	background-color:#141414;
-	border-radius:10px;
-}
-
-.scrollSwitch:before /*Sets the scroll width*/
-{
-	display:block; 
-	content:""; 
-	width:150%; 
-	height:50px;
-}
-
-.scrollSwitch:after /*This is the 'handle'*/
-{
-	display:block; 
-	content:attr(data-state);
-	 border-radius:8px;width:100px; 
-	 position:absolute; 
-	 left:100px;
-	 top:0px; 
-	 height:50px;
-	 text-align:center;
-	 line-height:50px;
-	 font-size:24px;
-	 text-transform:uppercase;
-}
-
-.scrollSwitch[data-state="on"]:after
-{	
-	background-image: -webkit-linear-gradient(bottom, rgb(82,147,63) 55%, rgb(112,198,86) 100%); 
-	color:#efff97;
-}
-
-.scrollSwitch[data-state="off"]:after
-{	
-	background-image: -webkit-linear-gradient(bottom, rgb(96,111,117) 54%, rgb(134,154,161) 91%); 
-	color:#ccedfe;
-}

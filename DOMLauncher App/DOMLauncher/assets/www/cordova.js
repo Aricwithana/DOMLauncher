@@ -6915,6 +6915,16 @@ window.cordova = require('cordova');
 		}, 'Launch', 'appManual', [params]);
 	};	
 	
+	//Battery Level Check
+	var Powerlevels = function() {};
+				
+	Powerlevels.prototype.check = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Powerlevels', 'check', [params]);
+	};
 	
 	
 	
@@ -6929,9 +6939,9 @@ window.cordova = require('cordova');
 	
 	var Fullscreen = function() {};
 				
-	Fullscreen.prototype.check = function() {
+	Fullscreen.prototype.check = function(func) {
 		window.plugins.fullscreencontrols.check({}, 
-			function(returnVal) {domCallbacks.fullscreenCheck(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Toggle Bar Failed Check ' + error)}); // Failure function
 	};
 	
@@ -6950,292 +6960,292 @@ window.cordova = require('cordova');
 	
 	var Ringer = function() {};
 	
-	Ringer.prototype.up = function(arg) {
-		window.plugins.volumecontrols.ringerUp({toast:arg || false}, 
-			function(returnVal) {domCallbacks.ringerUp(returnVal.returnVal);}, // Success function
+	Ringer.prototype.up = function(arg, func) {
+		window.plugins.volumecontrols.ringerUp({toast:(typeof arg === 'function' || !arg) ? false : arg}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}if(typeof arg == "function"){arg(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Ringer Up Failed' + error)}); // Failure function
 	};
 	
-	Ringer.prototype.down = function(arg) {
-		window.plugins.volumecontrols.ringerDown({toast:arg || false}, 
-			function(returnVal) {domCallbacks.ringerDown(returnVal.returnVal);}, // Success function
+	Ringer.prototype.down = function(arg, func) {
+		window.plugins.volumecontrols.ringerDown({toast:(typeof arg === 'function' || !arg) ? false : arg}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}if(typeof arg == "function"){arg(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Ringer Down Failed ' + error)}); // Failure function
 	};
 	
-	Ringer.prototype.percentage = function(val, arg) {
-		window.plugins.volumecontrols.ringerPercentage({percentage:val, toast:arg || false}, 
-			function(returnVal) {domCallbacks.ringerPercentage(returnVal.returnVal);}, // Success function
+	Ringer.prototype.percentage = function(val, arg, func) {
+		window.plugins.volumecontrols.ringerPercentage({percentage:val, toast:(typeof arg === 'function' || !arg) ? false : arg}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}if(typeof arg == "function"){arg(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Ringer Percentage Failed ' + error)}); // Failure function
 	};
 	
-	Ringer.prototype.silent = function() {
+	Ringer.prototype.silent = function(func) {
 		window.plugins.volumecontrols.ringerSilent({}, 
-			function() {domCallbacks.ringerSilent();}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Ringer Silent Failed ' + error)}); // Failure function
 	};
 	
-	Ringer.prototype.vibrate = function() {
+	Ringer.prototype.vibrate = function(func) {
 		window.plugins.volumecontrols.ringerVibrate({}, 
-			function() {domCallbacks.ringerVibrate();}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Ringer Vibrate Failed ' + error)}); // Failure function
 	};
 	
-	Ringer.prototype.normal = function(arg) {
-		window.plugins.volumecontrols.ringerNormal({value:arg || false}, 
-			function(returnVal) {domCallbacks.ringerNormal(returnVal.returnVal);}, // Success function
+	Ringer.prototype.normal = function(arg, func) {
+		window.plugins.volumecontrols.ringerNormal({value:(typeof arg === 'function' || !arg) ? false : arg}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}if(typeof arg == "function"){arg(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Ringer Normal Failed ' + error)}); // Failure function
 	};
 	
-	Ringer.prototype.check = function(arg) {
-		window.plugins.volumecontrols.ringerCheck({check:arg || false}, 
-			function(returnVal) {domCallbacks.ringerCheck(returnVal.returnVal);}, // Success function
+	Ringer.prototype.check = function(arg, func) {
+		window.plugins.volumecontrols.ringerCheck({check:(typeof arg === 'function' || !arg) ? false : arg}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}if(typeof arg == "function"){arg(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Ringer Check Failed ' + error)}); // Failure function
 	};
 	
-	Ringer.prototype.modecheck = function() {
+	Ringer.prototype.modecheck = function(func) {
 		window.plugins.volumecontrols.ringermodeCheck({}, 
-			function(returnVal) {domCallbacks.ringermodeCheck(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Mode Check Failed ' + error)}); // Failure function
 	};
 	
 	var Media = function() {};
 
-	Media.prototype.up = function(arg) {
-		window.plugins.volumecontrols.mediaUp({toast:arg || false}, 
-			function(returnVal) {domCallbacks.mediaUp(returnVal.returnVal);}, // Success function
+	Media.prototype.up = function(arg, func) {
+		window.plugins.volumecontrols.mediaUp({toast:(typeof arg === 'function' || !arg) ? false : arg}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}if(typeof arg == "function"){arg(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Media Up Failed ' + error)}); // Failure function
 	};
 	
-	Media.prototype.down = function(arg) {
-		window.plugins.volumecontrols.mediaDown({toast:arg || false}, 
-			function(returnVal) {domCallbacks.mediaDown(returnVal.returnVal);}, // Success function
+	Media.prototype.down = function(arg, func) {
+		window.plugins.volumecontrols.mediaDown({toast:(typeof arg === 'function' || !arg) ? false : arg}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}if(typeof arg == "function"){arg(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Media Down Failed ' + error)}); // Failure function
 	};
 	
-	Media.prototype.percentage = function(val, arg) {
-		window.plugins.volumecontrols.mediaPercentage({percentage:val, toast:arg || false}, 
-			function(returnVal) {domCallbacks.mediaPercentage(returnVal.returnVal);}, // Success function
+	Media.prototype.percentage = function(val, arg, func) {
+		window.plugins.volumecontrols.mediaPercentage({percentage:val, toast:(typeof arg === 'function' || !arg) ? false : arg}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}if(typeof arg == "function"){arg(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Media Percentage Failed ' + error)}); // Failure function
 	};
 	
-	Media.prototype.mute = function(arg) {
-		window.plugins.volumecontrols.mediaMute({toast:arg || false}, 
-			function() {domCallbacks.mediaMute();}, // Success function
+	Media.prototype.mute = function(arg, func) {
+		window.plugins.volumecontrols.mediaMute({toast:(typeof arg === 'function' || !arg) ? false : arg}, 
+			function() {if(typeof func == "function"){func(returnVal.returnVal);}if(typeof arg == "function"){arg(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Toggle Bar Failed ' + error)}); // Failure function
 	};
 	
-	Media.prototype.check = function(arg) {
-		window.plugins.volumecontrols.mediaCheck({check:arg || false}, 
-			function(returnVal) {domCallbacks.mediaCheck(returnVal.returnVal);}, // Success function
+	Media.prototype.check = function(arg, func) {
+		window.plugins.volumecontrols.mediaCheck({check:(typeof arg === 'function' || !arg) ? false : arg}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}if(typeof arg == "function"){arg(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Media Check Failed ' + error)}); // Failure function
 	};
 	
 	var Airplanemode = function() {}; 
 	
-	Airplanemode.prototype.check = function() {
+	Airplanemode.prototype.check = function(func) {
 		window.plugins.airplane.check({}, 
-			function(returnVal) {domCallbacks.airplaneCheck(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Airplane Check Failed ' + error)}); // Failure function
 	};
 	
-	Airplanemode.prototype.toggle = function() {
+	Airplanemode.prototype.toggle = function(func) {
 		window.plugins.airplane.toggle({}, 
-			function(returnVal) {domCallbacks.airplaneToggle(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Airplane Check Failed ' + error)}); // Failure function
 	};
 	
-	Airplanemode.prototype.enable = function() {
+	Airplanemode.prototype.enable = function(func) {
 		window.plugins.airplane.enable({}, 
-			function(returnVal) {domCallbacks.airplaneEnable(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Airplane Enable Failed ' + error)}); // Failure function
 	};
 	
-	Airplanemode.prototype.disable = function() {
+	Airplanemode.prototype.disable = function(func) {
 		window.plugins.airplane.disable({}, 
-			function(returnVal) {domCallbacks.airplaneDisable(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Airplane Disable Failed ' + error)}); // Failure function
 	};
 	
 	var Bluetooth = function() {};
 	
-	Bluetooth.prototype.check = function() {
+	Bluetooth.prototype.check = function(func) {
 		window.plugins.bluetoothcontrols.check({}, 
-			function(returnVal) {domCallbacks.bluetoothCheck(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('bluetooth Check Failed ' + error)}); // Failure function
 	};
 	
-	Bluetooth.prototype.toggle = function() {
+	Bluetooth.prototype.toggle = function(func) {
 		window.plugins.bluetoothcontrols.toggle({}, 
-			function(returnVal) {domCallbacks.bluetoothToggle(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('bluetooth Check Failed ' + error)}); // Failure function
 	};
 	
-	Bluetooth.prototype.enable = function() {
+	Bluetooth.prototype.enable = function(func) {
 		window.plugins.bluetoothcontrols.enable({}, 
-			function(returnVal) {domCallbacks.bluetoothEnable(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('bluetooth Enable Failed ' + error)}); // Failure function
 	};
 	
-	Bluetooth.prototype.disable = function() {
+	Bluetooth.prototype.disable = function(func) {
 		window.plugins.bluetoothcontrols.disable({}, 
-			function(returnVal) {domCallbacks.bluetoothDisable(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('bluetooth Disable Failed ' + error)}); // Failure function
 	};
 	
 	var Data = function() {}; 
 	
-	Data.prototype.check = function() {
+	Data.prototype.check = function(func) {
 		window.plugins.dataconnection.check({}, 
-			function(returnVal) {domCallbacks.dataconnectionCheck(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Data Connection Check Failed ' + error)}); // Failure function
 	};
 	
-	Data.prototype.enable = function() {
+	Data.prototype.enable = function(func) {
 		window.plugins.dataconnection.enable({}, 
-			function(returnVal) {domCallbacks.dataconnectionEnable(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Data Connection Enable Failed ' + error)}); // Failure function
 	};
 	
-	Data.prototype.disable = function() {
+	Data.prototype.disable = function(func) {
 		window.plugins.dataconnection.disable({}, 
-			function(returnVal) {domCallbacks.dataconnectionDisable(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Data Connection Disable Failed ' + error)}); // Failure function
 	};
 	
-	Data.prototype.toggle = function() {
+	Data.prototype.toggle = function(func) {
 		window.plugins.dataconnection.toggle({}, 
-			function(returnVal) {domCallbacks.dataconnectionToggle(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Data Connection Toggle Failed ' + error)}); // Failure function
 	};
 	
 	var Fileaccess = function() {};
 	
-	Fileaccess.prototype.save = function(object, path) {
+	Fileaccess.prototype.save = function(object, path, func) {
 		window.plugins.simplefile.saveFile({content:object, file:path}, 			
-			function(){},
+			function(){if(typeof func == "function"){func();}},
 			function(error) {alert('Simple Save Failed ' + error);}); 	
 	};
 	
-	Fileaccess.prototype.access = function(path) {
+	Fileaccess.prototype.access = function(path, func) {
 		window.plugins.simplefile.openFile({file:path}, 			
-			function(returnVal){domCallbacks.simplefileOpen(returnVal.returnVal);},
+			function(returnVal){if(typeof func == "function"){func(returnVal.returnVal);}},
 			function(error) {alert('Simple Save Failed ' + error);}); 	
 	};
 	
 	
 	var Cellsignal = function() {};
 	
-	Cellsignal.prototype.enable = function() {
+	Cellsignal.prototype.enable = function(func) {
 		window.plugins.cellularsignal.enable({}, 
-			function(returnVal) {domCallbacks.cellularsignalEnable(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Cellular Signal Enable Failed ' + error)}); // Failure function
 	};
 		
-	Cellsignal.prototype.disable = function() {
+	Cellsignal.prototype.disable = function(func) {
 		window.plugins.cellularsignal.disable({}, 
-			function(returnVal) {domCallbacks.cellularsignalDisable(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Cellular Signal Disable Failed ' + error)}); // Failure function
 	};
 	
 	var Wifi = function() {};
 	
-	Wifi.prototype.check = function() {
+	Wifi.prototype.check = function(func) {
 		window.plugins.wificontrols.check({}, 
-			function(returnVal) {domCallbacks.wificontrolsCheck(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Wifi Controls Check Failed ' + error)}); // Failure function
 	};
 	
-	Wifi.prototype.enable = function() {
+	Wifi.prototype.enable = function(func) {
 		window.plugins.wificontrols.enable({}, 
-			function(returnVal) {domCallbacks.wificontrolsEnable(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Wifi Controls Enable Failed ' + error)}); // Failure function
 	};
 	
-	Wifi.prototype.disable = function() {
+	Wifi.prototype.disable = function(func) {
 		window.plugins.wificontrols.disable({}, 
-			function(returnVal) {domCallbacks.wificontrolsDisable(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Wifi Controls Disable Failed ' + error)}); // Failure function
 	};
 	
-	Wifi.prototype.toggle = function() {
+	Wifi.prototype.toggle = function(func) {
 		window.plugins.wificontrols.toggle({}, 
-			function(returnVal) {domCallbacks.wificontrolsToggle(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Wifi Controls Toggle Failed ' + error)}); // Failure function
 	};
 	
 	var Missed = function() {};
 	
-	Missed.prototype.sms = function() {
+	Missed.prototype.sms = function(func) {
 		window.plugins.missedcommunications.sms({}, 
-			function(returnVal) {domCallbacks.missedSMS(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Missed SMS Failed ' + error)}); // Failure function
 	};
 	
-	Missed.prototype.calls = function() {
+	Missed.prototype.calls = function(func) {
 		window.plugins.missedcommunications.calls({}, 
-			function(returnVal) {domCallbacks.missedCalls(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
 	};
 	
 	var Brightness = function() {};
 	
-	Brightness.prototype.valuecheck = function() {
+	Brightness.prototype.valuecheck = function(func) {
 		window.plugins.screenbrightness.checkValue({}, 
-			function(returnVal) {domCallbacks.brightnessvalueCheck(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Screen Brightness Value CHeckFailed ' + error)}); // Failure function
 	};
 	
-	Brightness.prototype.modecheck = function() {
+	Brightness.prototype.modecheck = function(func) {
 		window.plugins.screenbrightness.checkMode({}, 
-			function(returnVal) {domCallbacks.brightnessmodeCheck(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Screen Brightness Mode Check Failed ' + error)}); // Failure function
 	};
 	
-	Brightness.prototype.autoenable = function() {
+	Brightness.prototype.autoenable = function(func) {
 		window.plugins.screenbrightness.autoEnable({}, 
-			function(returnVal) {domCallbacks.brightnessautoEnable(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Auto Brightness Enable Failed ' + error)}); // Failure function
 	};
 	
-	Brightness.prototype.autodisable = function() {
+	Brightness.prototype.autodisable = function(func) {
 		window.plugins.screenbrightness.autoDisable({}, 
-			function(returnVal) {domCallbacks.brightnessautoDisable(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Auto Brightness Disabled Failed ' + error)}); // Failure function
 	};
 	
-	Brightness.prototype.autotoggle = function() {
+	Brightness.prototype.autotoggle = function(func) {
 		window.plugins.screenbrightness.autoToggle({}, 
-			function(returnVal) {domCallbacks.brightnessautoToggle(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Auto Brightness Toggle Failed ' + error)}); // Failure function
 	};
 	
-	Brightness.prototype.value = function(arg) {
+	Brightness.prototype.value = function(arg, func) {
 		window.plugins.screenbrightness.value({value:arg}, 
-			function(returnVal) {domCallbacks.brightnessValue(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}if(typeof arg == "function"){arg(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Screen Brightness Value Failed ' + error)}); // Failure function
 	};
 	
 	var Apps = function() {};
 	
-	Apps.prototype.generatelist = function() {
+	Apps.prototype.generatelist = function(func) {
 		window.plugins.applist.appList({}, 
-			function(returnVal) {domCallbacks.generateappList(returnVal.returnVal);}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Generate App List Failed ' + error)}); // Failure function
 	};
 
-	Apps.prototype.savelist = function() {
+	Apps.prototype.savelist = function(func) {
 		window.plugins.applist.appList({}, 
-			function(returnVal) {window.plugins.fileaccess.save(returnVal.returnVal, "/mnt/sdcard/DOMLauncher/settings/applist.txt");}, // Success function
+			function(returnVal) {window.plugins.fileaccess.save(returnVal.returnVal, "/mnt/sdcard/DOMLauncher/settings/applist.txt"); if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Generate App List Failed ' + error)}); // Failure function
 	};
 
-	Apps.prototype.generateicons = function() {
+	Apps.prototype.generateicons = function(func) {
 		window.plugins.applist.generateIcons({}, 
-			function(returnVal) {domCallbacks.generateappIcons();}, // Success function
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Generate App Icons Failed ' + error)}); // Failure function
 	};
 	
-	Apps.prototype.generatecss = function() {
+	Apps.prototype.generatecss = function(func) {
 		window.plugins.applist.appList({},
 				function(returnVal) {
 					
@@ -7253,36 +7263,37 @@ window.cordova = require('cordova');
 						document.getElementsByTagName('head')[0].appendChild(newStyle);
 						var styleText = newStyle.innerHTML;
 						window.plugins.fileaccess.save(styleText, "/mnt/sdcard/DOMLauncher/settings/icons/icons.css");
+						if(typeof func == "function"){func(returnVal.returnVal);}
 					}, // Success function
 				function() {alert('Refresh Icons Failed')}); // Failure function	
 	};
 	
 	var Launching = function() {};
 	
-	Launching.prototype.app = function(object) {
+	Launching.prototype.app = function(object, func) {
 		var packageChoice = object.getAttribute('data-appPackage');  //com.class.name
 		var activityChoice = object.getAttribute('data-appActivity') || "";  //.ActivityCall
 		window.plugins.launch.app({package:packageChoice, activity:packageChoice+activityChoice}, 
-			function() {}, // Success function
+			function() {if(typeof func == "function"){func();}}, // Success function
 			function(error) {alert('Application/Activity Launch Failed ' + error)}); // Failure function
 	};
 	
-	Launching.prototype.setting = function(object) {
+	Launching.prototype.setting = function(object, func) {
 		var settingsChoice = object.getAttribute('data-setting') || false;
 		window.plugins.launch.setting({setting:settingsChoice}, 
-			function() {}, // Success function
+			function() {if(typeof func == "function"){func();}}, // Success function
 			function(error) {alert('Setting Launch Failed ' + error)}); // Failure function
 	};
 	
-	Launching.prototype.manualapp = function(package, activity) {
+	Launching.prototype.manualapp = function(package, activity, func) {
 		window.plugins.launch.app({package:package, activity:activity}, 
-			function() {}, // Success function
+			function() {if(typeof func == "function"){func();}if(typeof activity == "function"){activity();}}, // Success function
 			function(error) {alert('Manual Application/Activity Launch Failed ' + error)}); // Failure function
 	};
 	
-	Launching.prototype.manualsetting = function(arg) {
+	Launching.prototype.manualsetting = function(arg, func) {
 		window.plugins.launch.setting({setting:arg}, 
-			function() {}, // Success function
+			function() {if(typeof func == "function"){func();}}, // Success function
 			function(error) {alert('Manual Setting Launch Failed ' + error)}); // Failure function
 	};
 	//img_domLogo.png
@@ -7360,7 +7371,14 @@ window.cordova = require('cordova');
 	
 	
 	
+	//Battery Call Wrapper
+	var Power = function() {};
 	
+	Power.prototype.check = function(func) {
+		window.plugins.powerlevels.check({}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
+			function(error) {alert('Battery Check Failed ' + error)}); // Failure function
+	};
 	
 	
 	
@@ -7401,6 +7419,7 @@ window.cordova = require('cordova');
 		window.plugins.screenbrightness = new Screenbrightness();
 		window.plugins.applist = new Applist();
 		window.plugins.launch = new Launch();
+		window.plugins.powerlevels = new Powerlevels();
 	
 		window.plugins.fullscreen = new Fullscreen();
 		window.plugins.ringer = new Ringer();
@@ -7416,6 +7435,7 @@ window.cordova = require('cordova');
 		window.plugins.apps = new Apps();
 		window.plugins.launching = new Launching();
 		window.plugins.domlsettings = new DOMLSettings();
+		window.plugins.power = new Power();
 	
 	}); 
 	

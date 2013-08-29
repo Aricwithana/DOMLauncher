@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Environment;
 
@@ -23,7 +24,7 @@ public class DOMLauncher extends DroidGap {
 		
 		File sdcard = Environment.getExternalStorageDirectory();
 		File configFile = new File(sdcard,"/DOMLauncher/settings/config.txt");     
-	  
+
 		if(configFile.exists()){
 			try {	     
 				FileInputStream is = new FileInputStream(configFile);
@@ -36,11 +37,18 @@ public class DOMLauncher extends DroidGap {
 
 				String activeTheme = jsnobject.getString("active");
 				String fullscreen = jsnobject.getString("fullscreen");  
+				String screenMode = jsnobject.getString("screen");  
 				
 				File themeLocation = new File(sdcard,"/DOMLauncher/DOMods/"+activeTheme+"/index.html");
 				
 				if(themeLocation.exists()){  
 					super.loadUrl("file:///sdcard/DOMLauncher/DOMods/"+activeTheme+"/index.html");
+					if(screenMode.equals("landscape")){ 
+						super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+					}
+					if(screenMode.equals("portrait")){ 
+						super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+					}  
 					if(fullscreen.equals("true")){ 
 						getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 						WindowManager.LayoutParams.FLAG_FULLSCREEN | 

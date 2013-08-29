@@ -13,6 +13,7 @@ import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 
 import android.os.Environment;
+import android.util.Log;
 
 public class Simplefile extends CordovaPlugin {
 
@@ -51,6 +52,7 @@ public class Simplefile extends CordovaPlugin {
 				is.read(buffer);
 				is.close();
 				String text = new String(buffer);
+				Log.d(id, "Open:" + text);
 				callbackContext.success(new JSONObject().put("returnVal", text));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block	

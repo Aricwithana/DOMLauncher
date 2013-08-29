@@ -71,7 +71,7 @@ public class Screenbrightness extends CordovaPlugin {
 				int value = args.getJSONObject(0).getInt("value");
 				float valueFloat = args.getJSONObject(0).getInt("value");
 				float floater = valueFloat/255;
-				if(value > 0){
+				if(value > 0 && value <= 255){
 					Intent intent = new Intent(this.cordova.getActivity(), com.awaa.domlauncher.DummyBrightnessActivity.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //this is important
 					//in the next line 'brightness' should be a float number between 0.0 and 1.0
@@ -80,7 +80,9 @@ public class Screenbrightness extends CordovaPlugin {
 					this.cordova.getActivity().startActivity(intent);
 					
 					callbackContext.success(new JSONObject().put("returnVal", value));
-				}
+				}else{
+					callbackContext.success(new JSONObject().put("returnVal", null));					
+				}	
 			}	
 		} catch (SettingNotFoundException e) {
 			// TODO Auto-generated catch block

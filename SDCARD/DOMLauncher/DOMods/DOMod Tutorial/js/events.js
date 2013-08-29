@@ -1,65 +1,70 @@
-document.getElementById("close_appPanel").addEventListener("click", hs_appPanel, false);
-document.getElementById("appPanel_Show").addEventListener("click", hs_appPanel, false);
+// JavaScript Document
 
-function hs_appPanel(){
-	if(document.getElementById('appPanel').classList.contains('visible') === true){
-		document.getElementById('appPanel').className = "";
-		setTimeout(function(){document.getElementById('appPanel').style.display = "none";}, 500);
+//App Launch Event
+$(document).on('click', '*[data-appPackage]', function(){
+	window.plugins.launching.app(this);
+});
+
+
+//Hide Show App Panel
+$(document).on('click', '#close_appPanel, #appPanel_Show', function(){
+	if($('#appPanel').hasClass('visible')){
+		$('#appPanel').removeClass('visible');
+		setTimeout(function(){$('#appPanel').css('display', 'none');}, 500);
 	}else{
-		document.getElementById('appPanel').style.display = "block";
-		setTimeout(function(){document.getElementById('appPanel').className = "visible";}, 10);
+		$('#appPanel').css('display', 'block');
+		setTimeout(function(){$('#appPanel').addClass('visible');}, 10);
 	}
-}
+});
 
-document.getElementById("refresh_appPanel").addEventListener("click", refresh_appPanel, false);
 
-function refresh_appPanel(){
-	window.plugins.apps.generatelist();
+//Refresh Apps
+$(document).on('click', '#refresh_appPanel', function(){ 
+	window.plugins.apps.generatelist(suc_generateappList);
 	window.plugins.apps.generateicons();	
 	window.plugins.apps.generatecss();	
-}
+});
 
 
+//Main Control Events
+$(document).on('click', '#btn_ringerDown', function(){ window.plugins.ringer.down(true, suc_ringerDown); });
+$(document).on('click', '#btn_ringerUp', function(){ window.plugins.ringer.up(true, suc_ringerUp); });
+$(document).on('click', '#btn_ringerSilent', function(){ window.plugins.ringer.silent(suc_ringerSilent); });
+$(document).on('click', '#btn_ringerVibrate', function(){ window.plugins.ringer.vibrate(suc_ringerVibrate); });
+$(document).on('click', '#btn_mediaDown', function(){ window.plugins.media.down(true); });
+$(document).on('click', '#btn_mediaUp', function(){ window.plugins.media.up(true); });
+$(document).on('click', '#btn_bluetooth', function(){ window.plugins.bluetooth.toggle(suc_bluetoothToggle); });
+$(document).on('click', '#btn_wifi', function(){ window.plugins.wifi.toggle(suc_wificontrolsToggle); });
+$(document).on('click', '#btn_data', function(){ window.plugins.data.toggle(suc_dataconnectionToggle); });
+$(document).on('click', '#btn_fullscreen', function(){ window.plugins.fullscreen.toggle(); });
+$(document).on('click', '#btn_brightAuto', function(){window.plugins.brightness.autotoggle(suc_brightnessautoToggle);});
 
-(function() {
-  var httpRequest;
-  document.getElementById("weatherWrapper").onclick = function() { 
-		window.plugins.simplefile.openFile({file:'/mnt/sdcard/DOMLauncher/settings/config.txt'}, 			
-			function(returnVal){
-				var returnArray = JSON.parse(returnVal.returnVal);
-				var city = returnArray.city; 
-		
-				makeRequest('http://api.openweathermap.org/data/2.5/weather?q='+city+'&units=imperial&APPID=7687bs878b9nqcn87cs78098q222788y'); 
-			 
-				function makeRequest(url) {
-					httpRequest = new XMLHttpRequest();
-					if (!httpRequest) {
-					  alert('Giving up :( Probably no internet access');
-					  return false;
-					}
-					httpRequest.onreadystatechange = alertContents;
-					httpRequest.open('GET', url);
-					httpRequest.send();
-				}
-			 
-				function alertContents() {
-					if (httpRequest.readyState === 4) {
-						if (httpRequest.status === 200) {
-							var weatherArray = JSON.parse(httpRequest.responseText);
-							var weatherWrapper = document.getElementById('weatherWrapper');
-							var city = weatherArray.list[0].name ;
-							var temp = weatherArray.list[0].main.temp ;
-							weatherWrapper.dataset.appname = city;
-							weatherWrapper.dataset.temp = Math.round(temp, 1)+"°F";
-						} else {
-							alert('Weather Request Error-Probably No Internet Access');
-						}
-					}
-				}
-			},
-			function(error) {alert('DOMLSettings Change Acive DOMod Error ' + error);}); 	
-		};
-})();
+/**
+*	Brightness Controls
+*		There is no default up/down for the brightness controls.
+*		This is done on purpose because of the large range of
+*		values for brightness.  More info, check the wiki.
+*		Below shows off turning the value range into a 1-10 range.
+*/
 
+$(document).on('click', '#btn_brightDown', function(){
+	var current = parseInt($('#btn_brightUp').attr('data-bright'));	
+	var value = Math.round(((current-1) *.1)*255)
+	$('#btn_displayAuto').removeAttr('enabled').attr('disabled', '');
 
+	if(value > 0){
+		window.plugins.brightness.value(value);
+		$('#btn_brightDown, #btn_brightUp').attr('data-bright', current-1);
+	}
+});
+
+$(document).on('click', '#btn_brightUp', function(){
+	var current = parseInt($('#btn_brightUp').attr('data-bright'));	
+	var value = Math.round(((current+1) *.1)*255);
+	$('#btn_displayAuto').removeAttr('enabled').attr('disabled', '');
+	if(value <= 255){
+		window.plugins.brightness.value(value);
+		$('#btn_brightUp, #btn_brightDown').attr('data-bright', current+1);
+	}
+});
 

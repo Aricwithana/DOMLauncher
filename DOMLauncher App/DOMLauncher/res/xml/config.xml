@@ -66,6 +66,7 @@
 <plugin name="Missedcommunications" value="com.phonegap.Missedcommunications"/>
 <plugin name="Wificontrols" value="com.phonegap.Wificontrols"/>
 <plugin name="Bluetoothcontrols" value="com.phonegap.Bluetoothcontrols"/>
+<plugin name="Powerlevels" value="com.phonegap.Powerlevels"/>
 </plugins>
 </cordova>
 

@@ -1,177 +1,18 @@
 /*Document Ready*/
-document.addEventListener("deviceready", themeLoaded, false);
+document.addEventListener("deviceready", domodLoaded, false);
 
 /*Document Ready Success Function*/
-function themeLoaded(){
-	//window.addEventListener("batterystatus", domCallbacks.battery, false);
+function domodLoaded(){
+	window.addEventListener("batterystatus", suc_battery, false);
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("resume", onResume, false);
 }
 /*End Document Ready*/
 
-
+//Preset Callbacks for Backbutton, Wifi/Celluar Signal Returns.
 var domCallbacks = {
-	//Back Button Logic
+	//Back Button
 	backButton: function(){
-		
-	},
-	
-	//Full Screen Controls
-	fullscreenCheck: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	ringerUp: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-	
-		/*End Theme Specific Editible Code*/
-	},
-	ringerDown: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-	
-		/*End Theme Specific Editible Code*/
-	},
-	ringerPercentage: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	ringerSilent: function(){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	ringerVibrate: function(){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	ringerNormal: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	mediaUp: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	mediaDown: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	mediaPercentage: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	mediaCheck: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	ringerCheck: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	ringermodeCheck: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	airplaneToggle: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	airplaneCheck: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	airplaneEnable: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	airplaneDisable: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	bluetoothToggle: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-	
-		/*End Theme Specific Editible Code*/
-	},
-	bluetoothCheck: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	bluetoothEnable: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-		
-		/*End Theme Specific Editible Code*/
-	},
-	bluetoothDisable: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	
-	//Data Connection
-	dataconnectionToggle: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-	
-		/*End Theme Specific Editible Code*/
-	},
-	dataconnectionCheck: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	dataconnectionEnable: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	dataconnectionDisable: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	cellularsignalEnable: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	cellularsignalDisable: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	
-	//Wifi Controls
-	wificontrolsToggle: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	wificontrolsCheck: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	wificontrolsEnable: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	wificontrolsDisable: function(returnVal){
 		/*Begin Theme Specific Editible Code*/
 
 		/*End Theme Specific Editible Code*/
@@ -193,124 +34,370 @@ var domCallbacks = {
 		/*Begin Theme Specific Editible Code*/
 
 		/*End Theme Specific Editible Code*/		
-	},
-	
-	//Missed Calls/SMS
-	missedSMS: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	missedCalls: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-
-	//Screen Brightness
-	brightnessvalueCheck: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	brightnessmodeCheck: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	brightnessautoEnable: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-		
-		/*End Theme Specific Editible Code*/
-	},
-	brightnessautoDisable: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-		
-		/*End Theme Specific Editible Code*/
-	},
-	brightnessautoToggle: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-		
-		/*End Theme Specific Editible Code*/
-	},
-	brightnessValue: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	
-	//File Access
-	simplefileOpen: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	
-	//Create App Icons and List
-	generateappList: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-			var previous_appIntent = document.querySelectorAll('*[appPackage]');
-			
-			for (var i = 0; i < previous_appIntent.length; i++)
-			{
-				previous_appIntent[i].removeEventListener("click", function(){window.plugins.launching.app(this);}, false);
-			}
-			
-			var appListArray = JSON.parse(returnVal); 
-			var appPanel = document.getElementById('appPanel_Content'); 
-			appPanel.innerHTML = ''; 
-			
-			var dialer = document.createElement('a');
-			dialer.setAttribute('class', 'app dialer');
-			dialer.setAttribute('href', 'tel:');
-			dialer.setAttribute('data-appName', 'Dialer');
-			appPanel.appendChild(dialer);
-		
-			for(var ii = 0; ii < appListArray.length; ii++) {  
-				var appInfo = appListArray[ii];
-				var appName = appInfo.name; 
-				var appPackage = appInfo.package; 
-				var appActivity = appInfo.activity;
-			
-				var newdiv = document.createElement('div');
-				newdiv.setAttribute('class', 'app');
-				newdiv.setAttribute('appPackage', appPackage);
-				newdiv.setAttribute('appActivity', appActivity);
-				newdiv.setAttribute('data-appName', appName);
-				appPanel.appendChild(newdiv);
-			}
-			
-			var final_appIntent = document.querySelectorAll('*[appPackage]');
-			
-			for (var iii = 0; iii < final_appIntent.length; iii++)
-			{
-				final_appIntent[iii].addEventListener("click", function(){window.plugins.launching.app(this);}, false);
-			}
-		/*End Theme Specific Editible Code*/
-	},
-	generateappIcons: function(){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	
-	//Battery Information
-	battery: function(info){
-		/*Begin Theme Specific Editible Code*/
-			if(info.isPlugged !== false){
-			}else{
-			}
-		/*End Theme Specific Editible Code*/
-	},
-	
-	//DOMLauncher Settings
-	domodList: function(returnVal){
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	}
+	}	
 }
 
+
+
+/**
+*	Plugin Success Callbacks.
+*		Not all of these calls are used in this DOMod.  They are only here
+*		for quick reference.  Each API call has success call feature.
+**/
+
+//Full Screen Controls
+function suc_fullscreenCheck(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_ringerUp(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Ringer Down
+function suc_ringerDown(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Set Ringer by Percentage
+function suc_ringerPercentage(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Ringer Silent
+function suc_ringerSilent(){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_ringerVibrate(){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_ringerNormal(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_mediaUp(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_mediaDown(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_mediaPercentage(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_mediaCheck(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_ringerCheck(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_ringermodeCheck(returnVal){
+	/*Begin Theme Specific Editible Code*/
+	
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_airplaneToggle(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_airplaneCheck(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_airplaneEnable(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_airplaneDisable(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_bluetoothToggle(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_bluetoothCheck(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_bluetoothEnable(returnVal){
+	/*Begin Theme Specific Editible Code*/
+	
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_bluetoothDisable(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Data Connection
+function suc_dataconnectionToggle(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_dataconnectionCheck(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_dataconnectionEnable(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_dataconnectionDisable(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_cellularsignalEnable(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_cellularsignalDisable(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+	
+//Wifi Controls
+function suc_wificontrolsToggle(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_wificontrolsCheck(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_wificontrolsEnable(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_wificontrolsDisable(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+	
+//Missed Calls/SMS
+function suc_missedSMS(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_missedCalls(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Screen Brightness
+function suc_brightnessvalueCheck(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_brightnessmodeCheck(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_brightnessautoEnable(returnVal){
+	/*Begin Theme Specific Editible Code*/
+	
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_brightnessautoDisable(returnVal){
+	/*Begin Theme Specific Editible Code*/
+	
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_brightnessautoToggle(returnVal){
+	/*Begin Theme Specific Editible Code*/
+	
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_brightnessValue(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+	
+//File Access
+function suc_simplefileOpen(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+	
+//Create App Icons and List
+function suc_generateappList(returnVal){
+	/*Begin Theme Specific Editible Code*/
+		var previous_appIntent = document.querySelectorAll('*[appPackage]');
+		
+		for (var i = 0; i < previous_appIntent.length; i++)
+		{
+			previous_appIntent[i].removeEventListener("click", function(){window.plugins.launching.app(this);}, false);
+		}
+		
+		var appListArray = JSON.parse(returnVal); 
+		var appPanel = document.getElementById('appPanel_Content'); 
+		appPanel.innerHTML = ''; 
+		
+		var dialer = document.createElement('a');
+		dialer.setAttribute('class', 'app dialer');
+		dialer.setAttribute('href', 'tel:');
+		dialer.setAttribute('data-appName', 'Dialer');
+		appPanel.appendChild(dialer);
+	
+		for(var ii = 0; ii < appListArray.length; ii++) {  
+			var appInfo = appListArray[ii];
+			var appName = appInfo.name; 
+			var appPackage = appInfo.package; 
+			var appActivity = appInfo.activity;
+		
+			var newdiv = document.createElement('div');
+			newdiv.setAttribute('class', 'app');
+			newdiv.setAttribute('appPackage', appPackage);
+			newdiv.setAttribute('appActivity', appActivity);
+			newdiv.setAttribute('data-appName', appName);
+			appPanel.appendChild(newdiv);
+		}
+		
+		var final_appIntent = document.querySelectorAll('*[appPackage]');
+		
+		for (var iii = 0; iii < final_appIntent.length; iii++)
+		{
+			final_appIntent[iii].addEventListener("click", function(){window.plugins.launching.app(this);}, false);
+		}
+	/*End Theme Specific Editible Code*/
+}
+	
+// App Icons Generation	
+function suc_generateappIcons(){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+	
+//Battery Information
+function suc_battery(info){
+	/*Begin Theme Specific Editible Code*/
+		if(info.isPlugged !== false){
+		}else{
+		}
+	/*End Theme Specific Editible Code*/
+}
+	
+//DOMLauncher Settings
+function suc_domodList(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
+
+//Full Screen Controls
+function suc_generateCSS(returnVal){
+	/*Begin Theme Specific Editible Code*/
+
+	/*End Theme Specific Editible Code*/
+}
 
 
 
