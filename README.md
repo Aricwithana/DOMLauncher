@@ -3,7 +3,7 @@ DOMLauncher
 
 Cordova Powered Android App Launcher Replacement. 
 
-1.0.3 Release! 
+1.0.4 Release! 
 
 Before going any further understand a couple key points:
 
@@ -55,7 +55,7 @@ If anyone wants to contribute!  Go right ahead!
 
 Credits & Thanks:
 
-Cordova/Phonegap IRC Peoples:  Devgeeks, EionRobb & MitchW.  Without these main three this would not exist.
+Cordova/Phonegap IRC Peoples:  Devgeeks, EionRobb & MitchW.  Without these main three this would not exist.  There are others but so many to name.
 DOMLauncher Font:  http://www.levien.com/type/myfonts/inconsolata.html  
 Cordova Developers
 
