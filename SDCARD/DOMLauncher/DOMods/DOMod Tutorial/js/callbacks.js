@@ -6,8 +6,8 @@ var clockTimer = null;
 var missedcallsTimer = null;
 var missedsmsTimer = null;
 
-$(document).ready(function(){domodLoaded();});
-//document.addEventListener("deviceready", domodLoaded, false);
+//$(document).ready(function(){domodLoaded();});
+document.addEventListener("deviceready", domodLoaded, false);
 
 /*Document Ready Success Function*/
 function domodLoaded(){
