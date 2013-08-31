@@ -37,16 +37,16 @@ public class DOMLauncher extends DroidGap {
 
 				String activeTheme = jsnobject.getString("active");
 				String fullscreen = jsnobject.getString("fullscreen");  
-				String screenMode = jsnobject.getString("screen");  
+				String orientation = jsnobject.getString("orientation");  
 				
 				File themeLocation = new File(sdcard,"/DOMLauncher/DOMods/"+activeTheme+"/index.html");
 				
 				if(themeLocation.exists()){  
 					super.loadUrl("file:///sdcard/DOMLauncher/DOMods/"+activeTheme+"/index.html");
-					if(screenMode.equals("landscape")){ 
+					if(orientation.equals("landscape")){ 
 						super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 					}
-					if(screenMode.equals("portrait")){ 
+					if(orientation.equals("portrait")){ 
 						super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 					}  
 					if(fullscreen.equals("true")){ 

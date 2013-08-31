@@ -6926,11 +6926,40 @@ window.cordova = require('cordova');
 		}, 'Powerlevels', 'check', [params]);
 	};
 	
+	//Orientation Controls
+	var Orientationcontrols = function() {};
+				
+	Orientationcontrols.prototype.rotate = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Orientationcontrols', 'rotate', [params]);
+	};
 	
+	Orientationcontrols.prototype.portrait = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Orientationcontrols', 'portrait', [params]);
+	};
 	
+	Orientationcontrols.prototype.landscape = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Orientationcontrols', 'landscape', [params]);
+	};
 	
-	
-	
+	Orientationcontrols.prototype.check = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Orientationcontrols', 'check', [params]);
+	};
 	
 	
 	//Wrappers Begin
@@ -7380,10 +7409,33 @@ window.cordova = require('cordova');
 			function(error) {alert('Battery Check Failed ' + error)}); // Failure function
 	};
 	
+	//Orientation Call Wrapper
+	var Screenorient = function() {};
 	
+	Screenorient.prototype.check = function(func) {
+		window.plugins.orientationcontrols.check({}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
+			function(error) {alert('Orientation Check Failed ' + error)}); // Failure function
+	};
 	
+	Screenorient.prototype.rotate = function(func) {
+		window.plugins.orientationcontrols.rotate({}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
+			function(error) {alert('Orientation Check Failed ' + error)}); // Failure function
+	};
 	
+	Screenorient.prototype.landscape = function(func) { 
+		window.plugins.orientationcontrols.landscape({}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
+			function(error) {alert('Orientation Check Failed ' + error)}); // Failure function
+	};
 	
+	Screenorient.prototype.portrait = function(func) {
+	window.plugins.orientationcontrols.portrait({}, 
+		function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
+		function(error) {alert('Orientation Check Failed ' + error)}); // Failure function
+	};
+
 	
 	
 	
@@ -7420,6 +7472,7 @@ window.cordova = require('cordova');
 		window.plugins.applist = new Applist();
 		window.plugins.launch = new Launch();
 		window.plugins.powerlevels = new Powerlevels();
+		window.plugins.orientationcontrols = new Orientationcontrols();
 	
 		window.plugins.fullscreen = new Fullscreen();
 		window.plugins.ringer = new Ringer();
@@ -7436,6 +7489,7 @@ window.cordova = require('cordova');
 		window.plugins.launching = new Launching();
 		window.plugins.domlsettings = new DOMLSettings();
 		window.plugins.power = new Power();
+		window.plugins.screenorient = new Screenorient();
 	
 	}); 
 	

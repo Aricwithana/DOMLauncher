@@ -38,6 +38,10 @@ $(document).on('click', '#btn_wifi', function(){ window.plugins.wifi.toggle(suc_
 $(document).on('click', '#btn_data', function(){ window.plugins.data.toggle(suc_dataconnectionToggle); });
 $(document).on('click', '#btn_fullscreen', function(){ window.plugins.fullscreen.toggle(); });
 $(document).on('click', '#btn_brightAuto', function(){window.plugins.brightness.autotoggle(suc_brightnessautoToggle);});
+$(document).on('click', '#btn_portrait', function(){window.plugins.screenorient.portrait();});
+$(document).on('click', '#btn_landscape', function(){window.plugins.screenorient.landscape();});
+$(document).on('click', '#btn_rotate', function(){window.plugins.screenorient.rotate();});
+
 
 /**
 *	Brightness Controls

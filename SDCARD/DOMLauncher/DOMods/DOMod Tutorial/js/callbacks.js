@@ -35,7 +35,7 @@ function domodLoaded(){
 	window.plugins.brightness.modecheck(suc_brightnessmodeCheck);
 	window.plugins.fullscreen.check(suc_fullscreenCheck);
 	window.plugins.apps.generatelist(suc_generateappList);
-	
+	window.plugins.screenorient.check(suc_orientationCheck);
 	//Timers
 	var clockTimer = setInterval(clock, 1000 );	
 	var missedcallsTimer = setInterval(window.plugins.missed.calls(suc_missedCalls), 5000);
@@ -307,7 +307,12 @@ function suc_powerlevelCheck(returnVal){
 	$('#meter_battery').css('background-color', 'rgba('+(100-returnVal)+','+returnVal+',0,.75)');
 }
 	
-
+//Current Battery Level.	
+function suc_orientationCheck(returnVal){
+	if(returnVal === "portrait"){$('#btn_portrait').removeAttr('disabled').attr('enabled', '');}
+	if(returnVal === "landscape"){$('#btn_landscape').removeAttr('disabled').attr('enabled', '');}
+	if(returnVal === "rotate"){$('#btn_rotate').removeAttr('disabled').attr('enabled', '');}
+}
 
 //Weather Call Example
 (function() {
