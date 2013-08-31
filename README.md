@@ -1,9 +1,12 @@
 DOMLauncher
 ===========
 
+Visit the new site! http://www.domlauncher.com
+
+
 Cordova Powered Android App Launcher Replacement. 
 
-1.0.4 Release! 
+1.0.5 Release! 
 
 Before going any further understand a couple key points:
 
@@ -25,7 +28,7 @@ Personally, I love LCARS.
 
 Instructions:
 
-Compile with Eclipse and intall on the device.
+Compile with Eclipse and intall on the device or copy apk to device and install.
 
 The DOMLauncher folder within the SD CARD folder, just copy to your sdcard. 
 
@@ -58,5 +61,4 @@ Credits & Thanks:
 Cordova/Phonegap IRC Peoples:  Devgeeks, EionRobb & MitchW.  Without these main three this would not exist.  There are others but so many to name.
 DOMLauncher Font:  http://www.levien.com/type/myfonts/inconsolata.html  
 Cordova Developers
-
-Electricity
+iDangero.us for their swiper
