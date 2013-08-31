@@ -62,3 +62,5 @@ Cordova/Phonegap IRC Peoples:  Devgeeks, EionRobb & MitchW.  Without these main 
 DOMLauncher Font:  http://www.levien.com/type/myfonts/inconsolata.html  
 Cordova Developers
 iDangero.us for their swiper
+
+
