@@ -63,4 +63,5 @@ DOMLauncher Font:  http://www.levien.com/type/myfonts/inconsolata.html
 Cordova Developers
 iDangero.us for their swiper
 
+Other Things
 
