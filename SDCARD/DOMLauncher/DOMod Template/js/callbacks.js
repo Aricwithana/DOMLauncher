@@ -13,29 +13,26 @@ function domodLoaded(){
 //Back Button Event
 var backButton = function(){}
 
+//Callback for Cell Signal Listener
+function cellularSignal(returnVal){
+	var maxStrength = -100; 
+	var minStrength = -70; 
+	var percentage = Math.round(100 - Math.max(0, Math.min((returnVal - maxStrength) / (minStrength - maxStrength), 1) * 100));
 
-//Preset Callbacks for Wifi/Celluar Signal Returns - Will be updated for custom callbacks.
-var domCallbacks = {
-	wifiSignal: function(returnVal){
-		var maxStrength = -50; 
-		var minStrength = -120; 
-		var percentage = Math.round(100 - Math.max(0, Math.min((returnVal - maxStrength) / (minStrength - maxStrength), 1) * 100));	
-	
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/
-	},
-	cellularSignal: function(returnVal){
-		var maxStrength = -100; 
-		var minStrength = -70; 
-		var percentage = Math.round(100 - Math.max(0, Math.min((returnVal - maxStrength) / (minStrength - maxStrength), 1) * 100));
-	
-		/*Begin Theme Specific Editible Code*/
-
-		/*End Theme Specific Editible Code*/		
-	}	
+	/*Begin Theme Specific Editible Code*/
+		$('#meter_cellular').css('background-color', 'rgba('+(100-percentage)+','+percentage+',0,.75)');
+	/*End Theme Specific Editible Code*/		
 }
 
+//Callback for Wifi Signal Listener
+function wifiSignal(returnVal){
+	var maxStrength = -50; 
+	var minStrength = -120; 
+	var percentage = Math.round(100 - Math.max(0, Math.min((returnVal - maxStrength) / (minStrength - maxStrength), 1) * 100));	
+	/*Begin Theme Specific Editible Code*/
+		$('#meter_wifi').css('background-color', 'rgba('+(100-percentage)+','+percentage+',0,.75)');
+	/*End Theme Specific Editible Code*/
+}	
 
 
 /**

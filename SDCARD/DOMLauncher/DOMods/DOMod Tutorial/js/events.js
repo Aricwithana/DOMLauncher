@@ -34,7 +34,7 @@ $(document).on('click', '#btn_ringerVibrate', function(){ window.plugins.ringer.
 $(document).on('click', '#btn_mediaDown', function(){ window.plugins.media.down(true); });
 $(document).on('click', '#btn_mediaUp', function(){ window.plugins.media.up(true); });
 $(document).on('click', '#btn_bluetooth', function(){ window.plugins.bluetooth.toggle(suc_bluetoothToggle); });
-$(document).on('click', '#btn_wifi', function(){ window.plugins.wifi.toggle(suc_wificontrolsToggle); });
+$(document).on('click', '#btn_wifi', function(){ window.plugins.wifi.toggle('wifiSignal', suc_wificontrolsToggle); });
 $(document).on('click', '#btn_data', function(){ window.plugins.data.toggle(suc_dataconnectionToggle); });
 $(document).on('click', '#btn_fullscreen', function(){ window.plugins.fullscreen.toggle(); });
 $(document).on('click', '#btn_brightAuto', function(){window.plugins.brightness.autotoggle(suc_brightnessautoToggle);});

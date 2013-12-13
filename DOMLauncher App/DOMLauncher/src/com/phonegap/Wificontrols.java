@@ -17,7 +17,7 @@ import android.net.wifi.WifiManager;
 public class Wificontrols extends CordovaPlugin { 
  
 BroadcastReceiver wifireceiver;
-	
+String callback;
 	public Wificontrols() {
 	    this.wifireceiver = new BroadcastReceiver() {
 			@Override
@@ -32,7 +32,7 @@ BroadcastReceiver wifireceiver;
 	}
 	 
     private void updateSignalStrength(int strengthDbm) {
-    	this.webView.sendJavascript("domCallbacks.wifiSignal(" + strengthDbm + ")");           
+    	this.webView.sendJavascript(callback+"(" + strengthDbm + ")");   	
     }
 	
     @Override
@@ -74,6 +74,7 @@ BroadcastReceiver wifireceiver;
 		
 			if(action.equals("check")){				
 				if (wifiManager.isWifiEnabled()) {	
+					callback = args.getJSONObject(0).getString("success");
 					startListen();
 					callbackContext.success(new JSONObject().put("returnVal", true));
 				}else{
@@ -82,6 +83,7 @@ BroadcastReceiver wifireceiver;
 			}
 			
 			if(action.equals("enable")){
+				callback = args.getJSONObject(0).getString("success");
 				startListen();
 				wifiManager.setWifiEnabled(true);	
 				callbackContext.success(new JSONObject().put("returnVal", true));
@@ -99,7 +101,8 @@ BroadcastReceiver wifireceiver;
 					stopListen();
 					wifiManager.setWifiEnabled(false);									
 					callbackContext.success(new JSONObject().put("returnVal", false));				
-				}else{						
+				}else{
+					callback = args.getJSONObject(0).getString("success");
 					startListen();
 					wifiManager.setWifiEnabled(true);
 					callbackContext.success(new JSONObject().put("returnVal", true));

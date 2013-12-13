@@ -7168,8 +7168,8 @@ window.cordova = require('cordova');
 	
 	var Cellsignal = function() {};
 	
-	Cellsignal.prototype.enable = function(func) {
-		window.plugins.cellularsignal.enable({}, 
+	Cellsignal.prototype.enable = function(listener, func) {
+		window.plugins.cellularsignal.enable({success:listener}, 
 			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Cellular Signal Enable Failed ' + error)}); // Failure function
 	};
@@ -7182,14 +7182,14 @@ window.cordova = require('cordova');
 	
 	var Wifi = function() {};
 	
-	Wifi.prototype.check = function(func) {
-		window.plugins.wificontrols.check({}, 
+	Wifi.prototype.check = function(listener, func) {
+		window.plugins.wificontrols.check({success:listener}, 
 			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Wifi Controls Check Failed ' + error)}); // Failure function
 	};
 	
-	Wifi.prototype.enable = function(func) {
-		window.plugins.wificontrols.enable({}, 
+	Wifi.prototype.enable = function(listener, func) {
+		window.plugins.wificontrols.enable({success:listener}, 
 			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Wifi Controls Enable Failed ' + error)}); // Failure function
 	};
@@ -7200,8 +7200,8 @@ window.cordova = require('cordova');
 			function(error) {alert('Wifi Controls Disable Failed ' + error)}); // Failure function
 	};
 	
-	Wifi.prototype.toggle = function(func) {
-		window.plugins.wificontrols.toggle({}, 
+	Wifi.prototype.toggle = function(listener, func) {
+		window.plugins.wificontrols.toggle({success:listener}, 
 			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Wifi Controls Toggle Failed ' + error)}); // Failure function
 	};

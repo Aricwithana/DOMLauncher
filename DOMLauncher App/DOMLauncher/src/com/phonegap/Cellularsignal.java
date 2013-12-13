@@ -14,7 +14,8 @@ import android.telephony.TelephonyManager;
 public class Cellularsignal extends CordovaPlugin {
     
 	PhoneStateListener phoneStateListener;
-   
+	String callback;
+	
     public Cellularsignal() {
             this.phoneStateListener = new PhoneStateListener() {
                     @Override
@@ -37,7 +38,7 @@ public class Cellularsignal extends CordovaPlugin {
     }
    
     private void updateSignalStrength(int strengthDbm) {
-        this.webView.sendJavascript("domCallbacks.cellularSignal(" + strengthDbm + ")");  
+        this.webView.sendJavascript(callback+"(" + strengthDbm + ")");  
     }
    
     @Override
@@ -69,9 +70,10 @@ public class Cellularsignal extends CordovaPlugin {
    
     @Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-
+    	
         if (action.equals("enable")) {
-           startListen();
+        	callback = args.getJSONObject(0).getString("success");
+        	startListen();
         } 
         if(action.equals("disable")) {
            stopListen();

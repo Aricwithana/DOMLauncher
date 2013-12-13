@@ -3,8 +3,6 @@
 //Global Timer Variables
 var mainSwiper = null;
 var clockTimer = null;
-var missedcallsTimer = null;
-var missedsmsTimer = null;
 
 //$(document).ready(function(){domodLoaded();});
 document.addEventListener("deviceready", domodLoaded, false);
@@ -28,9 +26,9 @@ function domodLoaded(){
 	window.plugins.ringer.modecheck(suc_ringermodeCheck);
 	window.plugins.bluetooth.check(suc_bluetoothCheck);
 	window.plugins.data.check(suc_dataconnectionCheck);
-	window.plugins.wifi.check(suc_wificontrolsCheck);
+	window.plugins.wifi.check('wifiSignal', suc_wificontrolsCheck);
 	window.plugins.power.check(suc_powerlevelCheck);
-	window.plugins.cellsignal.enable();
+	window.plugins.cellsignal.enable('cellularSignal');
 	window.plugins.brightness.valuecheck(suc_brightnessvalueCheck);
 	window.plugins.brightness.modecheck(suc_brightnessmodeCheck);
 	window.plugins.fullscreen.check(suc_fullscreenCheck);
@@ -76,27 +74,26 @@ function clock() {
 //Back Button Event
 var backButton = function(){}
 
-//Preset Callbacks Wifi/Celluar Signal Returns.  To be updated for custom callbacks.
-var domCallbacks = {
-	wifiSignal: function(returnVal){
-		var maxStrength = -50; 
-		var minStrength = -120; 
-		var percentage = Math.round(100 - Math.max(0, Math.min((returnVal - maxStrength) / (minStrength - maxStrength), 1) * 100));	
-		/*Begin Theme Specific Editible Code*/
-			$('#meter_wifi').css('background-color', 'rgba('+(100-percentage)+','+percentage+',0,.75)');
-		/*End Theme Specific Editible Code*/
-	},
-	cellularSignal: function(returnVal){
-		var maxStrength = -100; 
-		var minStrength = -70; 
-		var percentage = Math.round(100 - Math.max(0, Math.min((returnVal - maxStrength) / (minStrength - maxStrength), 1) * 100));
-	
-		/*Begin Theme Specific Editible Code*/
-			$('#meter_cellular').css('background-color', 'rgba('+(100-percentage)+','+percentage+',0,.75)');
-		/*End Theme Specific Editible Code*/		
-	}	
+//Callback for Cell Signal Listener
+function cellularSignal(returnVal){
+	var maxStrength = -100; 
+	var minStrength = -70; 
+	var percentage = Math.round(100 - Math.max(0, Math.min((returnVal - maxStrength) / (minStrength - maxStrength), 1) * 100));
+
+	/*Begin Theme Specific Editible Code*/
+		$('#meter_cellular').css('background-color', 'rgba('+(100-percentage)+','+percentage+',0,.75)');
+	/*End Theme Specific Editible Code*/		
 }
 
+//Callback for Wifi Signal Listener
+function wifiSignal(returnVal){
+	var maxStrength = -50; 
+	var minStrength = -120; 
+	var percentage = Math.round(100 - Math.max(0, Math.min((returnVal - maxStrength) / (minStrength - maxStrength), 1) * 100));	
+	/*Begin Theme Specific Editible Code*/
+		$('#meter_wifi').css('background-color', 'rgba('+(100-percentage)+','+percentage+',0,.75)');
+	/*End Theme Specific Editible Code*/
+}	
 
 
 /**
@@ -377,7 +374,7 @@ function onResume() {
 	var clockTimer = setInterval(clock, 1000);
 	
 	window.plugins.brightness.valuecheck(suc_brightnessvalueCheck);
-	window.plugins.wifi.check();
+	window.plugins.wifi.check('wifiSignal', suc_wificontrolsCheck);
 	window.plugins.data.check();
 	window.plugins.fullscreen.check();
 	window.plugins.ringer.modecheck();
