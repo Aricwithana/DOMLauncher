@@ -9,14 +9,13 @@ function domodLoaded(){
 }
 /*End Document Ready*/
 
-//Preset Callbacks for Backbutton, Wifi/Celluar Signal Returns.
-var domCallbacks = {
-	//Back Button
-	backButton: function(){
-		/*Begin Theme Specific Editible Code*/
 
-		/*End Theme Specific Editible Code*/
-	},
+//Back Button Event
+var backButton = function(){}
+
+
+//Preset Callbacks for Wifi/Celluar Signal Returns - Will be updated for custom callbacks.
+var domCallbacks = {
 	wifiSignal: function(returnVal){
 		var maxStrength = -50; 
 		var minStrength = -120; 

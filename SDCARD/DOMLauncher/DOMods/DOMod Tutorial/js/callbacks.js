@@ -37,9 +37,10 @@ function domodLoaded(){
 	window.plugins.apps.generatelist(suc_generateappList);
 	window.plugins.screenorient.check(suc_orientationCheck);
 	//Timers
+	window.plugins.missed.calls(true, 5000, 'suc_missedCalls');
+	window.plugins.missed.sms(true, 5000, 'suc_missedSMS');
 	var clockTimer = setInterval(clock, 1000 );	
-	var missedcallsTimer = setInterval(window.plugins.missed.calls(suc_missedCalls), 5000);
-	var missedsmsTimer = setInterval(window.plugins.missed.sms(suc_missedSMS), 5000);
+
 }
 /*End Document Ready*/
 
@@ -72,14 +73,11 @@ function clock() {
 	var date = null;
 }
 
-//Preset Callbacks for Backbutton, Wifi/Celluar Signal Returns. Must be Included.
+//Back Button Event
+var backButton = function(){}
+
+//Preset Callbacks Wifi/Celluar Signal Returns.  To be updated for custom callbacks.
 var domCallbacks = {
-	//Back Button
-	backButton: function(){
-		/*Begin Theme Specific Editible Code*/
-			
-		/*End Theme Specific Editible Code*/
-	},
 	wifiSignal: function(returnVal){
 		var maxStrength = -50; 
 		var minStrength = -120; 
@@ -377,8 +375,6 @@ function onPause() {
 /*Handle the resume event*/
 function onResume() {
 	var clockTimer = setInterval(clock, 1000);
-	var missedcallsTimer = setInterval(window.plugins.missed.calls(), 5000);
-	var missedsmsTimer = setInterval(window.plugins.missed.sms(), 5000);
 	
 	window.plugins.brightness.valuecheck(suc_brightnessvalueCheck);
 	window.plugins.wifi.check();
