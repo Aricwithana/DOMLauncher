@@ -5932,6 +5932,8 @@ var exec = require('cordova/exec'),
 // object in bootstrap.js.
 if (typeof navigator != 'undefined') {
     utils.defineGetter(navigator, 'onLine', function() {
+
+
         return this.connection.type != 'none';
     });
 }
@@ -6167,6 +6169,7 @@ module.exports = splashscreen;
 });
 
 // file: lib/common/utils.js
+
 define("cordova/utils", function(require, exports, module) {
 
 var utils = exports;
@@ -6760,6 +6763,7 @@ window.cordova = require('cordova');
 	var Wificontrols = function() {};
 				
 	Wificontrols.prototype.check = function(params, success, fail) {
+
 		return cordova.exec( function(args) {
 			success(args);
 		}, function(args) {
@@ -7204,14 +7208,14 @@ window.cordova = require('cordova');
 	
 	var Missed = function() {};
 	
-	Missed.prototype.sms = function(func) {
-		window.plugins.missedcommunications.sms({}, 
+	Missed.prototype.sms = function(enable, timer, func) {
+		window.plugins.missedcommunications.sms({enable:enable, timing:timer, success:func}, 
 			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Missed SMS Failed ' + error)}); // Failure function
 	};
 	
-	Missed.prototype.calls = function(func) {
-		window.plugins.missedcommunications.calls({}, 
+	Missed.prototype.calls = function(enable, timer, func) {
+		window.plugins.missedcommunications.calls({enable:enable, timing:timer, success:func}, 
 			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
 	};
@@ -7502,10 +7506,16 @@ window.cordova = require('cordova');
 
 
 
+var backButton = null;
+
 document.addEventListener("deviceready", cordovaBack, false);
 
 function cordovaBack(){
-	document.addEventListener("backbutton", domCallbacks.backButton, false);
+	if(typeof backButton === 'function'){
+		document.addEventListener("backbutton", backButton, false);
+	}else{
+		document.addEventListener("backbutton", function(){}, false);
+	}
 }
 
 
