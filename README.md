@@ -6,7 +6,10 @@ Visit the new site! http://www.domlauncher.com
 
 Cordova Powered Android App Launcher Replacement. 
 
-1.0.5 Release! 
+1.0.6 Release! 
+
+DOMLauncher is a custom Android Launcher specifically designed for web developers and designers.  Utilizing a webview and the Cordova Library, DOMLauncher allows any web developer/designer to use their skills of HTML/CSS/JS to create fully custom and unique user interfaces for their Android devices.  Users with Java coding skills have the ability to expand DOMLauncher's functionality.
+
 
 Before going any further understand a couple key points:
 
@@ -14,11 +17,11 @@ Before going any further understand a couple key points:
 
 2.  I created this for myself and want to share and hopefully grow it beyond my initial wants and needs. 
 
-3.  This is a luxury launcher replacement.  I only offically support Android 4.0+ but the app CAN work down to version 2.3 if one compiles for themselves and removes the 'Missed Communications' plugin and remove come of the settings options from the 'Launch' plugin.
+3.  This is a luxury launcher replacement at the moment as our devices evolve.  Android 4.4 will be adding all kinds of new features along with a proper Chromium based webview!
 
 4.  The 'DOMod'-what a user loads for a custom UI, loads off your SDCARD. Many newer devices allow the internal memory to be the 'sdcard/sdcard0' and the physical card is sdcardext.  A device that doesn't not do this, the app instead references the external sdcard.  The key factor to remember when a device only has the external sdcard:  The App Will Not Load The DOMod When The SDCARD IS MOUNTED AND UNREADABLE BY THE DEVICE.  This only matters if the app restarts or if a DOMod uses live media from the storage space.  I have in place a 'dummy' DOMod that is one page and can access the very basics and launch the installed apps. This is baked into the app as a last ditch backup so something always loads.
 
-If one can handle these things, you have in your hands the ability to create ANY USER INTERFACE you want for your Launcher.  It is all HTML/CSS and some simple javascript if one want to dive into that.  Anything that you can imagine, you can create with the only real limitation is the hardware of the device and the webkit view.
+If one can handle these things, you have in your hands the ability to create ANY USER INTERFACE you want for your device. Anything that you can imagine, you can create with the only real limitation is the hardware of the device and the webview.
 
 Personally, I love LCARS.
 
@@ -28,9 +31,9 @@ Personally, I love LCARS.
 
 Instructions:
 
-Compile with Eclipse and intall on the device or copy apk to device and install.
+Compile with Eclipse and intall on the device or copy the provided apk to device and install.
 
-The DOMLauncher folder within the SD CARD folder, just copy to your sdcard. 
+The DOMLauncher folder within the SD CARD folder, just copy to your internal memory or physical sd card. 
 
 *DOMod Tutorial that is included in the SDCARD folder above is just to show off the API usage and lacks fancier touch features.
 
