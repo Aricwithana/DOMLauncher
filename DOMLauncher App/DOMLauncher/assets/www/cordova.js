@@ -6806,6 +6806,14 @@ window.cordova = require('cordova');
 		}, 'Missedcommunications', 'sms', [params]);
 	};
 	
+    Missedcommunications.prototype.smscheck = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Missedcommunications', 'smscheck', [params]);
+	};
+    
 	Missedcommunications.prototype.calls = function(params, success, fail) {
 		return cordova.exec( function(args) {
 			success(args);
@@ -6814,6 +6822,14 @@ window.cordova = require('cordova');
 		}, 'Missedcommunications', 'calls', [params]);
 	};	
 
+    Missedcommunications.prototype.callscheck = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Missedcommunications', 'callscheck', [params]);
+	};
+    
 	//Screen Brightness
 	var Screenbrightness = function() {};
 				
@@ -6864,6 +6880,22 @@ window.cordova = require('cordova');
 			fail(args);
 		}, 'Screenbrightness', 'value', [params]);
 	};
+    
+	Screenbrightness.prototype.up = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Screenbrightness', 'up', [params]);
+	};
+    
+	Screenbrightness.prototype.down = function(params, success, fail) {
+		return cordova.exec( function(args) {
+			success(args);
+		}, function(args) {
+			fail(args);
+		}, 'Screenbrightness', 'down', [params]);
+	};    
 
 	//Generate App List and Icons
 	var Applist = function() {};
@@ -7213,9 +7245,21 @@ window.cordova = require('cordova');
 			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Missed SMS Failed ' + error)}); // Failure function
 	};
-	
+
+    Missed.prototype.smscheck = function(func) {
+		window.plugins.missedcommunications.smscheck({success:func}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
+			function(error) {alert('Missed SMS Failed ' + error)}); // Failure function
+	};
+    
 	Missed.prototype.calls = function(enable, timer, func) {
 		window.plugins.missedcommunications.calls({enable:enable, timing:timer, success:func}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
+			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
+	};
+    
+    Missed.prototype.callscheck = function(func) {
+		window.plugins.missedcommunications.callscheck({success:func}, 
 			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Missed Calls Failed ' + error)}); // Failure function
 	};
@@ -7257,6 +7301,18 @@ window.cordova = require('cordova');
 			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}if(typeof arg == "function"){arg(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Screen Brightness Value Failed ' + error)}); // Failure function
 	};
+    
+	Brightness.prototype.up = function(step, func) {
+		window.plugins.screenbrightness.up({step:step}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}if(typeof arg == "function"){arg(returnVal.returnVal);}}, // Success function
+			function(error) {alert('Screen Brightness Up Failed ' + error)}); // Failure function
+	};
+
+	Brightness.prototype.down = function(step, func) {
+		window.plugins.screenbrightness.down({step:step}, 
+			function(returnVal) {if(typeof func == "function"){func(returnVal.returnVal);}if(typeof arg == "function"){arg(returnVal.returnVal);}}, // Success function
+			function(error) {alert('Screen Brightness Down Failed ' + error)}); // Failure function
+	};    
 	
 	var Apps = function() {};
 	
@@ -7268,7 +7324,7 @@ window.cordova = require('cordova');
 
 	Apps.prototype.savelist = function(func) {
 		window.plugins.applist.appList({}, 
-			function(returnVal) {window.plugins.fileaccess.save(returnVal.returnVal, "/mnt/sdcard/DOMLauncher/settings/applist.txt"); if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
+			function(returnVal) {window.plugins.fileaccess.save(returnVal.returnVal, "/DOMLauncher/settings/applist.txt"); if(typeof func == "function"){func(returnVal.returnVal);}}, // Success function
 			function(error) {alert('Generate App List Failed ' + error)}); // Failure function
 	};
 
@@ -7291,11 +7347,17 @@ window.cordova = require('cordova');
 						for(var i = 0; i < appListArray.length; i++) {  
 							var appInfo = appListArray[i];
 							var appPackage = appInfo.package; 
-							newStyle.innerHTML += '*[data-appPackage="'+appPackage+'"]{background-image:url(file:///mnt/sdcard/DOMLauncher/settings/icons/'+appPackage+'.png);}';
+							var iconPath = appInfo.path;
+							newStyle.innerHTML += '*[data-appPackage="'+appPackage+'"]{background-image:url('+iconPath+');}';
 						}	
 						document.getElementsByTagName('head')[0].appendChild(newStyle);
 						var styleText = newStyle.innerHTML;
-						window.plugins.fileaccess.save(styleText, "/mnt/sdcard/DOMLauncher/settings/icons/icons.css");
+						
+					window.plugins.simplefile.saveFile({content:styleText, file:"/DOMLauncher/settings/icons/icons.css"}, 			
+					function(){},
+					function(error) { window.plugins.fileaccess.save(styleText, "/DOMLauncher/settings/icons/icons.css"); }); 
+						
+						
 						if(typeof func == "function"){func(returnVal.returnVal);}
 					}, // Success function
 				function() {alert('Refresh Icons Failed')}); // Failure function	
@@ -7385,12 +7447,13 @@ window.cordova = require('cordova');
 					{
 						final_appIntent[ii].addEventListener("click", function(){	
 							themeID = this.getAttribute("id");
-							window.plugins.simplefile.openFile({file:'/mnt/sdcard/DOMLauncher/settings/config.txt'}, 			
+							window.plugins.simplefile.openFile({file:'/DOMLauncher/settings/config.txt'}, 			
 								function(returnVal){
+									
 									activeDomod = JSON.parse(returnVal.returnVal);
 									activeDomod.active = themeID; 
-									window.plugins.fileaccess.save(activeDomod, "/mnt/sdcard/DOMLauncher/settings/config.txt"); 
-									window.plugins.fullscreen.restart();
+									window.plugins.fileaccess.save(activeDomod, "/DOMLauncher/settings/config.txt", window.plugins.fullscreen.restart); 
+									
 								},
 								function(error) {alert('DOMLSettings Change Acive DOMod Error ' + error);}); 	
 						}, false);

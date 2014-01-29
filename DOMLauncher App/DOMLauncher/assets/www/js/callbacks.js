@@ -34,9 +34,9 @@ function domodLoaded(){
 	window.plugins.fullscreen.check(suc_fullscreenCheck);
 	window.plugins.apps.generatelist(suc_generateappList);
 	window.plugins.screenorient.check(suc_orientationCheck);
-	//Timers
 	window.plugins.missed.calls(true, 5000, 'suc_missedCalls');
 	window.plugins.missed.sms(true, 5000, 'suc_missedSMS');
+	//Timers
 	var clockTimer = setInterval(clock, 1000 );	
 
 }
@@ -46,20 +46,14 @@ function domodLoaded(){
 
 /**
 *	Check if Icons & CSS are Generated
-*		This is an example of being able to call the plugin API directly.
-*		The reason here was because access to the 'error' call of the plugin
-*		was needed since it isn't provided in the provided js wrapper calls.
 */
 function iconCheck(){	
-	window.plugins.simplefile.openFile({file:'/mnt/sdcard/DOMLauncher/settings/icons/icons.css'}, 			
-	function(returnVal){},
-	function(error) {
-		window.plugins.apps.generateicons();
-		window.plugins.apps.generatecss();
-	});	
+	window.plugins.simplefile.openFile('/DOMLauncher/settings/icons/icons.css', generateIconsData);		
 }
 
-
+function generateIconsData(returnVal){
+	if(returnVal === false);{window.plugins.apps.generateicons(); window.plugins.apps.generatecss();}	
+}
 
 
 //Clock
@@ -312,9 +306,10 @@ function suc_orientationCheck(returnVal){
 //Weather Call Example
 (function() {
   var httpRequest;
-  document.getElementById("btn_weather").onclick = function() { 
-		window.plugins.simplefile.openFile({file:'/mnt/sdcard/DOMLauncher/settings/config.txt'}, 			
+  document.getElementById("btn_weather").onclick = function() {
+		window.plugins.simplefile.openFile({file:'/DOMLauncher/settings/config.txt'},		
 			function(returnVal){
+				
 				var returnArray = JSON.parse(returnVal.returnVal);
 				var city = returnArray.city; 
 		
@@ -339,7 +334,7 @@ function suc_orientationCheck(returnVal){
 							var temp = weatherArray.main.temp ;
 							weatherWrapper.dataset.temp = Math.round(temp, 1)+"°F";
 						} else {
-							alert('Weather Request Error-Probably No Internet Access');
+							alert('Weather Request Error - Probably No Internet Access');
 						}
 					}
 				}
@@ -362,8 +357,6 @@ $.fn.hasAttr = function(arg){
 /*Handle the pause event*/
 function onPause() {
 	clearInterval(clockTimer);
-	clearInterval(missedcallsTimer);
-	clearInterval(missedsmsTimer);
 }
 
 	

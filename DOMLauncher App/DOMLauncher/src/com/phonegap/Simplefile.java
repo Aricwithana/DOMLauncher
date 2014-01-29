@@ -19,13 +19,13 @@ public class Simplefile extends CordovaPlugin {
 
 	@Override
 	   public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		
+		File sdcard = Environment.getExternalStorageDirectory();
 		if(action.equals("saveFile")){
-			try {
+			try {	
 				String path = args.getJSONObject(0).getString("file");
 				String content = args.getJSONObject(0).getString("content");
 				
-				File myFile = new File(path);
+				File myFile = new File(sdcard, path);
 				myFile.createNewFile();
 				FileOutputStream fOut = new FileOutputStream(myFile);
 				  
@@ -42,22 +42,25 @@ public class Simplefile extends CordovaPlugin {
 			}
 		}
 		
-		if(action.equals("openFile")){
-
+		if(action.equals("openFile")){	
 			try {
 				String path = args.getJSONObject(0).getString("file");
-				FileInputStream is = new FileInputStream(path);
+				
+				Log.d(id, "Text" + sdcard.getAbsolutePath());
+				FileInputStream is = new FileInputStream(sdcard.getAbsolutePath()+""+path);
 				int size = is.available();
 				byte[] buffer = new byte[size];
 				is.read(buffer);
 				is.close();
 				String text = new String(buffer);
-				Log.d(id, "Open:" + text);
+				Log.d(id, "Text" + text);
 				callbackContext.success(new JSONObject().put("returnVal", text));
 			} catch (IOException e) {
+                callbackContext.success(new JSONObject().put("returnVal", false));
 				// TODO Auto-generated catch block	
 				e.printStackTrace();
 			} catch (JSONException e) {
+                callbackContext.success(new JSONObject().put("returnVal", false));
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -65,7 +68,6 @@ public class Simplefile extends CordovaPlugin {
 		} 
 		
 		if(action.equals("domodList")){
-			File sdcard = Environment.getExternalStorageDirectory();
 			File f = new File(sdcard,"/DOMLauncher/DOMods");
 			File[] files = f.listFiles();
 			JSONArray jArray = new JSONArray();
@@ -77,6 +79,7 @@ public class Simplefile extends CordovaPlugin {
 					jArray.put(lastItem);
 			    }
 			}
+			
 			callbackContext.success(new JSONObject().put("returnVal", jArray));
 			
 		}		

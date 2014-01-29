@@ -1,63 +1,102 @@
 <!DOCTYPE html>
 
 <html>
-    
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+	    <meta http-equiv='cache-control' content='no-cache'>
+        <meta http-equiv='expires' content='0'>
+        <meta http-equiv='pragma' content='no-cache'>
         
-        <title>CHome</title>
+        <title>DOMLauncher: DOMLauncher:  Dummy DOMod</title>
         
-        <script type="text/javascript" src="cordova.js"></script>  
-        <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 0.75)" href="css/ldpi.css" />
-        <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.0)" href="css/mdpi.css" />
-        <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.5)" href="css/hdpi.css" />
-        <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 2.0)" href="css/xhdpi.css" />		
-		<script src="js/domlFunctions.js"></script>
-        <script>
-        
-			function onLoad() {document.addEventListener("deviceready", deviceReady, false);}
-			
-			function deviceReady() { 
-				window.plugins.apps.generatelist();
-			}
-
-
-        </script>
-
-<style>
-@font-face {
-    font-family: 'InconsolataMedium';
-    src: url('Inconsolata-webfont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-
-}
-*{	-webkit-tap-highlight-color:rgba(0,0,0,0);}
-body{font-family:"InconsolataMedium"; font-size:100%;}
-.app{background-color:rgba(0,0,0,.5); border-radius:50%;}
-a{text-decoration:none;}
-p{font-size:110%;}
-</style>
-    </head>
+        <script type="text/javascript" src="file:///android_asset/www/cordova.js"></script>
     
-    <body onLoad="onLoad()">
-
-        <span style="font-size:300%;"> DOMLauncher  </span>
-    		<img src="img/img_bigLogo.png" style="float:right; width:25%; height:auto;" />
-        	<h1>Well hello there!</h1>
-            
-            <p>You are seeing me because of a few possibilities.  This could be the first time you launched the app and did not copy the 'DOMLauncher' folder to your internal or external sdcard.  Second is that there is an error in the choosen DOMod to load.  Check your 'config.txt' within the DOMLauncher folder.  Lastly, it could be that the external sdcard is mounted and inaccessable by the device and your files are stored on the external sdcard.  Make sure your sdcard is readable.  It is preferable to store the DOMlauncher folder on the internal sdcard to avoid this issue. </p>
-          
+        <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+		<script type="text/javascript" src="js/idangerous.swiper-2.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery.tinysort.min.js"></script>
+        <link rel="stylesheet" id="iconsCss" href="../../settings/icons/icons.css" type="text/css" media="screen" charset="utf-8" />
         
-<hr>
-             <input type="button" value="Exit App" onClick="navigator.app.exitApp();" style="zoom:2;"/>
-             <input type="button" value="DOMods" onClick="window.plugins.domlsettings.domodlist();" style="zoom:2;"/>
+        <link rel="stylesheet" media="screen and (-webkit-min-device-pixel-ratio: 1.0) and (-webkit-max-device-pixel-ratio: 1.4)" href="css/mdpi.css" />
+        <link rel="stylesheet" media="screen and (-webkit-min-device-pixel-ratio: 1.5) and (-webkit-max-device-pixel-ratio: 1.9)" href="css/hdpi.css" />
+        <link rel="stylesheet" media="screen and (-webkit-min-device-pixel-ratio: 2.0)" href="css/xhdpi.css" />
+       
+    </head>
+    <body>
+    
             
-     <hr>        
-             <div id="appPanel" style="text-align:center;"></div>
-   
-</body>
-
+        <div class="wpr_swiper">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"> 
+                    	<div id="wpr_clock">
+                            <div class="clock" appPackage="com.sec.android.app.clockpackage" appactivity=".ClockPackage" appname="Clock">
+                                <div class="innerClock"></div>
+                                <div class="blank"></div>
+                                <div class="cover"></div>    
+                                <div id="sec"><div></div></div>
+                                <div id="hour"></div>
+                                <div id="min"></div>
+                                <div class="numNorth">12</div>
+                                <div class="numEast">3</div>
+                                <div class="numSouth">6</div>
+                                <div class="numWest">9</div> 
+                                <div class="secTick setOne"></div>  
+                                <div class="secTick setTwo"></div>
+                                <div class="secTick setThree"></div> 
+                                <div class="secTick setFour"></div> 
+                                <div class="secTick setFive"></div> 
+                                <div class="secTick setSix"></div> 
+                                <div class="secTick setSeven"></div> 
+                                <div class="secTick setEight"></div> 
+                                <div class="tickCover"></div>              
+                            </div> 
+                        </div>
+                        <div id="dummyInfo">
+                        	<p>This is the baked in dummy DOMod.  You could be seeing this because it is your first launch, the active DOMod is missing or your config.txt file is missing.</p>
+                            <p>If there is no internal or external sd card, the app icons use a placeholder image.  Fullscreen mode and orientation lock is also disabled while using the dummy DOMod</p>  
+                            <p>Scroll to the left and tap DOMods to choose an installed DOMod.</p>  
+                        </div>                   
+                    </div>
+                    <div class="swiper-slide"> 
+                        <div class="controlBox" data-name="Ringer" data-number="⇧" id="btn_ringerUp"></div>
+                        <div class="controlBox" data-name="Ringer" data-number="⇩" id="btn_ringerDown"></div>
+                        <div class="controlBox" data-name="Silent" id="btn_ringerSilent"></div>
+                        <div class="controlBox" data-name="Vibrate" id="btn_ringerVibrate"></div>
+                        <div class="controlBox" data-name="Media" data-number="⇧" id="btn_mediaUp"></div>
+                        <div class="controlBox" data-name="Media" data-number="⇩" id="btn_mediaDown"></div>
+                        <div class="controlBox" data-name="Bluetooth" id="btn_bluetooth"></div>
+                        <div class="controlBox" data-name="Wifi" id="btn_wifi"></div>
+                        <div class="controlBox" data-name="Data" id="btn_data"></div>
+                        <div class="controlBox" data-name="Wifi Signal" meter id="meter_wifi"></div>
+                        <div class="controlBox" data-name="Cell Signal" meter id="meter_cellular"></div>
+                        <div class="controlBox" data-name="Battery" meter id="meter_battery"></div>
+                        <div class="controlBox" data-name="Brightness" data-number="⇧" id="btn_brightUp"></div>
+                        <div class="controlBox" data-name="Brightness" data-number="⇩" id="btn_brightDown"></div>
+                        <div class="controlBox" data-name="Auto" id="btn_brightAuto"></div>                
+                        <div class="controlBox" data-name="Fullscreen" id="btn_fullscreen"></div>                
+                        <div class="controlBox" data-name="Portrait" disabled id="btn_portrait"></div>                
+                        <div class="controlBox" data-name="Landscape" disabled id="btn_landscape"></div>                
+                        <div class="controlBox" data-name="Rotate" disabled id="btn_rotate"></div> 
+                        <div class="app" id="btn_weather" data-appName="Weather"  data-temp="TAP"></div>
+                        <div class="app" data-appName="DOMods" style="background-image:url(file:///android_asset/www/img/img_bigLogo.png);" onClick="window.plugins.domlsettings.domodlist();"></div>                                       
+                    </div>
+                </div>
+                <div class="pagination"></div>
+            </div>
+        </div>  
+        <div class="quickBar">
+            <a href="tel:" class="app dialer" data-missed="0" id="dialer_mainScreen" data-appName="Dialer"></a>
+            <div class="app" data-appPackage="com.android.contacts" data-appActivity=".DialtactsContactsEntryActivity" data-appName="Contacts"></div>
+            <div class="app" data-missed="0"  id="txtmsg_mainScreen" data-appPackage="com.android.mms"></div>
+            <div class="app" id="appPanel_Show"></div>
+            <div class="app" data-appPackage="com.android.settings" data-appActivity=".Settings" data-appName="Settings"></div>   
+        </div>
+        <div id="appPanel"><div id="appPanel_Content"></div><div id="refresh_appPanel">Refresh</div><div id="close_appPanel">Close</div></div>
+		<script type="text/javascript" src="js/callbacks.js"></script>  
+		<script type="text/javascript" src="js/events.js"></script>  
+    </body>
 </html>
+
+

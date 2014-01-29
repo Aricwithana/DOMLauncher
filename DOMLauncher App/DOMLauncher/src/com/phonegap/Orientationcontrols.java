@@ -13,7 +13,6 @@ import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 import android.content.Intent;
 import android.os.Environment;
-import android.util.Log;
 
 public class Orientationcontrols extends CordovaPlugin {
 
@@ -46,7 +45,7 @@ public class Orientationcontrols extends CordovaPlugin {
 						
 						String content = jsnobject.toString();
 						
-						File myFile = new File("/mnt/sdcard/DOMLauncher/settings/config.txt");
+						File myFile = new File(sdcard, "/DOMLauncher/settings/config.txt");
 						myFile.createNewFile();
 						FileOutputStream fOut = new FileOutputStream(myFile);
 						
@@ -69,8 +68,7 @@ public class Orientationcontrols extends CordovaPlugin {
 					try {
 						
 						String content = jsnobject.toString();
-						
-						File myFile = new File("/mnt/sdcard/DOMLauncher/settings/config.txt");
+						File myFile = new File(sdcard, "/DOMLauncher/settings/config.txt");
 						myFile.createNewFile();
 						FileOutputStream fOut = new FileOutputStream(myFile);
 						
@@ -95,7 +93,7 @@ public class Orientationcontrols extends CordovaPlugin {
 						
 						String content = jsnobject.toString();
 						
-						File myFile = new File("/mnt/sdcard/DOMLauncher/settings/config.txt");
+						File myFile = new File(sdcard, "/DOMLauncher/settings/config.txt");
 						myFile.createNewFile();
 						FileOutputStream fOut = new FileOutputStream(myFile);
 						

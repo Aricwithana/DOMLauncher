@@ -6,7 +6,6 @@ import org.json.JSONObject;
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 import android.bluetooth.BluetoothAdapter;
-import android.util.Log;
 
 public class Bluetoothcontrols extends CordovaPlugin { 
 
@@ -48,13 +47,13 @@ public class Bluetoothcontrols extends CordovaPlugin {
 			}
 		}
 		
-		if(action.equals("check")){	Log.d(id, "Bluetooth Fire");		
+		if(action.equals("check")){	
 			if (mBluetoothAdapter == null) {
 			   
 			} else {
-			    if (mBluetoothAdapter.isEnabled()) {Log.d(id, "Bluetooth Check On");
+			    if (mBluetoothAdapter.isEnabled()) {
 			    	callbackContext.success(new JSONObject().put("returnVal", true));
-			    }else{Log.d(id, "Bluetooth Check Off");
+			    }else{
 			    	callbackContext.success(new JSONObject().put("returnVal", false));	
 			    }
 			}

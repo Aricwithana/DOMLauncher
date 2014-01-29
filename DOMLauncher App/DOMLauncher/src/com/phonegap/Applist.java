@@ -18,7 +18,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
+import android.os.Environment;
+
 
 public class Applist extends CordovaPlugin {
 
@@ -31,16 +32,14 @@ public class Applist extends CordovaPlugin {
 			List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 			
 			for (ApplicationInfo packageInfo : packages) {
-				Log.d(id, "Icon Gen");
 					
 				Intent appActivity = pm.getLaunchIntentForPackage(packageInfo.packageName);
 				
 				if(appActivity != null){
-					Log.d(id, "Package:" + appActivity);
 					String pkgName = packageInfo.packageName;		
 					Drawable appIcon = packageInfo.loadIcon(this.cordova.getActivity().getPackageManager());
-								
-					File file = new File("/mnt/sdcard/DOMLauncher/settings/icons/"+pkgName+".png");
+					File sdcard = Environment.getExternalStorageDirectory();
+					File file = new File(sdcard, "/DOMLauncher/settings/icons/"+pkgName+".png");
 					FileOutputStream foStream = null;
 					
 					Bitmap bitmap = ((BitmapDrawable)appIcon).getBitmap();
@@ -75,7 +74,8 @@ public class Applist extends CordovaPlugin {
 		
 		if(action.equals("appList")){			
 			final PackageManager pm = this.cordova.getActivity().getPackageManager();
-
+			File sdcard = Environment.getExternalStorageDirectory();
+			
 			JSONArray jArray = new JSONArray();
 			
 			List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
@@ -92,7 +92,6 @@ public class Applist extends CordovaPlugin {
 				//Log.d(id, "Name:" + appName);
 				//Log.d(id, "Package:" + pkgName);
 				//Log.d(id, "Activity:" + appActivity);
-				Log.d(id, "App Gen");
 				try {
 					
 					if(appActivity != null){
@@ -102,7 +101,7 @@ public class Applist extends CordovaPlugin {
 						String appIFormated = appIntent[1].substring(0, appIntent[1].length() - 2);
 
 						JSONObject json = new JSONObject();
-						json.put("name", appName).put("activity", appIFormated).put("package", pkgName);				
+						json.put("name", appName).put("activity", appIFormated).put("package", pkgName).put("path", "file:///" + sdcard.getAbsolutePath()+"/DOMLauncher/settings/icons/"+ pkgName+".png");				
 						jArray.put(json);
 					}
 				

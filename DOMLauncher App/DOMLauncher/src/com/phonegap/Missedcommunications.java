@@ -13,7 +13,6 @@ import org.apache.cordova.api.CordovaPlugin;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CallLog;
-import android.util.Log;
 
 public class Missedcommunications extends CordovaPlugin { 
 
@@ -31,17 +30,22 @@ public class Missedcommunications extends CordovaPlugin {
     {
     	smsCallback = callback;
     	smsTiming = timing;
+    	
 		Timer smsTimer = new Timer();
-		smsTimer.schedule(new TimerTask() {
+		smsTimer.schedule(new SMSTask(), 0, timing);
 
-            @Override
-            public void run() {
-                
-            	smsRun(callback);
-        		
-            }
-        }, timing);
+            
     }
+    
+    class SMSTask extends TimerTask {
+        @Override
+        public void run() {
+        	smsRun(smsCallback);
+        }
+    }
+
+
+    
     
 	private void stopSMS()
     {
@@ -83,20 +87,21 @@ public class Missedcommunications extends CordovaPlugin {
 	
    private void startCalls(final int timing, final String callback)
     {
+	   
 	   callsCallback = callback;
 	   callsTiming = timing;
 		Timer callsTimer = new Timer();
-		callsTimer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                
-            	callsRun(callback);
-        		
-            }
-        }, timing);
+		callsTimer.schedule(new callsTask(), 0, timing);
     }
 
+   class callsTask extends TimerTask {
+       @Override
+       public void run() {
+       	callsRun(callsCallback);
+       }
+   }
+   
+   
 	private void stopCalls()
     {
 		if(callsTimer != null){
@@ -172,34 +177,43 @@ public class Missedcommunications extends CordovaPlugin {
   
 	@Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		Boolean enable = args.getJSONObject(0).getBoolean("enable");
-		int timing = args.getJSONObject(0).getInt("timing");
 		String callback = args.getJSONObject(0).getString("success");
+		if(action.equals("sms") || action.equals("calls")){
+			Boolean enable = args.getJSONObject(0).getBoolean("enable");
+			int timing = args.getJSONObject(0).getInt("timing");
+			if(action.equals("sms")){
+				if(enable == true){
+					startSMS(timing, callback);
+					callbackContext.success(new JSONObject().put("returnVal", true));							
+				}
+				
+				if(enable == false){
+					stopSMS();
+				}
 
-		if(action.equals("sms")){
-			if(enable == true){
-				startSMS(timing, callback);
-				callbackContext.success(new JSONObject().put("returnVal", true));							
 			}
 			
-			if(enable == false){
-				stopSMS();
-			}
+			if(action.equals("calls")){
+				if(enable == true){
+					startCalls(timing, callback);
+					callbackContext.success(new JSONObject().put("returnVal", true));							
+				}
+				
+				if(enable == false){
+					stopCalls();
+				}
+			}	
+		}
 
+		if(action.equals("callscheck")){		
+			    callCount = -1;
+				callsRun(callback);
 		}
 		
-		if(action.equals("calls")){
-			if(enable == true){
-				startCalls(timing, callback);
-				callbackContext.success(new JSONObject().put("returnVal", true));							
-			}
-			
-			if(enable == false){
-				stopCalls();
-			}
-
+		if(action.equals("smscheck")){
+			smsCount = -1;
+			smsRun(callback);
 		}
-
 		return true;
 	}  
 }

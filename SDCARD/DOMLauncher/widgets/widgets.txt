@@ -1,1 +1,0 @@
-Widgets are HTML5 UI and other front end widgets.  DOMLauncher will sponsor specific widgets that are of high quality and of higher demand from developers.

@@ -7,12 +7,9 @@ import org.json.JSONObject;
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 
 public class Powerlevels extends CordovaPlugin { 
