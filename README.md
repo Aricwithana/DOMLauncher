@@ -6,7 +6,7 @@ Visit the new site! http://www.domlauncher.com
 
 Cordova Powered Android App Launcher Replacement. 
 
-1.0.6 Release! 
+1.0.7 Release! 
 
 DOMLauncher is a custom Android Launcher specifically designed for web developers and designers.  Utilizing a webview and the Cordova Library, DOMLauncher allows any web developer/designer to use their skills of HTML/CSS/JS to create fully custom and unique user interfaces for their Android devices.  Users with Java coding skills have the ability to expand DOMLauncher's functionality.
 
