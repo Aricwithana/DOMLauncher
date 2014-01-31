@@ -13,7 +13,6 @@ import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 
 import android.os.Environment;
-import android.util.Log;
 
 public class Simplefile extends CordovaPlugin {
 
@@ -45,15 +44,15 @@ public class Simplefile extends CordovaPlugin {
 		if(action.equals("openFile")){	
 			try {
 				String path = args.getJSONObject(0).getString("file");
-				
-				Log.d(id, "Text" + sdcard.getAbsolutePath());
-				FileInputStream is = new FileInputStream(sdcard.getAbsolutePath()+""+path);
+				File file = new File(sdcard, path);
+
+				FileInputStream is = new FileInputStream(file.getAbsolutePath());
 				int size = is.available();
 				byte[] buffer = new byte[size];
 				is.read(buffer);
 				is.close();
 				String text = new String(buffer);
-				Log.d(id, "Text" + text);
+
 				callbackContext.success(new JSONObject().put("returnVal", text));
 			} catch (IOException e) {
                 callbackContext.success(new JSONObject().put("returnVal", false));

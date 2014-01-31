@@ -19,9 +19,6 @@ function domodLoaded(){
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("resume", onResume, false);
 	
-	//Check if app icons/css have been generated.
-	iconCheck();
-	
 	//Start/Check API Calls	
 	window.plugins.ringer.modecheck(suc_ringermodeCheck);
 	window.plugins.bluetooth.check(suc_bluetoothCheck);
@@ -36,24 +33,14 @@ function domodLoaded(){
 	window.plugins.screenorient.check(suc_orientationCheck);
 	window.plugins.missed.calls(true, 5000, 'suc_missedCalls');
 	window.plugins.missed.sms(true, 5000, 'suc_missedSMS');
+	window.plugins.apps.generateicons(); 
+	window.plugins.apps.generatecss();
 	//Timers
 	var clockTimer = setInterval(clock, 1000 );	
 
+
 }
 /*End Document Ready*/
-
-  
-
-/**
-*	Check if Icons & CSS are Generated
-*/
-function iconCheck(){	
-	window.plugins.simplefile.openFile('/DOMLauncher/settings/icons/icons.css', generateIconsData);		
-}
-
-function generateIconsData(returnVal){
-	if(returnVal === false);{window.plugins.apps.generateicons(); window.plugins.apps.generatecss();}	
-}
 
 
 //Clock
