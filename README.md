@@ -4,24 +4,22 @@ DOMLauncher
 Visit the new site! http://www.domlauncher.com
 
 
-Cordova Powered Android App Launcher Replacement. 
+Cordova Powered Android App Launcher. 
 
-1.0.7 Release! 
+1.1.0 Release! 
 
 DOMLauncher is a custom Android Launcher specifically designed for web developers and designers.  Utilizing a webview and the Cordova Library, DOMLauncher allows any web developer/designer to use their skills of HTML/CSS/JS to create fully custom and unique user interfaces for their Android devices.  Users with Java coding skills have the ability to expand DOMLauncher's functionality.
 
 
 Before going any further understand a couple key points:
 
-1.  This is free for all to use as they please EXCEPT, make a competing Cordova/Phonegap Based launcher with this code that is not also open and free.  Commerical Profit Gain is Prohibited. Everything else, just credit me.  I retain all ownership of the project and code but happy to share!  If you really want, I'd love to see what others use this stuff for so drop me a line!
+1.  This is free for all to use as they please EXCEPT, make a competing Cordova/Phonegap Based launcher with this code that is not also open and free.  Commerical Profit Gain is Prohibited unless with a purchased license. Everything else, just credit me.  I retain all ownership of the project and code but happy to share!  If you really want, I'd love to see what others use this stuff for so drop me a line!
 
-2.  I created this for myself and want to share and hopefully grow it beyond my initial wants and needs. 
+2.  This is a luxury launcher replacement at the moment as our devices evolve so minimum Android 4.0 requirements.  Android 4.4 will be adding all kinds of new features along with a proper Chromium based webview!
 
-3.  This is a luxury launcher replacement at the moment as our devices evolve.  Android 4.4 will be adding all kinds of new features along with a proper Chromium based webview!
+4.  The 'DOMod'-what a user loads for a custom UI, loads off your internal storage first and then the sdcard. There is a baked in 'dummy' DOMod if there is an issue loading a DOMod into the application.
 
-4.  The 'DOMod'-what a user loads for a custom UI, loads off your SDCARD. Many newer devices allow the internal memory to be the 'sdcard/sdcard0' and the physical card is sdcardext.  A device that doesn't not do this, the app instead references the external sdcard.  The key factor to remember when a device only has the external sdcard:  The App Will Not Load The DOMod When The SDCARD IS MOUNTED AND UNREADABLE BY THE DEVICE.  This only matters if the app restarts or if a DOMod uses live media from the storage space.  I have in place a 'dummy' DOMod that is one page and can access the very basics and launch the installed apps. This is baked into the app as a last ditch backup so something always loads.
-
-If one can handle these things, you have in your hands the ability to create ANY USER INTERFACE you want for your device. Anything that you can imagine, you can create with the only real limitation is the hardware of the device and the webview.
+If one can handle these things, you have in your hands the ability to create ANY USER INTERFACE you want for your device. Anything that you can imagine, you can create with the only real limitation is the hardware of the device.
 
 Personally, I love LCARS.
 
@@ -31,15 +29,13 @@ Personally, I love LCARS.
 
 Instructions:
 
-Compile with Eclipse and intall on the device or copy the provided apk to device and install.
+Compile with Eclipse and intall on the device or copy the provided apk to device and install.  DOMLauncher will create a folder called 'DOMLauncher' either on the internal storage first and if that is not available onto the external sdcard.
 
-The DOMLauncher folder within the SD CARD folder, just copy to your internal memory or physical sd card. 
-
-*DOMod Tutorial that is included in the SDCARD folder above is just to show off the API usage and lacks fancier touch features.
+Download the Tutorial DOMod:  https://github.com/AricwithanA/Tutorial_DOMod or create your own.  To install a DOMod copy the folder into 'DOMLauncher/DOMods/yourDOMod'
 
 DEVELOPERS:
 
-The app itself is not extensive.  The 'bulk' of the app comes from the custom DOMods that I, you or others will create.  I have written a collection of additional Cordova API Plugins to make this app function, the rest is just HTML/CSS/JS.
+The app itself is not extensive, it is more like a shell application.  The 'bulk' of the app comes from the custom DOMods that I, you or others will create.  I have written a collection of additional Cordova API Plugins to make this app function, the rest is just HTML/CSS/JS.
 
 Check out the additional plugins in the Wiki!
 
@@ -54,14 +50,14 @@ Native Widgets - By research could be done via canvas to render and a way to pas
 
 Add Shortcut to desktop from application - Have plugin code provided by an awesome person but needs to be finished.
 
-If anyone wants to contribute!  Go right ahead!
+If anyone wants to contribute!  Go right ahead!  I am currently recruiting a java developer!
 
 -Aricwithana
 
 
 Credits & Thanks:
 
-Cordova/Phonegap IRC Peoples:  Devgeeks, EionRobb & MitchW.  Without these main three this would not exist.  There are others but so many to name.
+Cordova/Phonegap IRC Peoples:  Devgeeks, EionRobb, MitchW, BlinkyBill, and more!  Without these awesome people this would not exist. 
 DOMLauncher Font:  http://www.levien.com/type/myfonts/inconsolata.html  
 Cordova Developers
 
